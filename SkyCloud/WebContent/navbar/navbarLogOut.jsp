@@ -23,7 +23,7 @@
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="navbar-brand" href="<%=refer.getPath()%>index.jsp">
-					<img alt="Brand" src="<%=refer.getImg_path() %>logo_wh_2.png" height="100%">
+					<img alt="Brand" src="<%=refer.getImg_path() %>icons/logo_wh_2.png" height="100%">
 				</a>		
 			</div>
 			<form class="navbar-form navbar-left">

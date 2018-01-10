@@ -23,7 +23,7 @@
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="navbar-brand" href="<%=refer.getPath()%>index.jsp">
-					<img alt="Brand" src="<%=refer.getImg_path()%>logo_wh_2.png" height="100%">
+					<img alt="Brand" src="<%=refer.getImg_path()%>icons/logo_wh_2.png" height="100%">
 				</a>
 			</div>
 			<form class="navbar-form navbar-left">
@@ -35,7 +35,7 @@
 			<ul class="nav navbar-nav">
 				<li class="dropdown">
 					<a class="navbar-brand dropdown-toggle" data-toggle="dropdown" href="#">
-						<img alt="Brand" src="<%=refer.getImg_path() %>messages.png" height="100%">
+						<img alt="Brand" src="<%=refer.getImg_path() %>icons/messages.png" height="100%">
 					</a>
 					<ul class="dropdown-menu" >
 						<li><a href="#">쪽지1</a></li>
