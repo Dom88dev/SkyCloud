@@ -1,3 +1,4 @@
+<%@page import="java.net.InetAddress"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -8,8 +9,15 @@
 <script src="bootstrap337/js/jquery-3.2.1.min.js"></script>
 <script src="bootstrap337/js/bootstrap.min.js"></script>
 </head>
-<body>
-	<jsp:useBean id="refer" class="references.References"></jsp:useBean>
+<jsp:useBean id="refer" class="references.References"></jsp:useBean>
+<%
+	InetAddress inet = InetAddress.getLocalHost();
+	String svrIP = inet.getHostAddress();
+	int svrPort = request.getServerPort();
+	String ipPort = svrIP+":"+svrPort;
+%>
+<jsp:setProperty property="path" name="refer" value="<%=ipPort %>"/>
+<body>	
 	<!-- navbar -->
 	<div id="navbar" class="navbar navbar-fixed-top">
 		<jsp:include page="navbar/navbarLogOut.jsp"></jsp:include>
@@ -32,17 +40,17 @@
 				<!-- Wrapper for slides -->
 				<div class="carousel-inner">
 					<div class="item active">
-						<img src="<%=refer.IMG_PATH %>logo_wh_2.png" alt="Logo"
+						<img src="<%=refer.getImg_path() %>logo_wh_2.png" alt="Logo"
 							style="width: 100%;">
 					</div>
 
 					<div class="item">
-						<img src="<%=refer.IMG_PATH %>logo_wh_2.png" alt="Chicago"
+						<img src="<%=refer.getImg_path() %>logo_wh_2.png" alt="Chicago"
 							style="width: 100%;">
 					</div>
 
 					<div class="item">
-						<img src="<%=refer.IMG_PATH %>logo_wh_2.png" alt="New york"
+						<img src="<%=refer.getImg_path() %>logo_wh_2.png" alt="New york"
 							style="width: 100%;">
 					</div>
 				</div>

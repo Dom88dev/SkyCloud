@@ -9,7 +9,6 @@
 <script src="../bootstrap337/js/jquery-3.2.1.min.js"></script>
 <script src="../bootstrap337/js/bootstrap.min.js"></script>
 </head>
-<body>
 <jsp:useBean id="refer" class="references.References"/>
 <%
 	InetAddress inet = InetAddress.getLocalHost();
@@ -17,6 +16,8 @@
 	int svrPort = request.getServerPort();
 	String ipPort = svrIP+":"+svrPort;
 %>
+<jsp:setProperty property="path" name="refer" value="<%=ipPort %>"/>
+<body>
 	<!-- navbar -->
 	<nav class="navbar navbar-fixed-top">
 		<div class="container-fluid">

@@ -9,7 +9,6 @@
 <script src="../bootstrap337/js/jquery-3.2.1.min.js"></script>
 <script src="../bootstrap337/js/bootstrap.min.js"></script>
 </head>
-<body>
 <jsp:useBean id="refer" class="references.References"/>
 <%
 	InetAddress inet = InetAddress.getLocalHost();
@@ -18,12 +17,13 @@
 	String ipPort = svrIP+":"+svrPort;
 %>
 <jsp:setProperty property="path" name="refer" value="<%=ipPort %>"/>
+<body>
 	<!-- navbar -->
 	<nav class="navbar navbar-fixed-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="navbar-brand" href="<%=refer.getPath()%>index.jsp">
-					<img alt="Brand" src="<%=refer.getImg_path() %>logo_wh_2.png" height="100%">
+					<img alt="Brand" src="<%=refer.getImg_path()%>logo_wh_2.png" height="100%">
 				</a>
 			</div>
 			<form class="navbar-form navbar-left">
@@ -35,7 +35,7 @@
 			<ul class="nav navbar-nav">
 				<li class="dropdown">
 					<a class="navbar-brand dropdown-toggle" data-toggle="dropdown" href="#">
-						<img alt="Brand" src="<%=refer.IMG_PATH %>messages.png" height="100%">
+						<img alt="Brand" src="<%=refer.getImg_path() %>messages.png" height="100%">
 					</a>
 					<ul class="dropdown-menu" >
 						<li><a href="#">쪽지1</a></li>
