@@ -8,6 +8,10 @@
 <link rel="stylesheet" href="bootstrap337/css/bootstrap.min.css" />
 <script src="bootstrap337/js/jquery-3.2.1.min.js"></script>
 <script src="bootstrap337/js/bootstrap.min.js"></script>
+<style>
+	#myCarousel { height: 500px }
+	.item { background:#39d2fd }
+</style>
 </head>
 <jsp:useBean id="refer" class="references.References"></jsp:useBean>
 <%
@@ -39,19 +43,19 @@
 
 				<!-- Wrapper for slides -->
 				<div class="carousel-inner">
-					<div class="item active">
-						<img src="<%=refer.getImg_path() %>icons/logo_wh_2.png" alt="Logo"
-							style="width: 100%;">
+					<div class="item active" align="center">
+						<img src="<%=refer.getImg_path() %>icons/logo_Sky.png" alt="Logo"
+							style="height: 400;">
 					</div>
 
-					<div class="item">
-						<img src="<%=refer.getImg_path() %>icons/logo_wh_2.png" alt="Chicago"
-							style="width: 100%;">
+					<div class="item" align="center">
+						<img src="<%=refer.getImg_path() %>icons/logoCloud_Sky.png" alt="Chicago"
+							style="height: 400;">
 					</div>
 
-					<div class="item">
-						<img src="<%=refer.getImg_path() %>icons/logo_wh_2.png" alt="New york"
-							style="width: 100%;">
+					<div class="item" align="center">
+						<img src="<%=refer.getImg_path() %>icons/logo_Sky.png" alt="New york"
+							style="height: 400;">
 					</div>
 				</div>
 

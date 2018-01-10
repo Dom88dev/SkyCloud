@@ -1579,11 +1579,11 @@ a.text-success:focus, a.text-success:hover {
 }
 
 .text-info {
-	color: #31708f
+	color: #39d2fd
 }
 
 a.text-info:focus, a.text-info:hover {
-	color: #245269
+	color: #31708f
 }
 
 .text-warning {

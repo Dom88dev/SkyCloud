@@ -23,19 +23,19 @@
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="navbar-brand" href="<%=refer.getPath()%>index.jsp">
-					<img alt="Brand" src="<%=refer.getImg_path()%>icons/logo_wh_2.png" height="100%">
+					<img alt="Brand" src="<%=refer.getImg_path()%>icons/navbar_logo.png" height="100%">
 				</a>
 			</div>
 			<form class="navbar-form navbar-left">
 				<div class="form-group has-feedback">
 					<a style="color:sky" onclick=""><span class="glyphicon glyphicon-search form-control-feedback"></span></a>
-					<input type="search" class="form-control" placeholder="input the words you wanna search here"/>
+					<input type="search" class="form-control" placeholder="검색할 스터디를 입력하세요"/>
 				</div>
 			</form>
 			<ul class="nav navbar-nav">
 				<li class="dropdown">
 					<a class="navbar-brand dropdown-toggle" data-toggle="dropdown" href="#">
-						<img alt="Brand" src="<%=refer.getImg_path() %>icons/messages.png" height="100%">
+						<img alt="Brand" src="<%=refer.getImg_path() %>icons/message.png" height="100%">
 					</a>
 					<ul class="dropdown-menu" >
 						<li><a href="#">쪽지1</a></li>
@@ -52,9 +52,9 @@
 			<div class="navbar-inner">
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#">스터디 등록</a></li>
-						<li><a href="#">나의 스터디</a></li>
-						<li><a href="#">로그아웃</a></li>
+						<li class="text-info"><a href="#">스터디 등록</a></li>
+						<li class="text-info"><a href="#">나의 스터디</a></li>
+						<li class="text-info"><a href="#">로그아웃</a></li>
 					</ul>
 				</div>
 			</div>
