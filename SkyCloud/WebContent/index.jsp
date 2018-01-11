@@ -5,22 +5,14 @@
 <head>
 <title>Study Cloud</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="bootstrap337/css/bootstrap.min.css" />
-<script src="bootstrap337/js/jquery-3.2.1.min.js"></script>
-<script src="bootstrap337/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/SkyCloud/bootstrap337/css/bootstrap.min.css" />
+<script src="/SkyCloud/bootstrap337/js/jquery-3.2.1.min.js"></script>
+<script src="/SkyCloud/bootstrap337/js/bootstrap.min.js"></script>
 <style>
 	#myCarousel { height: 500px }
 	.item { background:#39d2fd }
 </style>
 </head>
-<jsp:useBean id="refer" class="references.References"></jsp:useBean>
-<%
-	InetAddress inet = InetAddress.getLocalHost();
-	String svrIP = inet.getHostAddress();
-	int svrPort = request.getServerPort();
-	String ipPort = svrIP+":"+svrPort;
-%>
-<jsp:setProperty property="path" name="refer" value="<%=ipPort %>"/>
 <body>	
 	<!-- navbar -->
 	<div id="navbar" class="navbar navbar-fixed-top">
@@ -44,17 +36,17 @@
 				<!-- Wrapper for slides -->
 				<div class="carousel-inner">
 					<div class="item active" align="center">
-						<img src="<%=refer.getImg_path() %>icons/logo_Sky.png" alt="Logo"
+						<img src="/SkyCloud/images/icons/logo_Sky.png" alt="Logo"
 							style="height: 400;">
 					</div>
 
 					<div class="item" align="center">
-						<img src="<%=refer.getImg_path() %>icons/logoCloud_Sky.png" alt="Chicago"
+						<img src="/SkyCloud/images/icons/logoCloud_Sky.png" alt="Chicago"
 							style="height: 400;">
 					</div>
 
 					<div class="item" align="center">
-						<img src="<%=refer.getImg_path() %>icons/logo_Sky.png" alt="New york"
+						<img src="/SkyCloud/images/icons/logo_Sky.png" alt="New york"
 							style="height: 400;">
 					</div>
 				</div>

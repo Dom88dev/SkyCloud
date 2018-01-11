@@ -5,25 +5,17 @@
 <head>
 	<title>navbar before logging in</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="../bootstrap337/css/bootstrap.min.css" />
-<script src="../bootstrap337/js/jquery-3.2.1.min.js"></script>
-<script src="../bootstrap337/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/SkyCloud/bootstrap337/css/bootstrap.min.css" />
+<script src="/SkyCloud/bootstrap337/js/jquery-3.2.1.min.js"></script>
+<script src="/SkyCloud/bootstrap337/js/bootstrap.min.js"></script>
 </head>
-<jsp:useBean id="refer" class="references.References"/>
-<%
-	InetAddress inet = InetAddress.getLocalHost();
-	String svrIP = inet.getHostAddress();
-	int svrPort = request.getServerPort();
-	String ipPort = svrIP+":"+svrPort;
-%>
-<jsp:setProperty property="path" name="refer" value="<%=ipPort %>"/>
 <body>
 	<!-- navbar -->
 	<nav class="navbar navbar-fixed-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="<%=refer.getPath()%>index.jsp">
-					<img alt="Brand" src="<%=refer.getImg_path()%>icons/navbar_logo.png" height="100%">
+				<a class="navbar-brand" href="/SkyCloud/index.jsp">
+					<img alt="Brand" src="/SkyCloud/images/icons/navbar_logo.png" height="100%">
 				</a>
 			</div>
 			<form class="navbar-form navbar-left">
@@ -35,7 +27,7 @@
 			<ul class="nav navbar-nav">
 				<li class="dropdown">
 					<a class="navbar-brand dropdown-toggle" data-toggle="dropdown" href="#">
-						<img alt="Brand" src="<%=refer.getImg_path() %>icons/message.png" height="100%">
+						<img alt="Brand" src="/SkyCloud/images/icons/message.png" height="100%">
 					</a>
 					<ul class="dropdown-menu" >
 						<li><a href="#">쪽지1</a></li>
