@@ -16,7 +16,7 @@
 <body>	
 	<!-- navbar -->
 	<div id="navbar" class="navbar navbar-fixed-top">
-		<jsp:include page="navbar/navbarLogOut.jsp"></jsp:include>
+		<jsp:include page="/templates/navbar/navbarLogOut.jsp"></jsp:include>
 	</div>
 
 
@@ -64,7 +64,12 @@
 			</div>
 			
 		<!-- study list -->
-			<div>
+			<div id="studyList">
+				
+			</div>
+			
+		<!-- footer -->	
+			<div id="footer">
 				
 			</div>
 		</div>
