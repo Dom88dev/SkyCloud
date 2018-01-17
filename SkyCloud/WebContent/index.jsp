@@ -16,7 +16,7 @@
 <body>	
 	<!-- navbar -->
 	<div id="navbar" class="navbar navbar-fixed-top">
-		<jsp:include page="/templates/navbar/navbarLogOut.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/templates/navbar/navbarLogOut.jsp"></jsp:include>
 	</div>
 
 
@@ -36,17 +36,17 @@
 				<!-- Wrapper for slides -->
 				<div class="carousel-inner">
 					<div class="item active" align="center">
-						<img src="/SkyCloud/images/icons/logo_Sky.png" alt="Logo"
+						<img src="/SkyCloud/WEB-INF/images/icons/logo_Sky.png" alt="Logo"
 							style="height: 400;">
 					</div>
 
 					<div class="item" align="center">
-						<img src="/SkyCloud/images/icons/logoCloud_Sky.png" alt="Chicago"
+						<img src="/SkyCloud/WEB-INF/images/icons/logoCloud_Sky.png" alt="Chicago"
 							style="height: 400;">
 					</div>
 
 					<div class="item" align="center">
-						<img src="/SkyCloud/images/icons/logo_Sky.png" alt="New york"
+						<img src="/SkyCloud/WEB-INF/images/icons/logo_Sky.png" alt="New york"
 							style="height: 400;">
 					</div>
 				</div>

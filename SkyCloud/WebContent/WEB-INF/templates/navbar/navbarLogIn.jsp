@@ -15,7 +15,7 @@
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="navbar-brand" href="/SkyCloud/index.jsp">
-					<img alt="Brand" src="/SkyCloud/images/icons/navbar_logo.png" height="100%">
+					<img alt="Brand" src="/SkyCloud/WEB-INF/images/icons/navbar_logo.png" height="100%">
 				</a>
 			</div>
 			<form class="navbar-form navbar-left">
@@ -27,7 +27,7 @@
 			<ul class="nav navbar-nav">
 				<li class="dropdown">
 					<a class="navbar-brand dropdown-toggle" data-toggle="dropdown" href="#">
-						<img alt="Brand" src="/SkyCloud/images/icons/message.png" height="100%">
+						<img alt="Brand" src="/SkyCloud/WEB-INF/images/icons/message.png" height="100%">
 					</a>
 					<ul class="dropdown-menu" >
 						<li><a href="#">쪽지1</a></li>

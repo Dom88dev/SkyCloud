@@ -15,7 +15,7 @@
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="navbar-brand" href="/SkyCloud/index.jsp">
-					<img alt="Brand" src="/SkyCloud/images/icons/navbar_logo.png" height="100%">
+					<img alt="Brand" src="/SkyCloud/WEB-INF/images/icons/navbar_logo.png" height="100%">
 				</a>		
 			</div>
 			<form class="navbar-form navbar-left">
