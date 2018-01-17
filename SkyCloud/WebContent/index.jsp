@@ -36,17 +36,17 @@
 				<!-- Wrapper for slides -->
 				<div class="carousel-inner">
 					<div class="item active" align="center">
-						<img src="/SkyCloud/WEB-INF/images/icons/logo_Sky.png" alt="Logo"
+						<img src="/SkyCloud/images/icons/logo_Sky.png" alt="Logo"
 							style="height: 400;">
 					</div>
 
 					<div class="item" align="center">
-						<img src="/SkyCloud/WEB-INF/images/icons/logoCloud_Sky.png" alt="Chicago"
+						<img src="/SkyCloud/images/icons/logoCloud_Sky.png" alt="Chicago"
 							style="height: 400;">
 					</div>
 
 					<div class="item" align="center">
-						<img src="/SkyCloud/WEB-INF/images/icons/logo_Sky.png" alt="New york"
+						<img src="/SkyCloud/images/icons/logo_Sky.png" alt="New york"
 							style="height: 400;">
 					</div>
 				</div>
@@ -64,8 +64,9 @@
 			</div>
 			
 		<!-- study list -->
+			<h2 class="text-center"><ins class="text-info">STUDY</ins></h2>
 			<div id="studyList">
-				
+				<jsp:include page="/WEB-INF/templates/studyList/studybrief.jsp"></jsp:include>
 			</div>
 			
 		<!-- footer -->	

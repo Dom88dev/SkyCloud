@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +9,15 @@
 <script src="/SkyCloud/bootstrap337/js/bootstrap.min.js"></script>
 </head>
 <body>
-
+	<div class="col-md-4" style="margin:5">
+		<div>
+			<img src="/SkyCloud/images/categories/language.png" width="100%">
+		</div>
+		<div align="center">
+			<h3>미드 정복</h3>
+			<p>모집합니다.</p>
+		</div>
+	</div>
+	
 </body>
 </html>

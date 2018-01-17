@@ -8,6 +8,9 @@
 <link rel="stylesheet" href="/SkyCloud/bootstrap337/css/bootstrap.min.css" />
 <script src="/SkyCloud/bootstrap337/js/jquery-3.2.1.min.js"></script>
 <script src="/SkyCloud/bootstrap337/js/bootstrap.min.js"></script>
+<style>
+	nav{background-color: white}
+</style>
 </head>
 <body>
 	<!-- navbar -->
@@ -15,7 +18,7 @@
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="navbar-brand" href="/SkyCloud/index.jsp">
-					<img alt="Brand" src="/SkyCloud/WEB-INF/images/icons/navbar_logo.png" height="100%">
+					<img alt="Brand" src="/SkyCloud/images/icons/navbar_logo.png" height="100%">
 				</a>		
 			</div>
 			<form class="navbar-form navbar-left">
