@@ -1,8 +1,8 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Sky Cloud х╦©Ь╟║ют</title>
+	<title>Sky Cloud М ▄Л⌡░Й╟─Л·┘</title>
 </head>
 <body>
 
