@@ -1,4 +1,3 @@
-<%@page import="java.net.InetAddress"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -21,7 +20,7 @@
 
 
 	<!--  body -->
-	<div class="container" style="margin-top:50px">
+	<div class="container-fluid" style="margin-top:50px">
 		<div class="row">
 		
 		<!-- CAROUSEL -->
@@ -65,13 +64,13 @@
 			
 		<!-- study list -->
 			<h2 class="text-center"><ins class="text-info">STUDY</ins></h2>
-			<div id="studyList">
+			<div id="studyList" style="min-height: 500px">
 				<jsp:include page="/WEB-INF/templates/studyList/studybrief.jsp"></jsp:include>
 			</div>
 			
 		<!-- footer -->	
 			<div id="footer">
-				
+				<jsp:include page="/WEB-INF/templates/footer.jsp"></jsp:include>
 			</div>
 		</div>
 	</div>
