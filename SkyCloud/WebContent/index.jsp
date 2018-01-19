@@ -65,7 +65,7 @@
 		<!-- study list -->
 			<h2 class="text-center"><ins class="text-info">STUDY</ins></h2>
 			<div id="studyList" style="min-height: 500px">
-				<jsp:include page="/WEB-INF/templates/studyList/studybrief.jsp"></jsp:include>
+				<jsp:include page="/WEB-INF/templates/studyList/studyList.jsp"></jsp:include>
 			</div>
 			
 		<!-- footer -->	

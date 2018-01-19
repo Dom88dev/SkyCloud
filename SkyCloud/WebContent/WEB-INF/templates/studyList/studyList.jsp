@@ -9,6 +9,11 @@
 <script src="/SkyCloud/lib/bootstrap337/js/bootstrap.min.js"></script>
 </head>
 <body>
-	
+	<div class="container">
+		<jsp:include page="/WEB-INF/templates/studyList/studybrief.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/templates/studyList/studybrief.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/templates/studyList/studybrief.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/templates/studyList/studybrief.jsp"></jsp:include>
+	</div>
 </body>
 </html>
