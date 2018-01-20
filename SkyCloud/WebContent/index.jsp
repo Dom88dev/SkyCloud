@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +14,11 @@
 </style>
 </head>
 <body>	
+	<c:if test="${empty Loaded }">
+		<c:redirect url="/main">
+			<c:param name="command" value="STUDYLIST"></c:param>
+		</c:redirect>
+	</c:if>
 	<!-- navbar -->
 	<div id="navbar" class="navbar navbar-fixed-top">
 		<jsp:include page="/WEB-INF/templates/navbar/navbarLogOut.jsp"></jsp:include>
@@ -64,8 +70,16 @@
 			
 		<!-- study list -->
 			<h2 class="text-center"><ins class="text-info">STUDY</ins></h2>
-			<div id="studyList" style="min-height: 500px">
-				<jsp:include page="/WEB-INF/templates/studyList/studyList.jsp"></jsp:include>
+			<div id="studyList" style="min-height: 500px" align="center">
+				<c:choose>
+					<c:when test="${empty stdList }">
+						<br><br><br><br><br><br>
+						<h3 class="text-default">현재 모집중인 스터디가 없습니다.</h3>
+					</c:when>
+					<c:otherwise>
+						<jsp:include page="/WEB-INF/templates/studyList/studyList.jsp"></jsp:include>
+					</c:otherwise>
+				</c:choose>
 			</div>
 			
 		<!-- footer -->	

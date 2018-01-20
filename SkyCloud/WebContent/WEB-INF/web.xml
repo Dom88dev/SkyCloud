@@ -10,11 +10,11 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   <servlet>
-  	<servlet-name>intro</servlet-name>
+  	<servlet-name>main</servlet-name>
   	<servlet-class>controller.MainController</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>intro</servlet-name>
-  	<url-pattern>/intro</url-pattern>
+  	<servlet-name>main</servlet-name>
+  	<url-pattern>/main</url-pattern>
   </servlet-mapping>
 </web-app>
