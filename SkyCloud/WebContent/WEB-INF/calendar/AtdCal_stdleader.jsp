@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,13 +46,14 @@
 								right : 'myAttendButton'
 							},
 							events : [ {
-								title : 'Ãâ¼® : ' + '6' + '¸í\n' + 'Áö°¢ : ' + '2'
-										+ '¸í\n' + '°ø°á : ' + '1' + '¸í\n'
-										+ '°á¼® : ' + '2' + '¸í\n',
+								title : 'ì¶œì„ : ' + '6' + 'ëª…\n' +
+										'ì§€ê° : ' + '2' + 'ëª…\n' +
+										'ê²°ì„ : ' + '1' + 'ëª…\n' +
+										'ê³µê²° : ' + '2' + 'ëª…\n',
 								start : '2018-01-12'
 							} ],
 							buttonText : {
-								today : "¿À´Ã",
+								today : "ì˜¤ëŠ˜",
 							},
 							selectable : true,
 							selectHelper : true,
@@ -126,58 +127,58 @@ body {
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
-						<h4 class="modal-title">Ãâ°á °ü¸®</h4>
+						<h4 class="modal-title">ì¶œê²° ê´€ë¦¬</h4>
 					</div>
 					<div class="modal-body">
 						<div class="row">
 							<!-- 
 							<div class="col-xs-12">
-								<label class="col-xs-4" for="title">¸í´Ü</label> 
+								<label class="col-xs-4" for="title">ï¿½ï¿½ï¿½</label> 
 								<input type="text" name="title" id="title" />
 							</div>-->
 							<div class="col-md-12">
 								<table class="table">
 									<thead>
 										<tr>
-											<th class="text-center">ÀÌ¸§</th>
-											<th class="text-center">Ãâ°á ÇöÈ²</th>
+											<th class="text-center">ì´ë¦„</th>
+											<th class="text-center">ì¶œê²° í˜„í™©</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
 											<td>Mark</td>
 											<td><select>
-													<option value="att">Ãâ¼®</option>
-													<option value="late">Áö°¢</option>
-													<option value="abs">°á¼®</option>
-													<option value="oaa">°ø°á</option>
+													<option value="att">ì¶œì„</option>
+													<option value="late">ì§€ê°</option>
+													<option value="abs">ê²°ì„</option>
+													<option value="oaa">ê³µê²°</option>
 											</select></td>
 										</tr>
 										<tr>
 											<td>Jacob</td>
 											<td><select>
-													<option value="att">Ãâ¼®</option>
-													<option value="late">Áö°¢</option>
-													<option value="abs">°á¼®</option>
-													<option value="oaa">°ø°á</option>
+													<option value="att">ì¶œì„</option>
+													<option value="late">ì§€ê°</option>
+													<option value="abs">ê²°ì„</option>
+													<option value="oaa">ê³µê²°</option>
 											</select></td>
 										</tr>
 										<tr>
 											<td>Larry</td>
 											<td><select>
-													<option value="att">Ãâ¼®</option>
-													<option value="late">Áö°¢</option>
-													<option value="abs">°á¼®</option>
-													<option value="oaa">°ø°á</option>
+													<option value="att">ì¶œì„</option>
+													<option value="late">ì§€ê°</option>
+													<option value="abs">ê²°ì„</option>
+													<option value="oaa">ê³µê²°</option>
 											</select></td>
 										</tr>
 										<tr>
-											<td>±èÈñÁø</td>
+											<td>ê¹€í¬ì§„</td>
 											<td><select>
-													<option value="att">Ãâ¼®</option>
-													<option value="late">Áö°¢</option>
-													<option value="abs">°á¼®</option>
-													<option value="oaa">°ø°á</option>
+													<option value="att">ì¶œì„</option>
+													<option value="late">ì§€ê°</option>
+													<option value="abs">ê²°ì„</option>
+													<option value="oaa">ê³µê²°</option>
 											</select></td>
 										</tr>
 									</tbody>
@@ -186,9 +187,9 @@ body {
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">´Ý±â</button>
-						<button type="button" class="btn btn-primary" id="save-event">Ãâ°á
-							¼öÁ¤</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">ï¿½Ý±ï¿½</button>
+						<button type="button" class="btn btn-primary" id="save-event">ï¿½ï¿½ï¿½
+							ï¿½ï¿½ï¿½ï¿½</button>
 					</div>
 				</div>
 				<!-- /.modal-content -->

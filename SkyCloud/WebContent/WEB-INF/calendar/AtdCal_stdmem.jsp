@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,9 +28,9 @@
 							aspectRatio : 1.8,
 							customButtons : {
 								myAttendButton : {
-									text : '√‚ºÆ√º≈©',
+									text : 'Ï∂úÏÑù',
 									click : function() {
-										alert('√‚ºÆ øœ∑·!');
+										alert('Ï∂úÏÑù ÏôÑÎ£å!');
 										$('div.fc-bg')
 												.find('td.fc-today')
 												.prepend(
@@ -48,7 +48,7 @@
 								right : 'myAttendButton'
 							},
 							buttonText: {
-							    today : "ø¿¥√",
+							    today : "Ïò§Îäò",
 							   },
 							schedulerLicenseKey : 'GPL-My-Project-Is-Open-Source'
 						});
