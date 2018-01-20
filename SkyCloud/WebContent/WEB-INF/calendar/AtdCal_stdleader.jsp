@@ -187,9 +187,8 @@ body {
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">�ݱ�</button>
-						<button type="button" class="btn btn-primary" id="save-event">���
-							����</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+						<button type="button" class="btn btn-primary" id="save-event">출결 수정</button>
 					</div>
 				</div>
 				<!-- /.modal-content -->
