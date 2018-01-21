@@ -3,27 +3,27 @@
 <html>
 <head>
 <meta charset='utf-8' />
-<link href='/SkyCloud/lib/bootstrap337/css/fullcalendar.min.css'
+<link href='/StudyCloud/lib/bootstrap337/css/fullcalendar.min.css'
 	rel='stylesheet' />
-<link href='/SkyCloud/lib/bootstrap337/css/fullcalendar.print.min.css'
+<link href='/StudyCloud/lib/bootstrap337/css/fullcalendar.print.min.css'
 	rel='stylesheet' media='print' />
-<link href='/SkyCloud/lib/bootstrap337/css/scheduler.min.css'
+<link href='/StudyCloud/lib/bootstrap337/css/scheduler.min.css'
 	rel='stylesheet' />
-<link href='/SkyCloud/lib/bootstrap337/css/fullcalendar.min.css'
+<link href='/StudyCloud/lib/bootstrap337/css/fullcalendar.min.css'
 	rel='stylesheet' />
-<link href='/SkyCloud/lib/bootstrap337/css/bootstrap.min.css'
+<link href='/StudyCloud/lib/bootstrap337/css/bootstrap.min.css'
 	rel='stylesheet' />
 <link
-	href='/SkyCloud/lib/bootstrap337/css/bootstrap-datetimepicker.min.css'
+	href='/StudyCloud/lib/bootstrap337/css/bootstrap-datetimepicker.min.css'
 	rel='stylesheet' />
-<script src='/SkyCloud/lib/bootstrap337/js/moment.min.js'></script>
-<script src='/SkyCloud/lib/bootstrap337/js/jquery.min.js'></script>
-<script src='/SkyCloud/lib/bootstrap337/js/jquery-ui.min.js'></script>
-<script src='/SkyCloud/lib/bootstrap337/js/fullcalendar.min.js'></script>
-<script src='/SkyCloud/lib/bootstrap337/js/bootstrap.min.js'></script>
+<script src='/StudyCloud/lib/bootstrap337/js/moment.min.js'></script>
+<script src='/StudyCloud/lib/bootstrap337/js/jquery.min.js'></script>
+<script src='/StudyCloud/lib/bootstrap337/js/jquery-ui.min.js'></script>
+<script src='/StudyCloud/lib/bootstrap337/js/fullcalendar.min.js'></script>
+<script src='/StudyCloud/lib/bootstrap337/js/bootstrap.min.js'></script>
 <script
-	src='/SkyCloud/lib/bootstrap337/js/bootstrap-datetimepicker.min.js'></script>
-<script src='/SkyCloud/lib/bootstrap337/js/scheduler.min.js'></script>
+	src='/StudyCloud/lib/bootstrap337/js/bootstrap-datetimepicker.min.js'></script>
+<script src='/StudyCloud/lib/bootstrap337/js/scheduler.min.js'></script>
 <script>
 	$(function() {
 		$('#external-events .fc-event').each(function() {

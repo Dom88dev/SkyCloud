@@ -3,14 +3,14 @@
 <html>
 <head>
 <meta charset='utf-8' />
-<link href='/SkyCloud/lib/bootstrap337/css/fullcalendar.min.css' rel='stylesheet' />
-<link href='/SkyCloud/lib/bootstrap337/css/fullcalendar.print.min.css' rel='stylesheet' media='print' />
-<link href='/SkyCloud/lib/bootstrap337/css/scheduler.min.css' rel='stylesheet' />
-<script src='/SkyCloud/lib/bootstrap337/js/moment.min.js'></script>
-<script src='/SkyCloud/lib/bootstrap337/js/jquery.min.js'></script>
-<script src='/SkyCloud/lib/bootstrap337/js/jquery-ui.min.js'></script>
-<script src='/SkyCloud/lib/bootstrap337/js/fullcalendar.min.js'></script>
-<script src='/SkyCloud/lib/bootstrap337/js/scheduler.min.js'></script>
+<link href='/StudyCloud/lib/bootstrap337/css/fullcalendar.min.css' rel='stylesheet' />
+<link href='/StudyCloud/lib/bootstrap337/css/fullcalendar.print.min.css' rel='stylesheet' media='print' />
+<link href='/StudyCloud/lib/bootstrap337/css/scheduler.min.css' rel='stylesheet' />
+<script src='/StudyCloud/lib/bootstrap337/js/moment.min.js'></script>
+<script src='/StudyCloud/lib/bootstrap337/js/jquery.min.js'></script>
+<script src='/StudyCloud/lib/bootstrap337/js/jquery-ui.min.js'></script>
+<script src='/StudyCloud/lib/bootstrap337/js/fullcalendar.min.js'></script>
+<script src='/StudyCloud/lib/bootstrap337/js/scheduler.min.js'></script>
 <script>
 	$(function() { 
 		$('#external-events .fc-event').each(function() {
@@ -34,7 +34,7 @@
 										$('div.fc-bg')
 												.find('td.fc-today')
 												.prepend(
-														"<img src='/SkyCloud/images/icons/atd.png' width='100' height='80' align='center'>");
+														"<img src='/StudyCloud/images/icons/atd.png' width='100' height='80' align='center'>");
 										$('div.fc-right')
 												.find(
 														'button.fc-myAttendButton-button')

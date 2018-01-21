@@ -30,7 +30,7 @@ public class MainController extends HttpServlet {
 		
 		switch(command){
 		
-		case "STUDYLIST":
+		case "LOADSTUDYLIST":
 			StudyDao stdDao = new StudyDao();
 			ArrayList<Study> stdList = (ArrayList<Study>)stdDao.getStduyList();
 			request.setAttribute("stdList", stdList);

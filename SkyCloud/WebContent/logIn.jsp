@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Study Cloud 스터디 등록</title>
+	<title>Insert title here</title>
 </head>
 <body>
 

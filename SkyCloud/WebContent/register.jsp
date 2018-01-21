@@ -3,11 +3,11 @@
 <html>
 <head>
 <title>Insert title here</title>
-<link rel='stylesheet' href="/SkyCloud/lib/bootstrap337/css/form-con.css" />
+<link rel='stylesheet' href="/StudyCloud/lib/bootstrap337/css/form-con.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="/SkyCloud/lib/bootstrap337/css/bootstrap.min.css" />
-<script src="/SkyCloud/lib/bootstrap337/js/jquery-3.2.1.min.js"></script>
-<script src="/SkyCloud/lib/bootstrap337/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/StudyCloud/lib/bootstrap337/css/bootstrap.min.css" />
+<script src="/StudyCloud/lib/bootstrap337/js/jquery-3.2.1.min.js"></script>
+<script src="/StudyCloud/lib/bootstrap337/js/bootstrap.min.js"></script>
 <style>
 	td{vertical-align: text-top;}
 

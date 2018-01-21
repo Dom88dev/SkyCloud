@@ -5,23 +5,33 @@
 <head>
 <title>Study Cloud</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="/SkyCloud/lib/bootstrap337/css/bootstrap.min.css" />
-<script src="/SkyCloud/lib/bootstrap337/js/jquery-3.2.1.min.js"></script>
-<script src="/SkyCloud/lib/bootstrap337/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/StudyCloud/lib/bootstrap337/css/bootstrap.min.css" />
+<script src="/StudyCloud/lib/bootstrap337/js/jquery-3.2.1.min.js"></script>
+<script src="/StudyCloud/lib/bootstrap337/js/bootstrap.min.js"></script>
 <style>
 	#myCarousel { height: 500px }
 	.item { background:#39d2fd }
-</style>
+	a.right.carousel-control, a.left.carousel-control {
+	    background-image: none;
+	}
+</style>	
 </head>
 <body>	
 	<c:if test="${empty Loaded }">
 		<c:redirect url="/main">
-			<c:param name="command" value="STUDYLIST"></c:param>
+			<c:param name="command" value="LOADSTUDYLIST"></c:param>
 		</c:redirect>
 	</c:if>
 	<!-- navbar -->
 	<div id="navbar" class="navbar navbar-fixed-top">
-		<jsp:include page="/WEB-INF/templates/navbar/navbarLogOut.jsp"></jsp:include>
+		<c:choose>
+			<c:when test="${empty sessionScope.email }">
+				<jsp:include page="/WEB-INF/templates/navbar/navbarLogOut.jsp"></jsp:include>
+			</c:when>
+			<c:otherwise>
+				<jsp:include page="/WEB-INF/templates/navbar/navbarLogIn.jsp"></jsp:include>
+			</c:otherwise>
+		</c:choose>
 	</div>
 
 
@@ -41,17 +51,17 @@
 				<!-- Wrapper for slides -->
 				<div class="carousel-inner">
 					<div class="item active" align="center">
-						<img src="/SkyCloud/images/icons/logo_Sky.png" alt="Logo"
+						<img src="/StudyCloud/images/icons/logo_Sky.png" alt="Logo"
 							style="height: 400;">
 					</div>
 
 					<div class="item" align="center">
-						<img src="/SkyCloud/images/icons/logoCloud_Sky.png" alt="Chicago"
+						<img src="/StudyCloud/images/icons/logoCloud_Sky.png" alt="Chicago"
 							style="height: 400;">
 					</div>
 
 					<div class="item" align="center">
-						<img src="/SkyCloud/images/icons/logo_Sky.png" alt="New york"
+						<img src="/StudyCloud/images/icons/logo_Sky.png" alt="New york"
 							style="height: 400;">
 					</div>
 				</div>
@@ -74,7 +84,7 @@
 				<c:choose>
 					<c:when test="${empty stdList }">
 						<br><br><br><br><br><br>
-						<h3 class="text-default">현재 모집중인 스터디가 없습니다.</h3>
+						<h3 class="text-center">현재 모집중인 스터디가 없습니다.</h3>
 					</c:when>
 					<c:otherwise>
 						<jsp:include page="/WEB-INF/templates/studyList/studyList.jsp"></jsp:include>
