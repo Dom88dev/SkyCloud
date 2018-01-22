@@ -1,0 +1,191 @@
+@charset "UTF-8";
+
+.mform-control {
+	width: 280px;
+	height: 35px;
+	padding: 6px 12px;
+	font-size: 15px;
+	line-height: 1.42857143;
+	color: #555;
+	background-color: #fff;
+	background-image: none;
+	border: 5px solid #39d2fd;
+	border-radius: 30px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+	-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow
+		ease-in-out .15s;
+	-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out
+		.15s;
+	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
+}
+
+.mform-control:focus {
+	border-color: #39d2fd;
+	outline: 0;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px
+		rgba(102, 175, 233, .6);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px
+		rgba(102, 175, 233, .6)
+}
+
+.mtext-info {
+	color: #39d2fd
+}
+
+.mform-group {
+	margin-bottom: 15px;
+	height: 130px;
+}
+
+body {
+	font-size: 30px;
+}
+.mmar-top{
+	botton-align:top;
+}
+
+.mlayer {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	-webkit-align-items: center;
+	-webkit-justify-content: center;
+	-webkit-box-pack: center;
+	-webkit-box-align: center;
+	-moz-box-pack: center;
+	-moz-box-align: center;
+	-ms-box-pack: center;
+	-ms-box-align: center;
+}
+
+.mlayer .content {
+	background: skyblue
+}
+
+.mtable {
+	border-spacing: 15px 12px;
+}
+
+.mfont-size {
+	font-size: 13px;
+}
+
+.memail-authentication{
+	width:130px;
+	color:#ffffff;
+	background-color:#39d2fd;
+	border:0;
+	border-radius: 5px;
+}
+
+.memail-confirm{
+	width:130px;
+	color:#6e6e6e;
+	background-color:#ffffff;
+	border:0;
+	border-radius: 5px;
+}
+
+.mimg-circle {
+	border-radius: 50%
+}
+
+.mimage-border {
+	border:3px solid #39d2fd;
+	border-radius: 7px;
+	moz-border-radius: 7px;
+	khtml-border-radius: 7px;
+	webkit-border-radius: 7px;
+}
+
+
+/* 토글버튼 */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  vertical-align:middle;
+}
+ 
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+ 
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+ 
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+ 
+input:checked + .slider {
+  background-color: #2196F3;
+}
+ 
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+ 
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+ 
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+ 
+.slider.round:before {
+  border-radius: 50%;
+}
+ 
+p {
+  margin:0px;
+  display:inline-block;
+  font-size:15px;
+  font-weight:bold;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
