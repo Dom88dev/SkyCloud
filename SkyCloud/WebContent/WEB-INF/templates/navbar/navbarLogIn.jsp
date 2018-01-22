@@ -15,6 +15,10 @@
 	function clickMsg() {
 		window.open("/WEB-INF/templates/msg/message.jsp", "쪽지함", "width=300, height=400");
 	}
+	
+	function fnLogOut() {
+		window.open("/StudyCloud/logInOut/logOut.jsp", "StudyCloud 로그아웃", "width=400, height=200");
+	}
 </script>
 </head>
 <body>
@@ -40,7 +44,7 @@
 					<ul class="nav navbar-nav navbar-right">
 						<li class="text-info"><a href="/StudyCloud/main?command=REGISTUDY">스터디 등록</a></li>
 						<li class="text-info"><a href="/StudyCloud/main?command=MNGSTUDY">나의 스터디</a></li>
-						<li class="text-info"><a href="/StudyCloud/main?command=LOGOUT">로그아웃</a></li>
+						<li class="text-info"><a href="javascript:fnLogOut();">로그아웃</a></li>
 					</ul>
 				</div>
 			</div>
