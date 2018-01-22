@@ -123,7 +123,7 @@ body {
 									<label class="mtext-info mfont-size"><strong>이메일</strong></label>
 								</th>
 								<td>
-									<input type="text" name="email" class="mform-control" placeholder="이메일 입력"/>
+									<input type="email" name="email" class="mform-control" placeholder="이메일 입력"/>
 									<div>
 										<div style="float:left;width:130px">
 											<button type="button" id='input' class="memail-authentication mfont-size" name="email">  email 인증  </button>
