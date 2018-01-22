@@ -6,48 +6,32 @@
 <head>
 <title>Insert title here</title>
 
+<link rel='stylesheet' href="/StudyCloud/lib/bootstrap337/css/form-con.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="/StudyCloud/lib/bootstrap337/css/bootstrap.min.css" />
 <script src="/StudyCloud/lib/bootstrap337/js/jquery-3.2.1.min.js"></script>
 <script src="/StudyCloud/lib/bootstrap337/js/bootstrap.min.js"></script>
 <style>
-	td{vertical-align: text-top;}
 
-table{
-	border: 1px solid red;
-	border-collapse: collapse;
-	border-spacing: 15px 12px;
-} 
-
-th, td {
-    border: 1px solid red;
+td, tr {
     padding: 10px;
-  } 
-  
-body {
-	font-size: 25px;
+    vertical-align: text-top;
+    
+  }
+
+.container {
+	max-width: 100%
 }
 
-.mform-control {
-	width: 300px;
-	height: 35px;
-	padding: 6px 12px;
+.mfont-size {
 	font-size: 15px;
-	line-height: 1.42857143;
-	color: #555;
-	background-color: #fff;
-	background-image: none;
-	border: 5px solid #39d2fd;
-	border-radius: 30px;
-	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-	-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow
-		ease-in-out .15s;
-	-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out
-		.15s;
-	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
 }
 
+.mform {
+	width: 600px;
+	height: 600px;
+	margin:auto;
+}
 </style>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
 <style type="text/css"></style>
@@ -107,104 +91,112 @@ body {
 		<jsp:include page="/WEB-INF/templates/navbar/navbarLogOut.jsp"></jsp:include>
 	</div>
 	
-	<div class="container" style="margin-top:50px">
+	<div class="container" style="margin-top:100px;">
 		<div class="row">
 		
 		<!-- 회원가입 폼 -->
 			<form action="/StudyCloud/main">
 				<input type="hidden" name="command" value="REGIMEMBER">
-				<div class="mform-group">
-					<div class="mform-group"></div>
-					
-					<div class="mlayer">
-						<table class="mtable">
-							<tr>
-								<th>
-									<label class="mtext-info mfont-size"><strong>이메일</strong></label>
-								</th>
-								<td>
-									<input type="email" name="email" class="mform-control" placeholder="이메일 입력"/>
-									<div>
-										<div style="float:left;width:130px">
-											<button type="button" id='input' class="memail-authentication mfont-size" name="email">  email 인증  </button>
-										</div>
-										<div style="float:right;width:130px;">	
-											<span id="certification" class="memail-confirm mfont-size" style="display: none;border: 1px solid #39d2fd">이메일 인증 확인</span>
-										</div>
-										<div style='clear:both'></div>
+				<div class="container">
+					<div class="container">
+						<div class="mform">
+							<table class="mtable table">
+							<tr >
+								<td colspan="2" style="border: 0">
+									<div align="center">
+										<img alt="로고" src="/StudyCloud/images/icons/navbar_logo.png">
 									</div>
 								</td>
 							</tr>
-							
-							<tr>
-								<th>
-									<label class="mtext-info mfont-size"><strong>비밀번호</strong></label>
-								</th>
-								<td>
-									<input type="password" name="pw" class="mform-control mfont-size" placeholder="비밀번호는 영문/숫자/특수문자 포함 6자이상"/>
-								</td>
-							</tr>
-							
-							<tr>
-								<th>
-									<label class="mtext-info mfont-size"><strong>비밀번호 확인</strong></label>
-								</th>
-								<td>
-									<input type="password" name="pwc" class="mform-control" placeholder="비밀번호 재확인"/>
-								</td>
-							</tr>
-							<tr>
-								<th>
-									<label class="mtext-info mfont-size"><strong>닉네임</strong></label>
-								</th>
-								<td>
-									<input type="text" name="name" class="mform-control" placeholder="닉네임 입력"/>
-								</td>
-							</tr>
-							<tr>
-								<th>
-									<label class="mtext-info mfont-size"><strong>연락처</strong></label>
-								</th>
-								<td>
-									<input type="tel" name="tel" class="mform-control" placeholder="01012345678"/>
-								</td>
-							</tr>
-							<tr>
-								<td colspan="2">
-									<div>
-										<div style="border: 1px solid #ffffff; float: left; width: 20%; padding-left: 5px">
-											<i id="men" class="fa fa-mars" style="font-size:36px;color:#39d2fd"></i>
+								<tr>
+									<th>
+										<label class="mtext-info mfont-size" style="padding-top: 15%"><strong>이메일</strong></label>
+									</th>
+									<td><div style="padding-bottom: 10px">
+											<input type="email" name="email" class="mform-control" style="width: 100%" placeholder="이메일 입력"/>
 										</div>
-										<div style="border: 1px solid #ffffff; float: left; width: 55%;text-align:center;">
-											<div style="border: 1px solid #ffffff; float: left; width: 31%;text-align:right;color:#6e6e6e;" ><p>남자</p></div>
-											<div style="border: 1px solid #ffffff; float: left; width: 40%;">
-												<label class="switch">
-													<input type="checkbox" id="box" name="gender">
-													<span class="slider round" id="toggle" ></span>
-												</label>
+										<div>
+											<div style="float:left;width:auto;">
+												<button type="button" id='input' class="memail-authentication" name="email">  email 인증  </button>
 											</div>
-											<div style="border: 1px solid #ffffff; float: left; width: 24%;text-align:left;color:#6e6e6e;"><p style="display: none;">여자</p></div>
+											<div style="float:right;width:65%;background:red;">	
+												<span id="certification" class="memail-confirm mfont-size" style="display; text-align:center; ;position:absolute ;width:250px;font-size:14px">이메일 인증 확인</span>
+											</div>
+											<div style='clear:both'></div>
 										</div>
-										<div style="border: 1px solid #ffffff;  float: right; width: 20%;">
-											<i id="women" class="fa fa-venus" style="font-size:36px;color:#ff6699;display: none;"></i>
+									</td>
+								</tr>
+								
+								<tr>
+									<th>
+										<label class="mtext-info mfont-size" style="padding-top: 5%"><strong>비밀번호</strong></label>
+									</th>
+									<td>
+										<input type="password" name="pw" class="mform-control" style="width: 100%" placeholder="비밀번호는 영문/숫자/특수문자 포함 6자이상"/>
+									</td>
+								</tr>
+								
+								<tr>
+									<th>
+										<label class="mtext-info mfont-size" style="padding-top: 5%"><strong>비밀번호 확인</strong></label>
+									</th>
+									<td>
+										<input type="password" name="pwc" class="mform-control" style="width: 100%" placeholder="비밀번호 재확인"/>
+									</td>
+								</tr>
+								<tr>
+									<th>
+										<label class="mtext-info mfont-size" style="padding-top: 5%"><strong>닉네임</strong></label>
+									</th>
+									<td>
+										<input type="text" name="name" class="mform-control" style="width: 100%" placeholder="닉네임 입력"/>
+									</td>
+								</tr>
+								<tr>
+									<th>
+										<label class="mtext-info mfont-size" style="padding-top: 5%"><strong>연락처</strong></label>
+									</th>
+									<td>
+										<input type="tel" name="tel" class="mform-control" style="width: 100%" placeholder="01012345678"/>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<div>
+											<div style="border: 1px solid #ffffff;text-align:r; float: left; width: 20%;">
+												<i id="men" class="fa fa-mars" style="font-size:36px;color:#39d2fd;"></i>
+											</div>
+											<div style="border: 1px solid #ffffff; float: left; width: 55%;text-align:center;">
+												<div style="border: 1px solid #ffffff; float: left; width: 31%;text-align:right;color:#6e6e6e;" ><p>남자</p></div>
+												<div style="border: 1px solid #ffffff; float: left; width: 40%;">
+													<label class="switch">
+														<input type="checkbox" id="box" name="gender">
+														<span class="slider round" style="background-color: #39d2fd;" id="toggle" ></span>
+													</label>
+												</div>
+												<div style="border: 1px solid #ffffff; float: left; width: 24%;text-align:left;color:#6e6e6e;"><p style="display: none;">여자</p></div>
+											</div>
+											<div style="border: 1px solid #ffffff;  float: right; width: 20%;">
+												<i id="women" class="fa fa-venus" style="font-size:36px;color:#ff6699;display: none;"></i>
+											</div>
 										</div>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<th>
-									<label class="mtext-info mfont-size"><strong>생년월일</strong></label>
-								</th>
-								<td>
-									<input type="date" name="born" max="${today}" class="mform-control" placeholder="19010131"/>
-								</td>
-							</tr>
-							<tr>
-								<td colspan="2">
-									<button type="submit">회원 가입</button>
-								</td>
-							</tr>
-						</table>
+									</td>
+								</tr>
+								<tr>
+									<th>
+										<label class="mtext-info mfont-size" style="padding-top: 5%"><strong>생년월일</strong></label>
+									</th>
+									<td>
+										<input type="date" name="born" max="${today}" style="width: 100%" class="mform-control" placeholder="19010131"/>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<button type="submit" style="width: 100%;height: 50px; border: 0;background-color:#39d2fd;color: white;">회원 가입</button>
+									</td>
+								</tr>
+							</table>
+						</div>
 					</div>
 				</div>
 			</form>
@@ -236,7 +228,7 @@ body {
 	</c:if>
 </body>
 <script>
-	var check = $("input[type='checkbox']");
+	var check = $("#box");
 	check.click(function() {
 		$("p").toggle();
 		$("#women").toggle();
