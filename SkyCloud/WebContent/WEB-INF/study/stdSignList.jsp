@@ -60,7 +60,7 @@ body{
 			
 			<!-- studySignList -->
 			<div style="margin-top: 10px">
-				<jsp:include page="/signList.jsp"></jsp:include>
+				<jsp:include page="/WEB-INF/study/signList.jsp"></jsp:include>
 			</div>
 			
 		</div>

@@ -112,7 +112,7 @@
 			
 			<!-- studyHome -->
 			<div style="margin-top: 10px">
-				<jsp:include page="/studyHome.jsp"></jsp:include>
+				<jsp:include page="/WEB-INF/study/studyHome.jsp"></jsp:include>
 			</div>
 			
 		</div>
