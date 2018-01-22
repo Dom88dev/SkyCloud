@@ -11,6 +11,11 @@
 <style>
 	nav{background-color: white}
 </style>
+<script>
+	function fnPopupLogIn() {
+		window.open("/StudyCloud/logInOut/logIn.jsp", "StudyCloud 로그인", "width=500, height=600");
+	}
+</script>
 </head>
 <body>
 	<!-- navbar -->
@@ -32,7 +37,7 @@
 					<ul class="nav navbar-nav navbar-right">
 						<li class="text-info"><a href="#">스터디 등록</a></li>
 						<li class="text-info"><a href="/StudyCloud/register.jsp">회원가입</a></li>
-						<li class="text-info"><a href="/StudyCloud/logIn.jsp">로그인</a></li>
+						<li class="text-info"><a href="javascript:fnPopupLogIn();">로그인</a></li>
 					</ul>
 				</div>
 			</div>

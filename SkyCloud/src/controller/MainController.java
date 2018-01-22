@@ -32,24 +32,47 @@ public class MainController extends HttpServlet {
 		String command = request.getParameter("command");
 		String url = "";
 		
+		MemberDao memDao;
+		Member mem;
+		StudyDao stdDao;
+		
 		switch(command){
 		
 		case "LOADSTUDYLIST":
-			StudyDao stdDao = new StudyDao();
+			stdDao = new StudyDao();
 			ArrayList<Study> stdList = (ArrayList<Study>)stdDao.getStduyList();
 			request.setAttribute("stdList", stdList);
 			request.setAttribute("Loaded", true);
 			url = "/index.jsp";
 			break;
 		case "REGIMEMBER":
-			Member mem = new Member();
+			mem = new Member();
 			mem.setMember(request.getParameter("email"), request.getParameter("pw"), request.getParameter("name"), request.getParameter("tel"), request.getParameter("gender")==null?"M":"F", Util.transDate(request.getParameter("born")));
-			MemberDao memDao = new MemberDao();
+			memDao = new MemberDao();
 			int result = memDao.insertMember(mem);
 			request.setAttribute("RegisterResult", result);
 			url = "/register.jsp";
 			break;
-			
+		case "LOGIN":
+			memDao = new MemberDao();
+			mem = memDao.getMemberByEmail(request.getParameter("email"));
+			if(mem.getPw()!=null) {
+				if(mem.getPw().equals(request.getParameter("pw"))) {
+					request.getSession().setAttribute("email", mem.getEmail());
+					request.setAttribute("logInResult", "success");
+				} else {
+					request.setAttribute("logInResult", "wrongPw");
+				}
+			} else {
+				request.setAttribute("logInResult", "noMember");
+			}
+			url = "/logInOut/logIn.jsp";
+			break;
+		case "LOGOUT":
+			request.getSession().removeAttribute("email");
+			request.setAttribute("logout", true);
+			url = "/logInOut/logOut.jsp";
+			break;
 		}
 		
 		RequestDispatcher view = request.getRequestDispatcher(url);
