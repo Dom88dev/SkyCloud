@@ -71,6 +71,14 @@ body {
 	float: right;
 	width: 100%;
 }
+.fc-row .fc-widget-header{
+	background-color: #39d2fd;
+	color: #fff;
+	border-color: #39d2fd;
+}
+.fc-unthemed .fc-content, .fc-unthemed .fc-divider, .fc-unthemed .fc-list-heading td, .fc-unthemed .fc-list-view, .fc-unthemed .fc-popover, .fc-unthemed .fc-row, .fc-unthemed tbody, .fc-unthemed td, .fc-unthemed th, .fc-unthemed thead {
+    border-color: #03c6fc;
+}
 </style>
 </head>
 <body>

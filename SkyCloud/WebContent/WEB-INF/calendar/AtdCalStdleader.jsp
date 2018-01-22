@@ -112,6 +112,14 @@ body {
 	color: #000;
 	/*text-decoration: none;*/
 }
+.fc-row .fc-widget-header{
+	background-color: #39d2fd;
+	color: #fff;
+	border-color: #39d2fd;
+}
+.fc-unthemed .fc-content, .fc-unthemed .fc-divider, .fc-unthemed .fc-list-heading td, .fc-unthemed .fc-list-view, .fc-unthemed .fc-popover, .fc-unthemed .fc-row, .fc-unthemed tbody, .fc-unthemed td, .fc-unthemed th, .fc-unthemed thead {
+    border-color: #03c6fc;
+}
 </style>
 </head>
 <body>
@@ -122,6 +130,7 @@ body {
 		<div class="modal fade" tabindex="-1" role="dialog">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
+				<form>
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
@@ -129,7 +138,7 @@ body {
 						</button>
 						<h4 class="modal-title">출결 관리</h4>
 					</div>
-					<div class="modal-body">
+					<div class="modal-body">					
 						<div class="row">
 							<!-- 
 							<div class="col-xs-12">
@@ -185,11 +194,13 @@ body {
 								</table>
 							</div>
 						</div>
+					
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-						<button type="button" class="btn btn-primary" id="save-event">출결 수정</button>
+						<button type="submit" class="btn btn-primary" id="save-event">출결 수정</button>
 					</div>
+				</form>
 				</div>
 				<!-- /.modal-content -->
 			</div>
