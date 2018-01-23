@@ -13,7 +13,7 @@
 </style>
 <script>
 	function fnPopupLogIn() {
-		window.open("/StudyCloud/logInOut/logIn.jsp", "StudyCloud 로그인", "width=500, height=600");
+		$("#logInModal").modal();
 	}
 </script>
 </head>

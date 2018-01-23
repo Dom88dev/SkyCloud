@@ -9,10 +9,8 @@
 <script src="/StudyCloud/lib/bootstrap337/js/jquery-3.2.1.min.js"></script>
 <script src="/StudyCloud/lib/bootstrap337/js/bootstrap.min.js"></script>
 <style>
-	#myCarousel { height: 500px }
-	.item { background:#39d2fd }
-	a.right.carousel-control, a.left.carousel-control {
-	    background-image: none;
+	button.close {
+		margin-top: 3px; margin-right: 5px;
 	}
 </style>
 </head>
@@ -50,7 +48,35 @@
 			<div id="footer">
 				<jsp:include page="/WEB-INF/templates/footer.jsp"></jsp:include>
 			</div>
+			
+		<!-- 로그인 모달창 -->
+			<div class="modal fade" id="logInModal" data-backdrop="static">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<iframe src="/StudyCloud/logInOut/logIn.jsp" width="100%" height="500px" style="border:none"></iframe>
+					</div>
+				</div>
+			</div>
+			
+		<!-- 로그아웃 모달창 -->
+			<div class="modal fade" id="logOutModal" data-backdrop="static">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<iframe src="/StudyCloud/logInOut/logOut.jsp" width="100%" height="100px" style="border:none"></iframe>
+					</div>
+				</div>
+			</div>
+			
 		</div>
 	</div>
-</body>	
+</body>
+<script>
+	window.closeModal = function(){
+	    $('#logInModal').modal('hide');
+	    $('#logOutModal').modal('hide');
+	};
+	
+</script>
 </html>

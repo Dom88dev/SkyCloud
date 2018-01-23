@@ -8,10 +8,10 @@
 <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" >
 <link rel="stylesheet" type="text/css" href="/StudyCloud/lib/bootstrap337/css/bootstrap.css"  >
 <link rel="stylesheet" type="text/css" href="/StudyCloud/lib/css/datepicker3.css">
-<link rel="stylesheet" type="text/css" href="/StudyCloud/lib/css/checkbox.css">
+<!-- <link rel="stylesheet" type="text/css" href="/StudyCloud/lib/css/checkbox.css"> -->
 <script type="text/javascript" src="/StudyCloud/lib/bootstrap337/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="/StudyCloud/lib/bootstrap337/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=FCutdjqYcxIgr5S5ObN8&submodules=geocoder"></script>
+<!-- <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=FCutdjqYcxIgr5S5ObN8&submodules=geocoder"></script> -->
 
 <style>
 label, select {
@@ -133,7 +133,7 @@ i { color : #39d2fd}
 						<div class="col-sm-2 text-center">
 							<label class="control-label">장소 및 시간</label>
 						</div>
-						<div class="col-sm-10">
+						<div class="col-sm-10" id="timePlaceDiv">
 							<div class="col-sm-12" style="background-color: #cdf4fe">
 								<div class="col-sm-5">
 									<br>
@@ -179,7 +179,7 @@ i { color : #39d2fd}
 									<button type="submit" class="btn btn-default" id="submit">위치 확인</button>
 								</div>
 								<div class="col-sm-2">
-									<button type="button" class="glyphicon glyphicon-plus"></button>
+									<button type="button" class="glyphicon glyphicon-plus" onclick="fnAddPlace()"></button>
 									<button type="button" class="glyphicon glyphicon-minus"></button>
 								</div>
 							</div>
@@ -231,4 +231,25 @@ i { color : #39d2fd}
 </body>
 <script type="text/javascript" src="/StudyCloud/lib/js/bootstrap-datepicker.js" ></script>
 <script type="text/javascript" src="/StudyCloud/lib/js/bootstrap-datepicker.kr.js"  charset="UTF-8"></script>
+<script type="text/javascript" src="/StudyCloud/lib/js/ajax.js"></script>
+<script>
+	var placeIdNum = 1;
+	function fnAddPlace() {
+		var param = "stdPlaceDivId=timePlace"+placeIdNum++;
+		sendRequest("GET", "stdTimePlaceTemplate.jsp", param, callback);
+	}
+	
+	function callback() {
+		if(httpRequest.readyState != 4) return;
+		if(httpRequest.status != 200) return;
+		var addData = httpRequest.responseText;
+		document.getElementById("timePlaceDiv").innerHTML+= addData;
+	}
+	
+	function fnRemovePlace(divId) {
+		var child = document.getElementById(divId);
+		child.parentNode.removeChild(child);
+	}
+</script>
+
 </html>

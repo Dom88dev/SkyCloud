@@ -60,7 +60,7 @@ public class MainController extends HttpServlet {
 			bodyInclude = "/register.jsp";
 			break;
 			
-		case "LOGIN"://로그인 처리 작업
+		case "LOGIN"://로그인 처리 작업 - modal이기 때문에 url을 변경
 			memDao = new MemberDao();
 			mem = memDao.getMemberByEmail(request.getParameter("email"));
 			if(mem.getPw()!=null) {
@@ -73,13 +73,13 @@ public class MainController extends HttpServlet {
 			} else {
 				request.setAttribute("logInResult", "noMember");
 			}
-			bodyInclude = "/logInOut/logIn.jsp";
+			url = "/logInOut/logIn.jsp";
 			break;
 			
-		case "LOGOUT"://로그아웃 처리 작업
+		case "LOGOUT"://로그아웃 처리 작업 - modal이기 때문에 url을 변경
 			request.getSession().removeAttribute("email");
 			request.setAttribute("logout", true);
-			bodyInclude = "/logInOut/logOut.jsp";
+			url = "/logInOut/logOut.jsp";
 			break;
 			
 			

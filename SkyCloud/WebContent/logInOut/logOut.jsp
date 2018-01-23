@@ -14,12 +14,12 @@
 </style>
 <script>
 	function fnCancelLogout(){
-		self.close();
+		window.parent.closeModal();
 	}
 	
 	function fnConfirmLogOut() {
-		opener.parent.location.reload();
-		window.close();
+		window.parent.closeModal();
+		window.parent.location.reload();
 	}
 </script>
 </head>
@@ -29,10 +29,10 @@
 			<script>fnConfirmLogOut();</script>
 		</c:if>
 	</c:if>
-	<div class="container-fluid" style="margin-top:50px">
+	<div class="container-fluid">
 		<div class="row" align="center">
-			<div class="col-md-2"></div>
-			<div class="col-md-8">
+			<div class="col-sm-2"></div>
+			<div class="col-sm-8">
 				<div>
 					<h5 class="text-info">정말 로그아웃 하시겠습니까?</h5>
 				</div>
@@ -44,7 +44,7 @@
 					</form>
 				</div>
 			</div>
-			<div class="col-md-2"></div>
+			<div class="col-sm-2"></div>
 		</div>	
 	</div>
 </body>
