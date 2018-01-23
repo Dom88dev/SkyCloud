@@ -2,20 +2,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Sky Cloud 스터디 등록</title>
+<title>Study Cloud 스터디 등록</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" >
-<link rel="stylesheet" type="text/css" href="/SkyCloud/lib/bootstrap337/css/bootstrap.css"  >
-<link rel="stylesheet" type="text/css" href="/SkyCloud/lib/css/datepicker3.css">
-<script type="text/javascript" src="/SkyCloud/lib/bootstrap337/js/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="/SkyCloud/lib/bootstrap337/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/SkyCloud/lib/js/bootstrap-datepicker.js" ></script>
-<script type="text/javascript" src="/SkyCloud/lib/js/bootstrap-datepicker.kr.js"  charset="UTF-8"></script>
+<link rel="stylesheet" type="text/css" href="/StudyCloud/lib/bootstrap337/css/bootstrap.css"  >
+<link rel="stylesheet" type="text/css" href="/StudyCloud/lib/css/datepicker3.css">
+<link rel="stylesheet" type="text/css" href="/StudyCloud/lib/css/checkbox.css">
+<script type="text/javascript" src="/StudyCloud/lib/bootstrap337/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/StudyCloud/lib/bootstrap337/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=FCutdjqYcxIgr5S5ObN8&submodules=geocoder"></script>
+
 <style>
 label, select {
 	padding: 3px;
-	font-size: 10pt;
+	font-size: 12pt;
 	font-style: 맑은 고딕;
 	color: #39d2fd;
 }
@@ -46,6 +47,14 @@ label, select {
     -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
+i { color : #39d2fd}
+
+.search {
+    position: absolute;
+    z-index: 1000;
+    top: 20px;
+    left: 20px;
+	}
 </style>
 </head>
 <body>
@@ -73,8 +82,13 @@ label, select {
 						</div>
 						<div class="col-sm-2">
 							<select>
-								<option value="">대분류</option>
-								<option>공부</option>
+								<option selected="selected" hidden="hidden">대분류</option>
+								<option>어학</option>
+ 								<option>취업</option>
+  								<option>자격증</option>
+  								<option>뷰티</option>
+  								<option>스포츠</option>
+  								<option>기타</option>
 							</select>
 						</div>
 						<div class="col-sm-8">
@@ -119,58 +133,59 @@ label, select {
 						<div class="col-sm-2 text-center">
 							<label class="control-label">장소 및 시간</label>
 						</div>
-						<div class="col-sm-10" style="background-color: #cdf4fe">
-							<br>
-							<div class="col-sm-5">
-								<select>
-									<option value="">시</option>
-									<option>1</option>
-								</select> <select>
-									<option value="">분</option>
-									<option>1</option>
-								</select> <label style="color:#000">부터&nbsp;&nbsp;&nbsp;</label> <select>
-									<option value="">시간</option>
-									<option>1</option>
-								</select> <label style="color:#000">시간</label>
-							</div>
-							<div class="col-sm-5">
-								<table class="table">
-									<tbody>
-										<tr>
-											<th>월</th>
-											<th>화</th>
-											<th>수</th>
-											<th>목</th>
-											<th>금</th>
-											<th>토</th>
-											<th>일</th>
-										</tr>
-										<tr>
-											<td><input type="checkbox" value="mon"></td>
-											<td><input type="checkbox" value="mon"></td>
-											<td><input type="checkbox" value="mon"></td>
-											<td><input type="checkbox" value="mon"></td>
-											<td><input type="checkbox" value="mon"></td>
-											<td><input type="checkbox" value="mon"></td>
-											<td><input type="checkbox" value="mon"></td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-							<br>
-							<div class="col-sm-8">
-								<input type="text" class="rform-control" placeholder="주소 입력">
+						<div class="col-sm-10">
+							<div class="col-sm-12" style="background-color: #cdf4fe">
+								<div class="col-sm-5">
+									<br>
+									<input type="number" name="time" min="0" max="23" placeholder="시" style="text-align:center">
+									
+									<input type="number" name="time" min="0" max="59" placeholder="분" style="text-align:center">
+													
+									<label style="color:#000">부터&nbsp;&nbsp;&nbsp;</label>
+									<br>
+									<input type="number" name="hour" min="0" max="8" placeholder="몇" style="text-align:center">
+									<label style="color:#000">시간</label>
+								</div>
+								<div class="col-sm-5">
+									<table class="table">
+										<tbody>
+											<tr>
+												<th>월</th>
+												<th>화</th>
+												<th>수</th>
+												<th>목</th>
+												<th>금</th>
+												<th>토</th>
+												<th>일</th>
+											</tr>
+											<tr>
+												<td><input type="checkbox" value="mon"></td>
+												<td><input type="checkbox" value="mon"></td>
+												<td><input type="checkbox" value="mon"></td>
+												<td><input type="checkbox" value="mon"></td>
+												<td><input type="checkbox" value="mon"></td>
+												<td><input type="checkbox" value="mon"></td>
+												<td><input type="checkbox" value="mon"></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
 								<br>
-							</div>
-							<div class="col-sm-2">
-								<button type="submit" class="btn btn-default">지도 첨부</button>
-							</div>
-							<div class="col-sm-2">
-								<button type="submit" class="btn btn-default"
-									style="position: absolute; right: 0">항목 추가</button>
+								<div class="col-sm-8">
+									<input type="text" class="rform-control" placeholder="도로명 주소나 지번주소를 입력해주세요" id="address">
+									<br>
+								</div>
+								<div class="col-sm-2">
+									<button type="submit" class="btn btn-default" id="submit">위치 확인</button>
+								</div>
+								<div class="col-sm-2">
+									<button type="button" class="glyphicon glyphicon-plus"></button>
+									<button type="button" class="glyphicon glyphicon-minus"></button>
+								</div>
 							</div>
 						</div>
 					</div>
+					
 					<div class="form-group">
 						<div class="col-sm-2 text-center">
 							<label class="control-label">스터디 소개글</label>
@@ -214,4 +229,6 @@ label, select {
 				<jsp:include page="/WEB-INF/templates/footer.jsp"></jsp:include>
 			</div>
 </body>
+<script type="text/javascript" src="/StudyCloud/lib/js/bootstrap-datepicker.js" ></script>
+<script type="text/javascript" src="/StudyCloud/lib/js/bootstrap-datepicker.kr.js"  charset="UTF-8"></script>
 </html>
