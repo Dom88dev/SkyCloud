@@ -92,7 +92,8 @@ body {
 				});
 				$("#modal").modal();
 			} else {
-				$("div.modal-body").innerHTML = "회원가입도중 문제가 발생했습니다.<br>잠시 후 다시 시도해주십시오.";
+				$("div.modal-body")[0].innerHTML = "회원가입도중 문제가 발생했습니다.<br>잠시 후 다시 시도해주십시오.";
+				$("div.modal-footer button").addClass("btn btn-danger");
 				$("#modal").modal();
 			}
 		}
@@ -216,7 +217,7 @@ body {
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<strong>회원가입</strong>
+						<i class="fa fa-cloud" style="font-size:24px;color:#39d2fd"><strong>회원가입</strong></i>
 					</div>
 					<div class="modal-body">
 						가입을 축하드립니다.
