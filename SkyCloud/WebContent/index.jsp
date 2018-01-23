@@ -18,11 +18,12 @@
 </head>
 <body>
 	<c:if test="${empty bodyInclude }">
+
 		<c:if test="${empty Loaded }">
-		<c:redirect url="/main">
-			<c:param name="command" value="LOADSTUDYLIST"></c:param>
-		</c:redirect>
-	</c:if>
+			<c:redirect url="/main">
+				<c:param name="command" value="LOADSTUDYLIST"></c:param>
+			</c:redirect>
+		</c:if>
 	</c:if>
 	
 	<!-- navbar -->
