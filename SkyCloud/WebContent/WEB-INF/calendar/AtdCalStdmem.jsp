@@ -13,6 +13,11 @@
 <script src='/StudyCloud/lib/bootstrap337/js/scheduler.min.js'></script>
 <script>
 	$(function() { 
+		var date = new Date();
+		var d = date.getDate();
+		var m = date.getMonth();
+		var y = date.getFullYear();
+		
 		$('#external-events .fc-event').each(function() {
 			$(this).data('event', {
 				title : $.trim($(this).text()),
@@ -23,7 +28,7 @@
 		$('#calendar')
 				.fullCalendar(
 						{
-							now : '2018-01-12',
+							now : new Date(y, m, d),
 							editable : false,
 							aspectRatio : 1.8,
 							customButtons : {
