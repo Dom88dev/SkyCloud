@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.Date;
+import java.util.List;
 
 public class Study {
 	private int std_id;
@@ -14,6 +15,7 @@ public class Study {
 	private String std_gender;
 	private String std_category;
 	private String email;
+	private List<StudyTimePlace> timePlaceList;
 	
 	public void setStudy(int stdId, String stdName, int stdMax, Date stdStart, Date stdEnd, String stdInfo, String stdPlan, String stdEtc, String stdGender, String stdCate, String email){
 		setStd_id(stdId);
@@ -94,6 +96,14 @@ public class Study {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public List<StudyTimePlace> getTimePlaceList() {
+		return timePlaceList;
+	}
+
+	public void setTimePlaceList(List<StudyTimePlace> timePlaceList) {
+		this.timePlaceList = timePlaceList;
 	}
 	
 }
