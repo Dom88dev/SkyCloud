@@ -16,8 +16,8 @@
 </style>
 <script>
 	function fnLogIn() {
-		opener.parent.location.reload();
-		window.close();
+		window.parent.closeModal();
+		window.parent.location.reload();
 	}
 
 	function fnPopupFailReason(reason) {

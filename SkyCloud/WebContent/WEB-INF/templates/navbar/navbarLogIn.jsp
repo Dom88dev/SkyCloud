@@ -17,7 +17,7 @@
 	}
 	
 	function fnLogOut() {
-		window.open("/StudyCloud/logInOut/logOut.jsp", "StudyCloud 로그아웃", "width=400, height=200");
+		$("#logOutModal").modal();
 	}
 </script>
 </head>
