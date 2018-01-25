@@ -26,6 +26,13 @@
 <script src='/StudyCloud/lib/bootstrap337/js/scheduler.min.js'></script>
 <script>
 	$(function() {
+		var date = new Date();
+		var d = date.getDate();
+		var m = date.getMonth();
+		var y = date.getFullYear();
+		
+		var atd = 
+		
 		$('#external-events .fc-event').each(function() {
 			$(this).data('event', {
 				title : $.trim($(this).text()),
@@ -35,7 +42,7 @@
 		$('#calendar')
 				.fullCalendar(
 						{
-							now : '2018-01-12',
+							now : new Date(y, m, d),
 							editable : false,
 							aspectRatio : 1.8,
 							height : "auto",
@@ -50,7 +57,7 @@
 										'지각 : ' + '2' + '명\n' +
 										'결석 : ' + '1' + '명\n' +
 										'공결 : ' + '2' + '명\n',
-								start : '2018-01-12'
+								start : new Date(y, m , d)
 							} ],
 							buttonText : {
 								today : "오늘",
@@ -66,6 +73,9 @@
 							},
 							editable : true,
 							eventLimit : true,
+							eventRender: function(event, element) {
+					             $(element).find(".fc-time").remove();
+							},
 							schedulerLicenseKey : 'GPL-My-Project-Is-Open-Source'
 						});
 		// Whenever the user clicks on the "save" button om the dialog
