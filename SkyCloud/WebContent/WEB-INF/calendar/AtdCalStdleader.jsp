@@ -17,6 +17,7 @@
 	href='/StudyCloud/lib/bootstrap337/css/bootstrap-datetimepicker.min.css'
 	rel='stylesheet' />
 <script src='/StudyCloud/lib/bootstrap337/js/moment.min.js'></script>
+<script src='/StudyCloud/lib/bootstrap337/js/jquery-3.2.1.min.js'></script>
 <script src='/StudyCloud/lib/bootstrap337/js/jquery.min.js'></script>
 <script src='/StudyCloud/lib/bootstrap337/js/jquery-ui.min.js'></script>
 <script src='/StudyCloud/lib/bootstrap337/js/fullcalendar.min.js'></script>
@@ -30,8 +31,6 @@
 		var d = date.getDate();
 		var m = date.getMonth();
 		var y = date.getFullYear();
-		
-		var atd = 
 		
 		$('#external-events .fc-event').each(function() {
 			$(this).data('event', {
@@ -52,13 +51,37 @@
 								center : 'prev title next',
 								right : 'myAttendButton'
 							},
-							events : [ {
-								title : '출석 : ' + '6' + '명\n' +
-										'지각 : ' + '2' + '명\n' +
-										'결석 : ' + '1' + '명\n' +
-										'공결 : ' + '2' + '명\n',
-								start : new Date(y, m , d)
-							} ],
+							events : function(start, end, timezone, callback){
+								$.ajax({
+									url : "attendance.jsp",
+									type : "GET",
+									success : function(data){
+										var jsonData = $.parseJSON(data);
+										var events = [];
+										if(jsonData){
+											$(jsonData).each(function(i, obj){
+												var titleStr;
+												if(obj.code == "1"){
+													titleStr = "출석 ["+obj.title+"]건";
+												}else if(obj.code == "2"){
+													titleStr = "지각 ["+obj.title+"]건";
+												}else if(obj.code == "3"){
+													titleStr = "공결 ["+obj.title+"]건";
+												}else if(obj.code == "4"){
+													titleStr = "병결 ["+obj.title+"]건";
+												}
+												events.push({
+													start : new Date(y, m, d),
+													title : titleStr	
+												});
+											});
+											callback(events);
+										}
+									},
+								});
+							},
+							eventAfterRender: function (event, element, view) {
+						    },
 							buttonText : {
 								today : "오늘",
 							},
@@ -71,7 +94,7 @@
 								$('.modal').modal('show');
 								$('.modal').find('#title').val(event.title);
 							},
-							editable : true,
+							//editable : true,
 							eventLimit : true,
 							eventRender: function(event, element) {
 					             $(element).find(".fc-time").remove();
@@ -80,12 +103,12 @@
 						});
 		// Whenever the user clicks on the "save" button om the dialog
 		$('#save-event').on('click', function() {
-			var title = $('#title').val();
+			var title = $('.rselect> option:selected').val();
 			$('#calendar').fullCalendar('removeEvents', event.title);
 			if (title) {
 				var eventData = {
-					title : $('#title').val(),
-					start : '2018-01-12'
+					title : $('.rselect> option:selected').val(),
+					start : new Date(y, m, d)
 				};
 				$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
 			}
@@ -166,7 +189,7 @@ body {
 									<tbody>
 										<tr>
 											<td>Mark</td>
-											<td><select>
+											<td><select class="rselect">
 													<option value="att">출석</option>
 													<option value="late">지각</option>
 													<option value="abs">결석</option>
@@ -175,7 +198,7 @@ body {
 										</tr>
 										<tr>
 											<td>Jacob</td>
-											<td><select>
+											<td><select class="rselect">
 													<option value="att">출석</option>
 													<option value="late">지각</option>
 													<option value="abs">결석</option>
@@ -184,7 +207,7 @@ body {
 										</tr>
 										<tr>
 											<td>Larry</td>
-											<td><select>
+											<td><select class="rselect">
 													<option value="att">출석</option>
 													<option value="late">지각</option>
 													<option value="abs">결석</option>
@@ -193,7 +216,7 @@ body {
 										</tr>
 										<tr>
 											<td>김희진</td>
-											<td><select>
+											<td><select class="rselect">
 													<option value="att">출석</option>
 													<option value="late">지각</option>
 													<option value="abs">결석</option>
