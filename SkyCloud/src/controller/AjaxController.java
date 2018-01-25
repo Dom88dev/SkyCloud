@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 /**
  * Servlet implementation class AjaxController
  */
@@ -25,7 +26,6 @@ public class AjaxController extends HttpServlet {
 		switch(command) {
 		case "VALIDITYTEST_REGISTER":
 			response.setContentType("text/plain");
-			
 			break;
 		}
 	}
