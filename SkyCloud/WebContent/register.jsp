@@ -45,37 +45,7 @@ td, tr {
 	});
 </script>
 </head>
-	<script>
-	/*	function toggle_btn(){
-			var btn1 = document.getElementById('men');
-			var btn2 = document.getElementById('women');
-			var box = document.getElementById('box');
-			var check = $("input[type='checkbox']");
-			alert(check);
-			if(check==box){
-				alert("true");
-				btn2.innerHTML = "";
-				btn1.innerHTML = "<img src='../images/male-user.png' alt='남자' align='right'/>";
-				
-			}
-			else{
-				alert("false");
-				btn1.innerHTML ="";
-				btn2.innerHTML = "<img src='../images/business-woman.png' alt='여자'  align='middle' />";
-			}
-		}
-		
-		window.onload = function(){
-			var btn = document.getElementById("toggle");
-			
-			btn.addEventListener('click', toggle_btn, false);
-		}
-		*/
-		
-
-
-
-		
+	<script>		
 		function regiResultModal(result) {
 			if(result>0){
 				$("div.modal-footer button").click(function(){
@@ -197,7 +167,7 @@ td, tr {
 												<div style="border: 1px solid #ffffff; float: left; width: 24%;text-align:left;color:#6e6e6e;height: 43.64px"><p style="display: none;padding-top: 15%">여자</p></div>
 											</div>
 											<div style="border: 1px solid #ffffff;  float: right; width: 20%;">
-												<i id="women" class="fa fa-venus" style="font-size:36px;color:#ff6699;display: none;height: 37.53px"></i>
+												<i id="women" class="fa fa-venus" style="font-size:36px;color:#8c8c8c;height: 37.53px; display: inline-block;  "></i>
 											</div>
 										</div>
 									</div>
@@ -259,8 +229,14 @@ td, tr {
 	var check = $("#box");
 	check.click(function() {
 		$("p").toggle();
-		$("#women").toggle();
-		$("#men").toggle();
+		if($(this).is(":checked")){
+			$("#men").css('color', '#8c8c8c');
+			$("#women").css('color', '#ff6699');
+		}
+		else{
+			$("#men").css('color', '#39d2fd');
+			$("#women").css('color', '#8c8c8c');
+		}
 	});
 </script>
 <script>
@@ -287,7 +263,7 @@ td, tr {
 			$("#pw").focusout(function(){
 			
 			var val =$(this).val();
-			var re = regex = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{6,16}$/;
+			var re = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{6,16}$/;
 			
 			if(val==""|val==null){
 				$("#pwValid").text("필수 정보입니다.").val();
@@ -324,12 +300,13 @@ td, tr {
 		$("#name").focusout(function(){
 			
 			var val =$(this).val();
+			var re =/^[0-9a-zA-Z가-힣]{1,16}$/;
 			
 			if(val==""|val==null){
 				$("#nameValid").text("필수 정보입니다.").val();
 			}
-			else if(val != pwOrgin){
-				$("#nameValid").text("비밀번호가 일치하지 않습니다.").val();
+			else if(!re.test(val)){
+				$("#nameValid").text("최대 12자, 입력이 부정확합니다.").val();
 			}
 			else{
 				$("#nameValid").text("사용가능합니다.").val();
@@ -341,12 +318,13 @@ td, tr {
 		$("#tel").focusout(function(){
 			
 			var val =$(this).val();
+			var re = /^\d[0-9]{8,11}$/;
 			
 			if(val==""|val==null){
 				$("#telValid").text("필수 정보입니다.").val();
 			}
-			else if(val != pwOrgin){
-				$("#telValid").text("비밀번호가 일치하지 않습니다.").val();
+			else if(!re.test(val)){
+				$("#telValid").text("연락처 입력이 부정확합니다.").val();
 			}
 			else{
 				$("#telValid").text("사용가능합니다.").val();
@@ -358,12 +336,13 @@ td, tr {
 		$("#born").focusout(function(){
 			
 			var val =$(this).val();
+			var re = /^(19|20)\d{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[0-1])$/;
 			
 			if(val==""|val==null){
 				$("#bornValid").text("필수 정보입니다.").val();
 			}
-			else if(val != pwOrgin){
-				$("#bornValid").text("비밀번호가 일치하지 않습니다.").val();
+			else if(!re.test(val)){
+				$("#bornValid").text("입력이 부정확합니다. 1900-01-01~").val();
 			}
 			else{
 				$("#bornValid").text("사용가능합니다.").val();
