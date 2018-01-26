@@ -233,12 +233,12 @@ td, tr {
 		if($(this).is(":checked")){
 			$("#men").css('color', '#8c8c8c');
 			$("#women").css('color', '#ff6699');
-			$("#box").val("F");
+			//$("#box").val("F");
 		}
 		else{
 			$("#men").css('color', '#39d2fd');
 			$("#women").css('color', '#8c8c8c');
-			$("#box").val("M");
+			//$("#box").val("M");
 		}
 	});
 </script>
