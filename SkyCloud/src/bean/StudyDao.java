@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import bean.DBConnectionMgr;
 import model.Study;
 import model.StudyTimePlace;
 
@@ -26,7 +25,7 @@ public class StudyDao {
 	
 	public List<StudyTimePlace> getTimePlaceList(int std_id) {
 		ArrayList<StudyTimePlace> list = new ArrayList<>();
-		String sql = "select * from study_timeplace where stdd_id=?";
+		String sql = "select * from study_timeplace where std_id=?";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -102,5 +101,17 @@ public class StudyDao {
 			pool.freeConnection(conn, pstmt, rs);
 		}
 		return stdList;
+	}
+	
+	public int insertStudy(Study s) {
+		int result = 0;
+		//TODO study테이블에 insert 처리 후 std_id 반환
+		return result;
+	}
+	
+	public int insertStudyTimePlace(StudyTimePlace tp) {
+		int result = 0;
+		//TODO study_timeplace테이블에 insert 처리
+		return result;
 	}
 }
