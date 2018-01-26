@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -128,7 +127,7 @@ textarea.rform-control {
 	border-radius: 0 0 4px 0;
 }
 
-#sdate1, #edate1 {
+.input-daterange input {
     width: 100%;
     font-size: 14px;
     line-height: 1.42857143;
@@ -271,14 +270,11 @@ input:focus, select:focus {
 </style>
 </head>
 <body>
-	<!-- 오늘 날짜 객체 생성 -->
-	<jsp:useBean id="date" class="java.util.Date"/>
-	<fmt:formatDate value="${date}" pattern="yyyy-MM-dd" var="today"/>
-
 	<div class="container-fluid" style="width:70%;">
 		<div class="row">
 			<div class="col-md-12">
-				<form class="form-horizontal" role="form">
+				<form class="form-horizontal" role="form" method="post" action="/StudyCloud/main">
+					<input type="hidden" name="command" value="REGISTUDY">
 					<table>
 						<tr>
 							<th class="col-sm-2">
@@ -333,9 +329,9 @@ input:focus, select:focus {
 							</th>
 							<td colspan="2" class="col-sm-10 dateTd">
 								<div class="input-group input-daterange" id="datepicker1">
-								    <input type="text" class="form-control" id="sdate1" name="std_start" min="${today}">
+								    <input type="text" class="form-control" name="std_start" data-date-start-date="0d" data-date-language="kr" data-date-autoclose="true" placeholder="시작 날짜를 선택해주세요.">
 								    <div class="input-group-addon" id="dateSeperator"> ~ </div>
-								    <input type="text" class="form-control" id="edate1" name="std_end">
+								    <input type="text" class="form-control" name="std_end" data-date-start-date="+7d" data-date-language="kr" data-date-autoclose="true" placeholder="종료 날짜를 선택해주세요.">
 								</div>
 							</td>
 						</tr>
@@ -415,11 +411,6 @@ input:focus, select:focus {
 			</div>
 		</div>
 	</div>
-	<!-- footer -->	
-			<div id="footer">
-				<jsp:include page="/WEB-INF/templates/footer.jsp"></jsp:include>
-			</div>
-			
 	<!-- Map modal -->
 			<div class="modal fade" id="mapModal" data-backdrop="static">
 				<div class="modal-dialog">
@@ -430,14 +421,14 @@ input:focus, select:focus {
 					</div>
 				</div>
 			</div>
+
 </body>
-<script type="text/javascript" src="/StudyCloud/lib/js/bootstrap-datepicker.js" ></script>
-<script type="text/javascript" src="/StudyCloud/lib/js/bootstrap-datepicker.kr.js"  charset="UTF-8"></script>
+<script src="/StudyCloud/lib/js/bootstrap-datepicker.js" ></script>
+<script src="/StudyCloud/lib/js/bootstrap-datepicker.kr.js" charset="UTF-8"></script>
 <script>
 	var placeIdNum = 1;
 	function fnAddPlace() {
-		var param = "timePlace"+placeIdNum++;
-		$.post("stdTimePlaceTemplate.jsp",{	stdPlaceDivId:param } , callback);
+		$.post("stdTimePlaceTemplate.jsp",{	stdPlaceNum:placeIdNum++ } , callback);
 	}
 	
 	function callback(data) {
@@ -487,6 +478,11 @@ input:focus, select:focus {
 	$("#"+currentAddrId).val(getVal);	
 	});
 	
+
+	$('.input-daterange input').each(function() {
+	    $(this).datepicker('clearDates');
+	});
+
 </script>
 
 </html>

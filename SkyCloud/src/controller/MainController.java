@@ -2,6 +2,9 @@ package controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,6 +18,7 @@ import bean.StudyDao;
 import bean.Util;
 import model.Member;
 import model.Study;
+import model.StudyTimePlace;
 
 /**
  * Servlet implementation class IntroController
@@ -36,6 +40,8 @@ public class MainController extends HttpServlet {
 		MemberDao memDao;
 		Member mem;
 		StudyDao stdDao;
+		Study std;
+		StudyTimePlace stp;
 		
 		switch(command){
 		
@@ -53,7 +59,8 @@ public class MainController extends HttpServlet {
 			
 		case "REGIMEMBER"://회원가입 처리 작업
 			mem = new Member();
-			mem.setMember(request.getParameter("email"), request.getParameter("pw"), request.getParameter("name"), request.getParameter("tel"), request.getParameter("gender")==null?"M":"F", Util.transDate(request.getParameter("born")));
+			mem.setMember(request.getParameter("email"), request.getParameter("pw"), request.getParameter("name"), request.getParameter("tel"),
+					request.getParameter("gender")==null?"M":"F", Util.transDate(request.getParameter("born")));
 			memDao = new MemberDao();
 			int result = memDao.insertMember(mem);
 			request.setAttribute("RegisterResult", result);
@@ -81,7 +88,42 @@ public class MainController extends HttpServlet {
 			request.setAttribute("logout", true);
 			url = "/logInOut/logOut.jsp";
 			break;
+	
+		case "REGISTUDY"://스터디 등록 처리 작업
+			stdDao = new StudyDao();
+			HashMap<String, String[]> params = (HashMap<String, String[]>) request.getParameterMap();
+			Enumeration<String> paramEnums = request.getParameterNames();
+			ArrayList<String> paramNames = new ArrayList<>();//파라미터 이름들을 받을 어레이리슽트
+			ArrayList<String[]> stdDays = new ArrayList<>();//요일값들을 나눠 담아놓을 어레이 리스트
+			while(paramEnums.hasMoreElements()) {//파라미터 이름들을 어레이 리스트에 답아준다.
+				paramNames.add(paramEnums.nextElement());
+			}
+			for(String n : paramNames) {//요일에 해당하는 String[]을 어레이 리스트에 담아준다.
+				if(n.contains("std_day")) stdDays.add(params.get(n));
+			}
 			
+			std = new Study();
+			std.setStudy(params.get("std_name")[0], Integer.parseInt(params.get("std_max")[0]), Util.transDate(params.get("std_start")[0]), 
+					Util.transDate(params.get("std_end")[0]), params.get("std_info")[0], params.get("std_plan")[0], params.get("std_etc")[0], 
+					params.get("std_gender")[0], params.get("std_category")[0], (String)request.getSession().getAttribute("email"));
+			
+			int stdId = stdDao.insertStudy(std);
+			
+			String[] stdTimes1=params.get("std_time_h"), stdTimes2=params.get("std_time_m"), stdHours=params.get("std_hour"), 
+					stdAddrs=params.get("std_addr");
+			
+			result = 0;
+			for(int i=0; i<stdTimes1.length;i++){
+				for(int j=0; j<stdDays.get(i).length; j++) {
+					stp = new StudyTimePlace();
+					stp.setStudyTimePlace(stdId, stdTimes1[i]+stdTimes2[i], Integer.parseInt(stdHours[i]), stdAddrs[i], stdDays.get(i)[j]);
+					result += stdDao.insertStudyTimePlace(stp);
+				}	
+			}
+			
+			request.setAttribute("RegisterResult", result);
+			bodyInclude = "/stdRegister.jsp";
+			break;
 			
 		}
 		request.setAttribute("bodyInclude", bodyInclude);
