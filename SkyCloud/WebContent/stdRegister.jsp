@@ -329,9 +329,9 @@ input:focus, select:focus {
 							</th>
 							<td colspan="2" class="col-sm-10 dateTd">
 								<div class="input-group input-daterange" id="datepicker1">
-								    <input type="text" class="form-control" name="std_start" data-date-start-date="0d" data-date-language="kr" data-date-autoclose="true" placeholder="시작 날짜를 선택해주세요.">
+								    <input type="text" class="form-control" name="std_start" data-date-start-date="0d" data-date-format="yyyy-mm-dd" data-date-language="kr" data-date-autoclose="true" placeholder="시작 날짜를 선택해주세요.">
 								    <div class="input-group-addon" id="dateSeperator"> ~ </div>
-								    <input type="text" class="form-control" name="std_end" data-date-start-date="+7d" data-date-language="kr" data-date-autoclose="true" placeholder="종료 날짜를 선택해주세요.">
+								    <input type="text" class="form-control" name="std_end" data-date-start-date="+7d" data-date-format="yyyy-mm-dd" data-date-language="kr" data-date-autoclose="true" placeholder="종료 날짜를 선택해주세요.">
 								</div>
 							</td>
 						</tr>
@@ -377,7 +377,7 @@ input:focus, select:focus {
 								<label>스터디 소개글</label>
 							</th>
 							<td colspan="2">
-								<textarea class="rform-control" style="width: 100%; height: 100px"></textarea>
+								<textarea class="rform-control" name="std_info" style="width: 100%; height: 100px"></textarea>
 							</td>
 						</tr>
 						<tr>
@@ -385,7 +385,7 @@ input:focus, select:focus {
 								<label>스터디 계획</label>
 							</th>
 							<td colspan="2">
-								<textarea class="rform-control" style="width: 100%; height: 100px"></textarea>
+								<textarea class="rform-control" name="std_plan" style="width: 100%; height: 100px"></textarea>
 							</td>
 						</tr>
 						<tr>
@@ -393,7 +393,7 @@ input:focus, select:focus {
 								<label>기타사항</label>
 							</th>
 							<td colspan="2">
-								<textarea class="rform-control" style="width: 100%; height: 100px"></textarea>
+								<textarea class="rform-control" name="std_etc" style="width: 100%; height: 100px"></textarea>
 							</td>
 						</tr>
 						<tr>

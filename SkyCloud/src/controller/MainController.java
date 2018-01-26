@@ -3,7 +3,7 @@ package controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -88,14 +88,20 @@ public class MainController extends HttpServlet {
 			url = "/logInOut/logOut.jsp";
 			break;
 			
+		case "GOSTDREGISTER"://스터디등록화면으로 이동
+			bodyInclude = "/stdRegister.jsp";
+			break;
+			
 		case "REGISTUDY"://스터디 등록 처리 작업
 			stdDao = new StudyDao();
-			HashMap<String, String[]> params = (HashMap<String, String[]>) request.getParameterMap();
+			Map<String, String[]> params = request.getParameterMap();
 			Enumeration<String> paramEnums = request.getParameterNames();
 			ArrayList<String> paramNames = new ArrayList<>();//파라미터 이름들을 받을 어레이리슽트
 			ArrayList<String[]> stdDays = new ArrayList<>();//요일값들을 나눠 담아놓을 어레이 리스트
 			while(paramEnums.hasMoreElements()) {//파라미터 이름들을 어레이 리스트에 답아준다.
-				paramNames.add(paramEnums.nextElement());
+				String str = paramEnums.nextElement();
+				paramNames.add(str);
+				System.out.println(str+" = " + params.get(str)[0]);
 			}
 			for(String n : paramNames) {//요일에 해당하는 String[]을 어레이 리스트에 담아준다.
 				if(n.contains("std_day")) stdDays.add(params.get(n));
@@ -120,8 +126,8 @@ public class MainController extends HttpServlet {
 				}	
 			}
 			
-			request.setAttribute("RegisterResult", result);
-			bodyInclude = "/stdRegister.jsp";
+			request.setAttribute("RegisterStudyResult", result);
+			bodyInclude = "/main.jsp";
 			break;
 			
 		}

@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import model.Member;
-import model.Study;
 
 public class MemberDao {
 	private Connection conn;
