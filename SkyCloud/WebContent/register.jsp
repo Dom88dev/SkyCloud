@@ -160,7 +160,7 @@ td, tr {
 												<div style="border: 1px solid #ffffff; float: left; width: 31%;text-align:right;color:#6e6e6e;" ><p style="padding-top: 10%">남자</p></div>
 												<div style="border: 1px solid #ffffff; float: left; width: 40%;">
 													<label class="switch">
-														<input type="checkbox" id="box" name="gender">
+														<input type="checkbox" id="box" name="gender" value="">
 														<span class="slider round" style="background-color: #39d2fd;" id="toggle" ></span>
 													</label>
 												</div>
@@ -185,7 +185,7 @@ td, tr {
 								<div style="margin-top: 10px;margin-bottom: 10px;border-top : 1px solid #dcdcdc;"></div>
 								<div>
 									<div>
-										<button type="submit" style="width: 100%;height: 50px; border: 0;background-color:#39d2fd;color: white;margin: auto;">회원 가입</button>
+										<button id="registerbtn" style="width: 100%;height: 50px; border: 0;background-color:#39d2fd;color: white;margin: auto;">회원 가입</button>
 									</div>
 								</div>
 								<div>
@@ -226,16 +226,19 @@ td, tr {
 	</c:if>
 </body>
 <script>
+	// 토글 박스
 	var check = $("#box");
 	check.click(function() {
 		$("p").toggle();
 		if($(this).is(":checked")){
 			$("#men").css('color', '#8c8c8c');
 			$("#women").css('color', '#ff6699');
+			$("#box").val("F");
 		}
 		else{
 			$("#men").css('color', '#39d2fd');
 			$("#women").css('color', '#8c8c8c');
+			$("#box").val("M");
 		}
 	});
 </script>
@@ -243,7 +246,6 @@ td, tr {
 	// 이메일 유효성 검사
 	$(document).ready(function(){
 		$("#email").focusout(function(){
-			
 			var val =$(this).val();
 			var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
 			
@@ -255,6 +257,7 @@ td, tr {
 			}
 			else{
 				$("#emailValid").text("사용가능합니다.").val();
+				$("#emailValid").val("1");
 			//확인
 			}
 
@@ -274,6 +277,7 @@ td, tr {
 			}
 			else{
 				$("#pwValid").text("사용가능합니다.").val();
+				$("#pwValid").val("1");
 			//확인
 			}
 
@@ -292,6 +296,7 @@ td, tr {
 			}
 			else{
 				$("#pwcValid").text("사용가능합니다.").val();
+				$("#pwcValid").val("1");
 			//확인
 			}
 
@@ -309,7 +314,14 @@ td, tr {
 				$("#nameValid").text("최대 12자, 입력이 부정확합니다.").val();
 			}
 			else{
+				$.ajax({
+					type:"GET",
+					url:"main?command=REGIMEMBER"
+				}).done(function(data){
+					alert(data);
+				})
 				$("#nameValid").text("사용가능합니다.").val();
+				$("#nameValid").val("1");
 			//확인
 			}
 
@@ -325,9 +337,11 @@ td, tr {
 			}
 			else if(!re.test(val)){
 				$("#telValid").text("연락처 입력이 부정확합니다.").val();
+				$("#bornValid").val("0");
 			}
 			else{
 				$("#telValid").text("사용가능합니다.").val();
+				$("#telValid").val("1");
 			//확인
 			}
 
@@ -343,13 +357,26 @@ td, tr {
 			}
 			else if(!re.test(val)){
 				$("#bornValid").text("입력이 부정확합니다. 1900-01-01~").val();
+				$("#bornValid").val("0");
 			}
 			else{
 				$("#bornValid").text("사용가능합니다.").val();
+				$("#bornValid").val("1");
 			//확인
 			}
 
-		}) 
+		})
+
+		$("#registerbtn").click(function(){
+			if($("#emailValid").val() == "1" && $("#pwValid").val() == "1" && $("#pwcValid").val() == "1" && $("#nameValid").val() == "1" && $("#telValid").val() == "1" && $("#bornValid").val() == "1"){
+				alert("호출1");
+				
+			}
+			else{
+				alert("호출2");
+			}
+		});
+
 	});
 	
 </script>
