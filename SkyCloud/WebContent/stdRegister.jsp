@@ -360,10 +360,10 @@ input:focus, select:focus {
 									</div>
 									<div class="col-sm-12" style="padding:0;"><hr></div>
 									<div class="col-sm-8" style="padding:0;">
-										<input type="text" name="std_addr" class="rform-control" placeholder="도로명 주소나 지번주소를 입력해주세요" id="address">
+										<input type="text" name="std_addr" class="rform-control" placeholder="도로명 주소나 지번주소를 입력해주세요" id="std_addr0">
 									</div>
 									<div class="col-sm-2" style="padding:0;">
-										<button type="button" class="btn btn-white" id="submit">위치 확인</button>
+										<button type="button" class="btn btn-white" onclick="popupMapModal('std_addr0')">위치 확인</button>
 									</div>
 									<div class="col-sm-2" style="padding:0; line-height:40px;" align="right">
 										<button class="btn-trans" type="button" onclick="fnAddPlace()"><i class="fa fa-plus-square-o" style="color:#39d2fd;"></i></button>
@@ -411,12 +411,20 @@ input:focus, select:focus {
 			</div>
 		</div>
 	</div>
-	<!-- footer -->	
-	<div id="footer">
-		<jsp:include page="/WEB-INF/templates/footer.jsp"></jsp:include>
-	</div>
-	<!-- 스터디 등록 결과 처리 모달 -->
-	
+	<!-- Map modal -->
+			<div class="modal fade" id="mapModal" data-backdrop="static">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<iframe id="myframe" src="/StudyCloud/mapTest.jsp" width="100%" height="500px" style="border:none"></iframe>
+						<div align="center">
+						<button id="mapCheck">주소 확인</button>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+
 </body>
 <script src="/StudyCloud/lib/js/bootstrap-datepicker.js" ></script>
 <script src="/StudyCloud/lib/js/bootstrap-datepicker.kr.js" charset="UTF-8"></script>
@@ -453,9 +461,27 @@ input:focus, select:focus {
 		});
 	});
 	
+	// mapModal
+	var currentAddrId = "";
+	
+	function popupMapModal(addrId) {
+		currentAddrId = addrId;
+		$('#mapModal').modal();
+	}
+	
+	// mapIframe 값 가져오기
+	$('#mapCheck').click(function(){
+		var frame = document.getElementById("myframe");
+	var getval = $("#myframe").contents().find('#address').val();
+	$("#"+currentAddrId).val(getval);
+	$('#mapModal').modal('hide');
+	});
+	
+
 	$('.input-daterange input').each(function() {
 	    $(this).datepicker('clearDates');
 	});
+
 </script>
 
 </html>

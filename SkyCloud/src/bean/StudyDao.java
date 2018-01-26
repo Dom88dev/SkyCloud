@@ -41,7 +41,7 @@ public class StudyDao {
 				list.add(tp);
 			}
 		} catch(Exception e) {
-			System.out.println("getStudyList() 에러 : "+e);
+			System.out.println("getTimePlaceList() 에러 : "+e);
 		} finally {
 			pool.freeConnection(conn, pstmt, rs);
 		}

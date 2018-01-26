@@ -6,6 +6,7 @@
 <link href='/StudyCloud/lib/bootstrap337/css/fullcalendar.min.css' rel='stylesheet' />
 <link href='/StudyCloud/lib/bootstrap337/css/fullcalendar.print.min.css' rel='stylesheet' media='print' />
 <link href='/StudyCloud/lib/bootstrap337/css/scheduler.min.css' rel='stylesheet' />
+<link href='/StudyCloud/lib/bootstrap337/css/bootstrap.css' rel='stylesheet' />
 <script src='/StudyCloud/lib/bootstrap337/js/moment.min.js'></script>
 <script src='/StudyCloud/lib/bootstrap337/js/jquery.min.js'></script>
 <script src='/StudyCloud/lib/bootstrap337/js/jquery-ui.min.js'></script>
@@ -31,7 +32,7 @@
 							now : new Date(y, m, d),
 							editable : false,
 							aspectRatio : 1.8,
-							customButtons : {
+							/*customButtons : {
 								myAttendButton : {
 									text : '출석',
 									click : function() {
@@ -46,7 +47,7 @@
 												.css('display', 'none');
 									}
 								}
-							},
+							},*/
 							header : {
 								left : 'today',
 								center : 'prev title next',
@@ -57,7 +58,35 @@
 							   },
 							schedulerLicenseKey : 'GPL-My-Project-Is-Open-Source'
 						});
+		$('.mybutton').click(function(){
+			var param;
+			$.post("/ajax",{AttStatus:param},callback);
+		});
 	});
+	
+	function callback(data){
+		if(data=="att"){
+			alert('출석 완료!');
+			$('div.fc-bg')
+					.find('td.fc-today')
+					.prepend(
+							"<img src='/StudyCloud/images/icons/atd.png' width='100' height='80' align='center'>");
+			$('div.fc-right')
+					.find(
+							'button.fc-myAttendButton-button')
+					.css('display', 'none');
+		}else if(date=="late"){
+			alert('지각입니다.');
+			$('div.fc-bg')
+					.find('td.fc-today')
+					.prepend(
+							"<img src='/StudyCloud/images/icons/atd.png' width='100' height='80' align='center'>");
+			$('div.fc-right')
+					.find(
+							'button.fc-myAttendButton-button')
+					.css('display', 'none');
+		}
+	}
 </script>
 <style>
 body {
@@ -88,6 +117,9 @@ body {
 </head>
 <body>
 	<div id='wrap'>
+		<div id=mybutton>
+			<button type=button class="btn" style="float: right">출석</button>
+		</div>
 		<div id='calendar'></div>
 		<div style='clear: both'></div>
 	</div>

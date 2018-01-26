@@ -19,10 +19,10 @@
 	</div>
 	<div class="col-sm-12" style="padding:0;"><hr></div>
 	<div class="col-sm-8" style="padding:0;">
-		<input type="text" name="std_addr" class="rform-control" placeholder="도로명 주소나 지번주소를 입력해주세요" id="address">
+		<input id="std_addr${param.stdPlaceNum}" type="text" name="std_addr" class="rform-control" placeholder="도로명 주소나 지번주소를 입력해주세요">
 	</div>
 	<div class="col-sm-2" style="padding:0;">
-		<button type="button" class="btn btn-white" id="submit">위치 확인</button>
+		<button type="button" class="btn btn-white" onclick="popupMapModal('std_addr${param.stdPlaceNum}')">위치 확인</button>
 	</div>
 	<div class="col-sm-2" style="padding:0; line-height:40px;" align="right">
 		<button class="btn-trans" type="button" onclick="fnRemovePlace('timePlace${param.stdPlaceNum}')"><i class="fa fa-minus-square-o" style="color:#39d2fd;"></i></button>
