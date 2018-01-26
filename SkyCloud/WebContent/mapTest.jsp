@@ -7,7 +7,7 @@
       <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=FCutdjqYcxIgr5S5ObN8&submodules=geocoder"></script>
       <script src="/web-study-01/jquery-3.2.1.min.js"></script>
   </head>
-  <style>
+  <style>	
   .search {
     position: absolute;
     z-index: 1000;

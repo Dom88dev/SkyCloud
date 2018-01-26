@@ -367,7 +367,7 @@ input:focus, select:focus {
 										<input type="text" name="std_addr" class="rform-control" placeholder="도로명 주소나 지번주소를 입력해주세요" id="address">
 									</div>
 									<div class="col-sm-2" style="padding:0;">
-										<button type="button" class="btn btn-white" id="submit">위치 확인</button>
+										<button type="button" class="btn btn-white" id="locationCheck">위치 확인</button>
 									</div>
 									<div class="col-sm-2" style="padding:0; line-height:40px;" align="right">
 										<button class="btn-trans" type="button" onclick="fnAddPlace()"><i class="fa fa-plus-square-o" style="color:#39d2fd;"></i></button>
@@ -419,6 +419,17 @@ input:focus, select:focus {
 			<div id="footer">
 				<jsp:include page="/WEB-INF/templates/footer.jsp"></jsp:include>
 			</div>
+			
+	<!-- Map modal -->
+			<div class="modal fade" id="mapModal" data-backdrop="static">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<iframe id="myframe" src="/StudyCloud/mapTest.jsp" width="100%" height="500px" style="border:none"></iframe>
+						<button id="xcz">dd</button>
+					</div>
+				</div>
+			</div>
 </body>
 <script type="text/javascript" src="/StudyCloud/lib/js/bootstrap-datepicker.js" ></script>
 <script type="text/javascript" src="/StudyCloud/lib/js/bootstrap-datepicker.kr.js"  charset="UTF-8"></script>
@@ -455,6 +466,27 @@ input:focus, select:focus {
 		    $(this).parent().removeClass('focus');
 		});
 	});
+	
+	// mapModal
+	$(document).ready(function(){
+		$('#locationCheck').click(function(){
+			$('#mapModal').modal();
+		});
+	});
+	var currentAddrId = "";
+	
+	function popupMapModal(addrId) {
+		currentAddrId = addrId;
+		$('#mapModal').modal();
+	}
+	
+	// mapIframe 값 가져오기
+	$('#xcz').click(function(){
+		var frame = document.getElementById("myframe");
+	var getval = $("#myframe").contents().find('#address').val();
+	$("#"+currentAddrId).val(getVal);	
+	});
+	
 </script>
 
 </html>
