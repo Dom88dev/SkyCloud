@@ -1,7 +1,10 @@
 package controller;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,11 +13,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bean.AttendanceDao;
 import bean.MemberDao;
 import bean.StudyDao;
 import bean.Util;
 import model.Member;
 import model.Study;
+import model.StudyTimePlace;
 
 /**
  * Servlet implementation class IntroController
@@ -81,8 +86,7 @@ public class MainController extends HttpServlet {
 			request.setAttribute("logout", true);
 			url = "/logInOut/logOut.jsp";
 			break;
-			
-			
+		
 		}
 		request.setAttribute("bodyInclude", bodyInclude);
 		RequestDispatcher view = request.getRequestDispatcher(url);

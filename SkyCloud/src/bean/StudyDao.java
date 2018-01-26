@@ -26,7 +26,7 @@ public class StudyDao {
 	
 	public List<StudyTimePlace> getTimePlaceList(int std_id) {
 		ArrayList<StudyTimePlace> list = new ArrayList<>();
-		String sql = "select * from study_timeplace where stdd_id=?";
+		String sql = "select * from study_timeplace where std_id=?";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -42,7 +42,7 @@ public class StudyDao {
 				list.add(tp);
 			}
 		} catch(Exception e) {
-			System.out.println("getStudyList() 에러 : "+e);
+			System.out.println("getTimePlaceList() 에러 : "+e);
 		} finally {
 			pool.freeConnection(conn, pstmt, rs);
 		}
