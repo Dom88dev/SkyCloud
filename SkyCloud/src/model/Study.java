@@ -31,6 +31,19 @@ public class Study {
 		setEmail(email);
 	}
 	
+	public void setStudy(String stdName, int stdMax, Date stdStart, Date stdEnd, String stdInfo, String stdPlan, String stdEtc, String stdGender, String stdCate, String email){
+		setStd_name(stdName);
+		setStd_max(std_max);
+		setStd_start(stdStart);
+		setStd_end(stdEnd);
+		setStd_info(stdInfo);
+		setStd_plan(stdPlan);
+		setStd_etc(stdEtc);
+		setStd_gender(stdGender);
+		setStd_category(stdCate);
+		setEmail(email);
+	}
+	
 	public int getStd_id() {
 		return std_id;
 	}
