@@ -267,6 +267,7 @@ input:focus, select:focus {
 }
 
 
+
 </style>
 </head>
 <body>
@@ -360,7 +361,7 @@ input:focus, select:focus {
 									</div>
 									<div class="col-sm-12" style="padding:0;"><hr></div>
 									<div class="col-sm-8" style="padding:0;">
-										<input type="text" name="std_addr" class="rform-control" placeholder="도로명 주소나 지번주소를 입력해주세요" id="std_addr0">
+										<input type="text" name="std_addr" class="rform-control" placeholder="위치 확인을 눌러 주소를 찾아주세요" id="std_addr0">
 									</div>
 									<div class="col-sm-2" style="padding:0;">
 										<button type="button" class="btn btn-white" onclick="popupMapModal('std_addr0')">위치 확인</button>
@@ -418,7 +419,7 @@ input:focus, select:focus {
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<iframe id="myframe" src="/StudyCloud/mapTest.jsp" width="100%" height="500px" style="border:none"></iframe>
 						<div align="center">
-						<button id="mapCheck">주소 확인</button>
+						<button class="btn btn-info" id="mapCheck">주소 확인</button>
 						</div>
 					</div>
 					

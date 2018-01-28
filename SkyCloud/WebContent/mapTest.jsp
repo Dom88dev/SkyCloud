@@ -5,7 +5,7 @@
       <meta charset="UTF-8">
       <title>네이버 지도 API - 주소로 지도 표시하기</title>
       <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=FCutdjqYcxIgr5S5ObN8&submodules=geocoder"></script>
-      <script src="/web-study-01/jquery-3.2.1.min.js"></script>
+      <script src="/StudyCloud/lib/bootstrap337/js/jquery-3.2.1.min.js"></script>
   </head>
   <style>	
   .search {
@@ -14,13 +14,23 @@
     top: 20px;
     left: 20px;
 	}
+	
+	.button{
+		border:1px solid #39d2fd;
+		border-radius: 10px;
+		background-Color: #39d2fd;
+		font:12px;
+		font-weight:bold;
+		color:white;
+		width:100;height:30;
+	}
   </style>
   <body>
   	
     <div id="map" style="width:100%;height:500PX;">
-    <div class="search" style="">
-            <input id="address" type="text" placeholder="검색할 주소" value="불정로 6">
-            <input id="submit" type="button" value="주소 검색">
+    <div class="search">
+            <input id="address" type="text" placeholder="지번주소를 입력해주세요" >
+            <input id="submit" type="button" class="button"  value="주소 검색">
         </div>
     </div>
     
@@ -28,6 +38,10 @@
     var map = new naver.maps.Map("map", {
         center: new naver.maps.LatLng(37.3595316, 127.1052133),
         zoom: 10,
+        zoomControl: true,
+        zoomControlOptions:{
+        	position: naver.maps.Position.TOP_RIGHT
+        },
         mapTypeControl: true
     });
 
