@@ -125,7 +125,7 @@ public class StudyDao {
 			result = pstmt.executeUpdate();
 			
 			if(result>0) {//if insert 성공했다면 std_id를 가져옴.
-				sql="select std_id from STUDY where std_name=? and std_max=? and std_start=? and std_end=? and std_info=? and std_plan=? and std_etc=? and std_gender=? and std_category=? and email=?";
+				sql="select std_id from STUDY where std_name=? and std_max=? and std_start=? and std_end=? and std_info=? and std_plan=? and std_etc=? and std_gender=? and std_category=? and email=? order by std_id desc";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, s.getStd_name());
 				pstmt.setInt(2, s.getStd_max());
@@ -150,9 +150,11 @@ public class StudyDao {
 		return result;
 	}
 	
+	
+	// study_timeplace테이블에 insert 처리
 	public int insertStudyTimePlace(StudyTimePlace tp) {
 		int result = 0;
-		//TODO study_timeplace테이블에 insert 처리
+		
 		try {
 			conn = pool.getConnection();
 			String sql = "insert into STUDY_TIMEPLACE values(?, ?, ?, ?, ?)";

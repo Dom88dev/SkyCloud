@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -350,13 +351,13 @@ input:focus, select:focus {
 										<label style="color:#000; padding:0;">시간</label>
 									</div>
 									<div class="col-sm-6" style="padding:0; vertical-align: middle;" align="justify">
-										<input name="std_day" type="checkbox" id="mon"><label for="mon">월</label>
-										<input name="std_day" type="checkbox" id="tue"><label for="tue">화</label>
-										<input name="std_day" type="checkbox" id="wed"><label for="wed">수</label>
-										<input name="std_day" type="checkbox" id="thur"><label for="thur">목</label>
-										<input name="std_day" type="checkbox" id="fri"><label for="fri">금</label>
-										<input name="std_day" type="checkbox" id="sat"><label for="sat">토</label>
-										<input name="std_day" type="checkbox" id="sun"><label for="sun">일</label>
+										<input name="std_day" type="checkbox" id="mon" value="월"><label for="mon">월</label>
+										<input name="std_day" type="checkbox" id="tue" value="화"><label for="tue">화</label>
+										<input name="std_day" type="checkbox" id="wed" value="수"><label for="wed">수</label>
+										<input name="std_day" type="checkbox" id="thur" value="목"><label for="thur">목</label>
+										<input name="std_day" type="checkbox" id="fri" value="금"><label for="fri">금</label>
+										<input name="std_day" type="checkbox" id="sat" value="토"><label for="sat">토</label>
+										<input name="std_day" type="checkbox" id="sun" value="일"><label for="sun">일</label>
 									</div>
 									<div class="col-sm-12" style="padding:0;"><hr></div>
 									<div class="col-sm-8" style="padding:0;">
@@ -424,6 +425,30 @@ input:focus, select:focus {
 					
 				</div>
 			</div>
+			
+	<!-- 스터디 등록 결과 모달창 -->
+			<div class="modal fade" id="RegisterStdResultModal" data-backdrop="static">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<i class="fa fa-cloud" style="font-size:24px;color:#39d2fd"><strong>스터디 등록</strong></i>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+						<div class="modal-body">
+							스터디 등록에 성공하셨습니다.
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-info" data-dismiss="modal">확인</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		<!-- 스터디 등록 결과 처리 -->
+		<c:if test="${! (empty RegisterStudyResult)}">
+			<script>fnResultModa('${RegisterStudyResult}');</script>
+		</c:if>
+			
 
 </body>
 <script src="/StudyCloud/lib/js/bootstrap-datepicker.js" ></script>
@@ -481,6 +506,21 @@ input:focus, select:focus {
 	$('.input-daterange input').each(function() {
 	    $(this).datepicker('clearDates');
 	});
+	
+	//스터디 등록 결과 모달 처리 function
+	function fnResultModal(result) {
+		if(result>0) {//성공
+			$("#RegisterStdResultModal div.modal-footer button").click(function() {
+				 window.opener.location.href="/index.jsp";
+			});
+		} else {//실패
+			$("#RegisterStdResultModal div.modal-body")[0].innerHTML = "스터드등록 중 문제가 발생했습니다. 잠시 후 다시 등록해 주십시오.";
+			$("#RegisterStdResultModal div.modal-footer button").removeClass("btn-info");
+			$("#RegisterStdResultModal div.modal-footer button").addClass("btn-danger");
+		}
+		
+		$('#RegisterStdResultModal').modal();
+	}
 
 </script>
 

@@ -3,9 +3,7 @@ package controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
-
 import java.util.Map;
-
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bean.ApplyDao;
 import bean.MemberDao;
 import bean.StudyDao;
 import bean.Util;
@@ -37,12 +36,15 @@ public class MainController extends HttpServlet {
 		String command = request.getParameter("command");
 		String url = "/index.jsp";
 		String bodyInclude = null;
+		String email = null;
+		if(request.getSession().getAttribute("email") != null) email = (String) request.getSession().getAttribute("email");
 		
 		MemberDao memDao;
 		Member mem;
 		StudyDao stdDao;
 		Study std;
 		StudyTimePlace stp;
+		ApplyDao applyDao;
 		
 		switch(command){
 		
@@ -112,14 +114,15 @@ public class MainController extends HttpServlet {
 			std = new Study();
 			std.setStudy(params.get("std_name")[0], Integer.parseInt(params.get("std_max")[0]), Util.transDate(params.get("std_start")[0]), 
 					Util.transDate(params.get("std_end")[0]), params.get("std_info")[0], params.get("std_plan")[0], params.get("std_etc")[0], 
-					params.get("std_gender")[0], params.get("std_category")[0], (String)request.getSession().getAttribute("email"));
-			
+					params.get("std_gender")[0], params.get("std_category")[0], email);
+			//Study table에 스터디를 등록
 			int stdId = stdDao.insertStudy(std);
 			
 			String[] stdTimes1=params.get("std_time_h"), stdTimes2=params.get("std_time_m"), stdHours=params.get("std_hour"), 
 					stdAddrs=params.get("std_addr");
 			
 			result = 0;
+			//Study_timeplace table에 위에서 넣은 Study의 장소와 시간을 갯수만틈 삽입
 			for(int i=0; i<stdTimes1.length;i++){
 				for(int j=0; j<stdDays.get(i).length; j++) {
 					stp = new StudyTimePlace();
@@ -127,9 +130,12 @@ public class MainController extends HttpServlet {
 					result += stdDao.insertStudyTimePlace(stp);
 				}	
 			}
+			applyDao = new ApplyDao();
+			//위에 만든 스터디의 스터디장을 applies table에 accept 상태로 삽입
+			if(result>0) result = applyDao.insertApply(email, stdId, "accept", "study_leader", System.currentTimeMillis());
 			
 			request.setAttribute("RegisterStudyResult", result);
-			bodyInclude = "/main.jsp";
+			bodyInclude = "/stdRegister.jsp";
 			break;
 			
 		}
