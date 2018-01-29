@@ -96,7 +96,7 @@ public class MainController extends HttpServlet {
 			break;
 			
 		case "GOSTDREGISTER"://스터디등록화면으로 이동
-			bodyInclude = "/stdRegister.jsp";
+			bodyInclude = "/WEB-INF/study/stdRegister.jsp";
 			break;
 			
 		case "REGISTUDY"://스터디 등록 처리 작업
@@ -140,7 +140,7 @@ public class MainController extends HttpServlet {
 			if(result>0) result = applyDao.insertApply(email, stdId, "accept", "study leader", System.currentTimeMillis());
 			
 			request.setAttribute("RegisterStudyResult", result);
-			bodyInclude = "/stdRegister.jsp";
+			bodyInclude = "/WEB-INF/study/stdRegister.jsp";
 			break;
 			
 		}

@@ -51,7 +51,7 @@ public class StudyDao {
 	//모든 스터디 리스트를 구하는 메서드
 	public List<Study> getAllStduyList() {
 		ArrayList<Study> list = new ArrayList<>();
-		String sql = "select * from study";
+		String sql = "select * from study order by std_id desc";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);

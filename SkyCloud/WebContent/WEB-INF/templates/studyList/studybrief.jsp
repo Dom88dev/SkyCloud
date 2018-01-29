@@ -38,6 +38,18 @@
     	background-color: #fff !important;
 	}
 	
+	.panel-footer p {
+    	width:100%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: 3; /* 라인수 */
+		-webkit-box-orient: vertical;
+		word-wrap:break-word; 
+		line-height: 1.2em;
+		height: 3.6em; /* line-height 가 1.2em 이고 3라인을 자르기 때문에 height는 1.2em * 3 = 3.6em */
+	}
+	
 	.panel-footer .btn {
 	    margin: 15px 0;
 	    background-color: #39d2fd;

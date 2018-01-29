@@ -10,6 +10,7 @@
 <script src="/StudyCloud/lib/bootstrap337/js/bootstrap.min.js"></script>
 <style>
 	#message{color:#39d2fd}
+	nav{background-color: white}
 </style>
 <script>
 	function clickMsg() {
