@@ -24,7 +24,7 @@ public class ApplyDao {
 		int result = 0;
 		try {
 			conn = pool.getConnection();
-			String sql = "insert into APPLIES values(seq_apply.nextVal, ?, ?, ?, ?, ?);";
+			String sql = "insert into APPLIES values(seq_apply.nextVal, ?, ?, ?, ?, ?)";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, email);

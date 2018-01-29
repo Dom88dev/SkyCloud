@@ -20,7 +20,7 @@ public class Study {
 	public void setStudy(int stdId, String stdName, int stdMax, Date stdStart, Date stdEnd, String stdInfo, String stdPlan, String stdEtc, String stdGender, String stdCate, String email){
 		setStd_id(stdId);
 		setStd_name(stdName);
-		setStd_max(std_max);
+		setStd_max(stdMax);
 		setStd_start(stdStart);
 		setStd_end(stdEnd);
 		setStd_info(stdInfo);
@@ -33,7 +33,7 @@ public class Study {
 	
 	public void setStudy(String stdName, int stdMax, Date stdStart, Date stdEnd, String stdInfo, String stdPlan, String stdEtc, String stdGender, String stdCate, String email){
 		setStd_name(stdName);
-		setStd_max(std_max);
+		setStd_max(stdMax);
 		setStd_start(stdStart);
 		setStd_end(stdEnd);
 		setStd_info(stdInfo);

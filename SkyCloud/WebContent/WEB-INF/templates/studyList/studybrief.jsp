@@ -49,13 +49,13 @@
 	<div class="col-md-4" style="margin:5">
 		<div class="panel panel-default text-center">
 			<div class="panel-heading">
-	          <img src="/StudyCloud/images/categories/language.png" width="100%">
+	          <img src="/StudyCloud/images/categories/${stdList[param.index].std_category}.png" width="100%">
 	        </div>
 			<div class="panel-body">
-	          <h3>미드 정복</h3>
+	          <h3>${stdList[param.index].std_name}</h3>
 	        </div>
 	        <div class="panel-footer">
-	          <p>모집합니다.</p>
+	          <p>${stdList[param.index].std_info}</p>
 	          <button class="btn btn-lg">자세히 보기</button>
 	        </div>
 		</div>

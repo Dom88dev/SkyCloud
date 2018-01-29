@@ -51,6 +51,9 @@ public class MainController extends HttpServlet {
 		case "LOADSTUDYLIST"://메인페이지에 스터디 목록 로딩 작업
 			stdDao = new StudyDao();
 			ArrayList<Study> stdList = (ArrayList<Study>)stdDao.getStduyList();
+			for(Study s : stdList) {
+				System.out.println(s.getStd_id());
+			}
 			request.setAttribute("stdList", stdList);
 			request.setAttribute("Loaded", true);
 			bodyInclude = "/main.jsp";
@@ -126,13 +129,15 @@ public class MainController extends HttpServlet {
 			for(int i=0; i<stdTimes1.length;i++){
 				for(int j=0; j<stdDays.get(i).length; j++) {
 					stp = new StudyTimePlace();
-					stp.setStudyTimePlace(stdId, stdTimes1[i]+stdTimes2[i], Integer.parseInt(stdHours[i]), stdAddrs[i], stdDays.get(i)[j]);
+					stp.setStudyTimePlace(stdId, 
+							(stdTimes1[i].length()==2?stdTimes1[i]:"0"+stdTimes1[i])+(stdTimes2[i].length()==2?stdTimes2[i]:"0"+stdTimes2[i]), 
+							Integer.parseInt(stdHours[i]), stdAddrs[i], stdDays.get(i)[j]);
 					result += stdDao.insertStudyTimePlace(stp);
 				}	
 			}
 			applyDao = new ApplyDao();
 			//위에 만든 스터디의 스터디장을 applies table에 accept 상태로 삽입
-			if(result>0) result = applyDao.insertApply(email, stdId, "accept", "study_leader", System.currentTimeMillis());
+			if(result>0) result = applyDao.insertApply(email, stdId, "accept", "study leader", System.currentTimeMillis());
 			
 			request.setAttribute("RegisterStudyResult", result);
 			bodyInclude = "/stdRegister.jsp";

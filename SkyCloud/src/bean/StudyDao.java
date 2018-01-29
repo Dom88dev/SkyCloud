@@ -81,17 +81,24 @@ public class StudyDao {
 	public List<Study> getStduyList() {
 		ArrayList<Study> list = (ArrayList<Study>)getAllStduyList();
 		ArrayList<Study> stdList = new ArrayList<>();
-		String sql = "select count(email) from applies group by std_id having std_id = ? and apply_status='accept'";
+		String sql = "select count(email), apply_status from applies group by std_id, apply_status having std_id = ?";
 		try {
 			conn = pool.getConnection();
 			for(Study s : list) {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, s.getStd_id());
 				rs = pstmt.executeQuery();
-				rs.next();
-				if(s.getStd_max()>rs.getInt(1)){
-					if(System.currentTimeMillis()<s.getStd_end().getTime()){
-						stdList.add(s);
+				while(rs.next()) {
+					int memNum = rs.getInt(1);
+					String status = rs.getString(2);
+					System.out.println(memNum + "/"+s.getStd_max());
+					if(status.equals("accept")) {
+						if(s.getStd_max()>memNum){
+							System.out.println(System.currentTimeMillis() + " : "+ s.getStd_end().getTime());
+							if(System.currentTimeMillis()<s.getStd_end().getTime()){
+								stdList.add(s);
+							}
+						}
 					}
 				}
 			}
