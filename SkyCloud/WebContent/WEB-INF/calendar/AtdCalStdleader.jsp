@@ -53,10 +53,13 @@
 							},
 							events : function(start, end, timezone, callback){
 								$.ajax({
-									url : "attendance.jsp",
+									url : "/ajax",
 									type : "GET",
 									success : function(data){
-										var jsonData = $.parseJSON(data);
+										var div = document.querySelector('#att-table');
+										console.log(data);
+									}
+										/*var jsonData = $.parseJSON(data);
 										var events = [];
 										if(jsonData){
 											$(jsonData).each(function(i, obj){
@@ -77,7 +80,7 @@
 											});
 											callback(events);
 										}
-									},
+									},*/
 								});
 							},
 							eventAfterRender: function (event, element, view) {
@@ -178,7 +181,7 @@ body {
 								<label class="col-xs-4" for="title">���</label> 
 								<input type="text" name="title" id="title" />
 							</div>-->
-							<div class="col-md-12">
+							<div class="col-md-12" id="att-table">
 								<table class="table">
 									<thead>
 										<tr>

@@ -33,7 +33,6 @@ public class AjaxController extends HttpServlet {
 		String command = request.getParameter("command");
 		
 		AttendanceDao attendanceDao;
-		Attendance att;
 		
 		switch(command) {
 		case "VALIDITYTEST_REGISTER":
@@ -41,17 +40,30 @@ public class AjaxController extends HttpServlet {
 			break;
 			
 		case "CHECKATT": //출석버튼 눌렀을때 작업
-			int att1 = Integer.parseInt((String) request.getSession().getAttribute("mystd_id"));
+			int att = Integer.parseInt((String) request.getSession().getAttribute("mystd_id"));
 			attendanceDao = new AttendanceDao();
 			String status=null;
 			try {
-				status = attendanceDao.InsertAttStatus(att1);
+				status = attendanceDao.InsertAttStatus(att);
 				
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
 			out.println(status);
 			break;
+			
+		case "UPDATE_ATTSTATUS": //출결 수정
+			int no = Integer.valueOf(request.getParameter("std_id"));
+			Attendance vo = new Attendance();
+			AttendanceDao dao = new AttendanceDao();
+			vo.setStd_id(no);
+			
+			String msg = dao.UpdateAttStatus(vo);
+			
+			if(msg != null){
+				out.print(msg);
+				out.flush();
+			}
 		}
 	}
 
