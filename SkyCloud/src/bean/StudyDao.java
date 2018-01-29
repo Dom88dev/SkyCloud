@@ -182,4 +182,11 @@ public class StudyDao {
 		}
 		return result;
 	}
+	
+	//study 테이블 내 수정
+	public int updateStudy(int std_id, Study std) {
+		int result=0;
+		String sql = "";
+		return result;
+	}
 }

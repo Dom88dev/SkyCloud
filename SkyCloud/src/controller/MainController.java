@@ -143,6 +143,13 @@ public class MainController extends HttpServlet {
 			bodyInclude = "/WEB-INF/study/stdRegister.jsp";
 			break;
 			
+		case "GETSTUDYINFO":
+			
+			break;
+			
+		case "SEARCHSTUDY":
+			
+			break;
 		}
 		request.setAttribute("bodyInclude", bodyInclude);
 		RequestDispatcher view = request.getRequestDispatcher(url);
