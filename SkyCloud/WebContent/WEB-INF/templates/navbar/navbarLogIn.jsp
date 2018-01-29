@@ -10,6 +10,7 @@
 <script src="/StudyCloud/lib/bootstrap337/js/bootstrap.min.js"></script>
 <style>
 	#message{color:#39d2fd}
+	nav{background-color: white}
 </style>
 <script>
 	function clickMsg() {
@@ -42,8 +43,8 @@
 			<div class="navbar-inner">
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav navbar-right">
-						<li class="text-info"><a href="/StudyCloud/main?command=REGISTUDY">스터디 등록</a></li>
-						<li class="text-info"><a href="/StudyCloud/main?command=MNGSTUDY">나의 스터디</a></li>
+						<li class="text-info"><a href="/StudyCloud/main?command=GOSTDREGISTER">스터디 등록</a></li>
+						<li class="text-info"><a href="/StudyCloud/main?command=GOMNGSTUDY">나의 스터디</a></li>
 						<li class="text-info"><a href="javascript:fnLogOut();">로그아웃</a></li>
 					</ul>
 				</div>

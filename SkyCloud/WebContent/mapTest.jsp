@@ -1,26 +1,36 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 <html>
   <head>
       <meta charset="UTF-8">
-      <title>³×ÀÌ¹ö Áöµµ API - ÁÖ¼Ò·Î Áöµµ Ç¥½ÃÇÏ±â</title>
+      <title>ë„¤ì´ë²„ ì§€ë„ API - ì£¼ì†Œë¡œ ì§€ë„ í‘œì‹œí•˜ê¸°</title>
       <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=FCutdjqYcxIgr5S5ObN8&submodules=geocoder"></script>
-      <script src="/web-study-01/jquery-3.2.1.min.js"></script>
+      <script src="/StudyCloud/lib/bootstrap337/js/jquery-3.2.1.min.js"></script>
   </head>
-  <style>
+  <style>	
   .search {
     position: absolute;
     z-index: 1000;
     top: 20px;
     left: 20px;
 	}
+	
+	.button{
+		border:1px solid #39d2fd;
+		border-radius: 10px;
+		background-Color: #39d2fd;
+		font:12px;
+		font-weight:bold;
+		color:white;
+		width:100;height:30;
+	}
   </style>
   <body>
   	
     <div id="map" style="width:100%;height:500PX;">
-    <div class="search" style="">
-            <input id="address" type="text" placeholder="°Ë»öÇÒ ÁÖ¼Ò" value="ºÒÁ¤·Î 6">
-            <input id="submit" type="button" value="ÁÖ¼Ò °Ë»ö">
+    <div class="search">
+            <input id="address" type="text" placeholder="ì§€ë²ˆì£¼ì†Œë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”" >
+            <input id="submit" type="button" class="button"  value="ì£¼ì†Œ ê²€ìƒ‰">
         </div>
     </div>
     
@@ -28,6 +38,10 @@
     var map = new naver.maps.Map("map", {
         center: new naver.maps.LatLng(37.3595316, 127.1052133),
         zoom: 10,
+        zoomControl: true,
+        zoomControlOptions:{
+        	position: naver.maps.Position.TOP_RIGHT
+        },
         mapTypeControl: true
     });
 
@@ -46,16 +60,16 @@
             address: address
         }, function(status, response) {
             if (status === naver.maps.Service.Status.ERROR) {
-                return alert('Àß¸ø °Ë»öÇÏ¼Ì½À´Ï´Ù.');
+                return alert('ì˜ëª» ê²€ìƒ‰í•˜ì…¨ìŠµë‹ˆë‹¤.');
             }
 
             var item = response.result.items[0],
-                addrType = item.isRoadAddress ? '[µµ·Î¸í ÁÖ¼Ò]' : '[Áö¹ø ÁÖ¼Ò]',
+                addrType = item.isRoadAddress ? '[ë„ë¡œëª… ì£¼ì†Œ]' : '[ì§€ë²ˆ ì£¼ì†Œ]',
                 point = new naver.maps.Point(item.point.x, item.point.y);
 
             infoWindow.setContent([
                     '<div style="padding:10px;min-width:200px;line-height:150%;">',
-                    '<h4 style="margin-top:5px; text-align:center;">°Ë»ö ÁÖ¼Ò : '+ response.result.userquery +'</h4><br />',
+                    '<h4 style="margin-top:5px; text-align:center;">ê²€ìƒ‰ ì£¼ì†Œ : '+ response.result.userquery +'</h4><br />',
                     addrType +' '+ item.address +'<br />',
                     '</div>'
                 ].join('\n'));
@@ -85,7 +99,7 @@
             searchAddressToCoordinate($('#address').val());
         });
 
-        searchAddressToCoordinate('Á¤ÀÚµ¿ 178-1');
+        searchAddressToCoordinate('ì •ìë™ 178-1');
     }
 
     naver.maps.onJSContentLoaded = initGeocoder;

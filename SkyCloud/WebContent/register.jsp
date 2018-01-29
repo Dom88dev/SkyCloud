@@ -168,7 +168,6 @@ td, tr {
 											<div style='clear:both'></div>
 										</div>
 										<div id="emailValid" style="color: #F56E6E;font-size: 13px;text-align: left;"></div>
-										<div id="emailValid2" style="color: #F56E6E;font-size: 13px;text-align: left;"></div>
 									</div>
 									
 								</div>
@@ -328,13 +327,13 @@ td, tr {
 	});
 </script>
 <script>
-	function callbackEmail(result){
+	function callbackName(result){
 		alert("result : " + result);
 		if(result == 0){
-			$("#emailValid").text("사용할 수 있는 이메일 입니다.").val();
+			$("#nameValid").text("사용할 수 있는 닉네임 입니다.").val();
 		}
 		else{
-			$("#emailValid").text("중복된 이메일입니다.").val();
+			$("#nameValid").text("중복된 닉네임입니다.").val();
 		}
 	}
 
@@ -366,10 +365,10 @@ td, tr {
 					success:function(result){
 						alert("result : " + result);
 						if(result == 0){
-							$("#emailValid").text("사용할 수 있는 이메일 입니다.").val();
+							$("#emailValid").text("중복된 이메일입니다.").val();
 						}
 						else{
-							$("#emailValid").text("중복된 이메일입니다.").val();
+							$("#emailValid").text("사용할 수 있는 이메일 입니다.").val();
 						}
 					}
 				})
@@ -430,9 +429,25 @@ td, tr {
 				$("#nameValid").text("최대 12자, 입력이 부정확합니다.").val();
 			}
 			else{
-				$("#nameValid").text("사용가능합니다.").val();
+				var name = $("#name").val();
+				alert(name);
+
+				$.ajax({
+					type:"POST",
+					url:"/StudyCloud/ajax?command=VALIDITYTEST_REGISTER_NAME",
+					data:{name : name},
+					success:function(result){
+						alert("result : " + result);
+						if(result == 0){
+							$("#nameValid").text("중복된 닉네임입니다.").val();
+						}
+						else{
+							$("#nameValid").text("사용할 수 있는 닉네임 입니다.").val();
+						}
+					}
+				})
+
 				$("#nameValid").val("1");
-			//확인
 			}
 
 		}) 
@@ -449,7 +464,24 @@ td, tr {
 				$("#telValid").text("연락처 입력이 부정확합니다.").val();
 			}
 			else{
-				$("#telValid").text("사용가능합니다.").val();
+				var tel = $("#tel").val();
+				alert(tel);
+
+				$.ajax({
+					type:"POST",
+					url:"/StudyCloud/ajax?command=VALIDITYTEST_REGISTER_TEL",
+					data:{tel : tel},
+					success:function(result){
+						alert("result : " + result);
+						if(result == 0){
+							$("#telValid").text("중복된 연락처입니다.").val();
+						}
+						else{
+							$("#telValid").text("사용할 수 있는 연락처입니다.").val();
+						}
+					}
+				})
+				
 				$("#telValid").val("1");
 			//확인
 			}

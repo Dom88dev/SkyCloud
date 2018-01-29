@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,10 +12,20 @@
 </head>
 <body>
 	<div class="container">
-		<jsp:include page="/WEB-INF/templates/studyList/studybrief.jsp"></jsp:include>
-		<jsp:include page="/WEB-INF/templates/studyList/studybrief.jsp"></jsp:include>
-		<jsp:include page="/WEB-INF/templates/studyList/studybrief.jsp"></jsp:include>
-		<jsp:include page="/WEB-INF/templates/studyList/studybrief.jsp"></jsp:include>
+		<c:if test="${fn:length(stdList)<9}">
+			<c:forEach begin="0" end="${fn:length(stdList) - 1}" step="1" var="i">
+				<jsp:include page="/WEB-INF/templates/studyList/studybrief.jsp">
+					<jsp:param value="${i}" name="index"/>
+				</jsp:include>
+			</c:forEach>
+		</c:if>
+		<c:if test="${fn:length(stdList)>=9}">
+			<c:forEach begin="0" end="8" step="1" var="i">
+				<jsp:include page="/WEB-INF/templates/studyList/studybrief.jsp">
+					<jsp:param value="${i}" name="index"/>
+				</jsp:include>
+			</c:forEach>
+		</c:if>
 	</div>
 </body>
 </html>

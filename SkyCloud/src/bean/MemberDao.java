@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import model.Member;
-import model.Study;
 
 public class MemberDao {
 	private Connection conn;
@@ -67,7 +66,7 @@ public class MemberDao {
 		}
 		return m;
 	}
-	public int getValidInfo(String email) {
+	public int getValidEmail(String email) {
 		int result = 0;
 		String sql="select email from member where email = ?";
 		try {
@@ -77,11 +76,47 @@ public class MemberDao {
 			rs = pstmt.executeQuery();
 			if(rs.next()) result = 1;
 		} catch (Exception e) {
-			System.out.println("getValidInfo() 에러 : "+e);
+			System.out.println("getValidEmail() 에러 : "+e);
 		}finally {
 			pool.freeConnection(conn, pstmt, rs);
 		}
-		System.out.println("결과"+result);
+		System.out.println("email 결과 : "+result);
+		return result;
+	}
+	
+	public int getValidName(String name) {
+		int result = 0;
+		String sql="select name from member where name = ?";
+		try {
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, name);
+			rs = pstmt.executeQuery();
+			if(rs.next()) result = 1;
+		} catch (Exception e) {
+			System.out.println("getValidName() 에러 : "+e);
+		}finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+		System.out.println("name 결과 : "+result);
+		return result;
+	}
+	
+	public int getValidTel(String tel) {
+		int result = 0;
+		String sql="select tel from member where tel = ?";
+		try {
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, tel);
+			rs = pstmt.executeQuery();
+			if(rs.next()) result = 1;
+		} catch (Exception e) {
+			System.out.println("getValidTel() 에러 : "+e);
+		}finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+		System.out.println("tel 결과 : "+result);
 		return result;
 	}
 	

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,10 +9,28 @@
 <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" >
 <link rel="stylesheet" type="text/css" href="/StudyCloud/lib/bootstrap337/css/bootstrap.css"  >
 <link rel="stylesheet" type="text/css" href="/StudyCloud/lib/css/datepicker3.css">
+<link rel="stylesheet" type="text/css" href="/StudyCloud/lib/css/stdRegisterCss.css">
 <script type="text/javascript" src="/StudyCloud/lib/bootstrap337/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="/StudyCloud/lib/bootstrap337/js/bootstrap.min.js"></script>
-<!-- <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=FCutdjqYcxIgr5S5ObN8&submodules=geocoder"></script> -->
-
+<script>
+	//스터디 등록 결과 모달 처리 function
+	function fnResultModal(result) {
+		if(result>0) {//성공
+			$("#regiStdBtn").click(function() {
+				 window.location.href="/StudyCloud/index.jsp";
+			});
+		} else {//실패
+			$("#RegisterStdResultModal div.modal-body")[0].innerHTML = "스터드등록 중 문제가 발생했습니다. 잠시 후 다시 등록해 주십시오.";
+			$("#RegisterStdResultModal div.modal-footer button").removeClass("btn-info");
+			$("#RegisterStdResultModal div.modal-footer button").addClass("btn-danger");
+			$("#regiStdBtn").click(function() {
+				$("#RegisterStdResultModal").modal("hide");
+			});
+		}
+		
+		$('#RegisterStdResultModal').modal();
+	}
+</script>
 <style>
 th label {
 	margin-top: 5px;
@@ -26,109 +44,13 @@ td { vertical-align: middle;	padding: 0;}
 
 div hr { margin-bottom: 5px;	margin-top: 5px; }
 
-.selectbox {
-	padding: 0;
-	height: 34px;
-    position: relative;
-    border: 0.4px solid #39d2fd;
-    border-radius: 4px;
-    z-index: 1;
-}
-/* 가상 선택자를 활용 화살표 대체 */
-.selectbox:before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    right: 5px;
-    width: 0;
-    height: 0;
-    margin-top: -1px;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 5px solid #39d2fd;
-}
-
-.selectbox label {
-    position: absolute;
-    top: -1px;  /* 위치정렬 */
-    left: 5px;  /* 위치정렬 */
-    padding: .8em .5em;  /* select의 여백 크기 만큼 */
-    color: #39d2fd;
-    z-index: -1;  /* IE8에서 label이 위치한 곳이 클릭되지 않는 것 해결 */
-    font-style: italic;
-    font-size: 12px;
-}
-
-.selectbox select {
-    width: 100%;
-    height: 34px;  /* 높이 초기화 */
-    line-height: normal;  /* line-height 초기화 */
-    font-family: inherit;  /* 폰트 상속 */
-    padding: .8em .5em;  /* 여백과 높이 결정 */
-    border: 0;
-    opacity: 0;  /* 숨기기 */
-    filter:alpha(opacity=0);  /* IE8 숨기기 */
-    -webkit-appearance: none; /* 네이티브 외형 감추기 */
-    -moz-appearance: none;
-    appearance: none;
-}
-
-.selectbox.focus {
-    -webkit-box-shadow: inset 0 4px 8px 0 rgba(57, 210, 253, 0.2), 0 6px 20px 0 rgba(57, 210, 253, 0.19);
-    box-shadow: 0 4px 8px 0 rgba(57, 210, 253, 0.2), 0 6px 20px 0 rgba(57, 210, 253, 0.19);
-}
-
 table { margin: 50px; }
 
 .weekstyle {
 	font-size: 8pt;
 } 
 
-.rform-control {
-	display: block;
-    width: 100%;
-    height: 34px;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 1.42857143;
-    color: #555;
-    background-color: #fff;
-    background-image: none;
-    border-left: 0px solid rgba(0, 0, 0, 0);
-    border-right: 0px solid rgba(0, 0, 0, 0);
-    border-top: 0px solid rgba(0, 0, 0, 0);
-    border-bottom: 0.4px solid #39d2fd;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0);
-    box-shadow: inset 0 0 0 rgba(0, 0, 0, 0);
-    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
-    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-}
-
-.rform-control-inline {
-    height: 34px;
-    font-size: 12px;
-    line-height: 1.42857143;
-    color: #555;
-    background-color: #fff;
-    background-image: none;
-    border-left: 0px solid rgba(0, 0, 0, 0);
-    border-right: 0px solid rgba(0, 0, 0, 0);
-    border-top: 0px solid rgba(0, 0, 0, 0);
-    border-bottom: 0.4px solid #39d2fd;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0);
-    box-shadow: inset 0 0 0 rgba(0, 0, 0, 0);
-    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
-    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-}
-
-textarea.rform-control {
-	border-bottom: 0.4px solid #39d2fd;
-	border-radius: 0 0 4px 0;
-}
-
-#sdate1, #edate1 {
+.input-daterange input {
     width: 100%;
     font-size: 14px;
     line-height: 1.42857143;
@@ -143,24 +65,7 @@ textarea.rform-control {
     transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
 
-div#dateSeperator { 
-	color: #555;
-	background-color: rgba(0, 0, 0, 0);
-    background-image: none; 
-    border: 0px solid rgba(0, 0, 0, 0);
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0);
-    box-shadow: inset 0 0 0 rgba(0, 0, 0, 0);
-    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
-    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-}
 
-#datepicker1 {
-    width: 100%;
-    padding:0;
-	background-color: #fff;
-    background-image: none;
-}
 
 td.dateTd {
 	border-left: 0px solid rgba(0, 0, 0, 0);
@@ -204,14 +109,6 @@ input + label {
 	padding-top: 5px;	padding-bottom: 5px; 
 }
 
-input#contact_open + label i { visibility: hidden; }
-input#contact_open:checked + label i { visibility: visible; }
-
-div.timePlaceDiv {
-	box-shadow: 0 4px 8px 0 rgba(57, 210, 253, 0.2), 0 6px 20px 0 rgba(57, 210, 253, 0.19);
-	padding: 6px;	margin-bottom: 8px;
-	background: #fff;
-}
 
 button.btn.active.focus, button.btn.active:focus, button.btn.focus, button.btn:active.focus,
 	button.btn:active:focus, button.btn:focus {
@@ -228,34 +125,6 @@ button.btn.active, button.btn:active {
 	color: #39d2fd;
 }
 
-button.btn-trans {
-	background:none;
-	border:none;
-	padding:0;
-}
-
-button.btn-trans:focus, button.btn-trans:active { outline: none;	}
-button.btn-trans:active i { color:	#028bb1; }
-button.btn-trans:hover i { text-shadow: 0 0 3px #39d2fd;	background: none;	}
-
-button.btn-white {
-	border: 0.4px solid #39d2fd;
-	color: #39d2fd;
-	background-color: #ffffff;
-}
-
-button.btn-white:active, button.btn-white.active, .open>.dropdown-toggle.btn-white 
-{
-	color: #39d2fd;
-	background-color: #ffffff;
-	border: 0.4px solid #39d2fd;
-	box-shadow: 0 4px 8px 0 rgba(57, 210, 253, 0.2), 0 6px 20px 0 rgba(57, 210, 253, 0.19);
-	outline:none;
-}
-
-button.btn-white:hover {	border: 0.4px solid #39d2fd;	color: #39d2fd;	background-color: #fff; }
-button.btn-white:focus {	border: 0.4px solid #39d2fd;	color: #39d2fd;	background-color: #fff;	outline:none;	}
-
 button.btn-info:active {
 	border: 0.4px solid #39d2fd;
 	box-shadow: 0 4px 8px 0 rgba(57, 210, 253, 0.2), 0 6px 20px 0 rgba(57, 210, 253, 0.19);
@@ -266,19 +135,14 @@ button.btn-info{ width: 50%; background-color: #39d2fd; }
 input:focus, select:focus {
   outline: none;
 }
-
-
 </style>
 </head>
 <body>
-	<!-- 오늘 날짜 객체 생성 -->
-	<jsp:useBean id="date" class="java.util.Date"/>
-	<fmt:formatDate value="${date}" pattern="yyyy-MM-dd" var="today"/>
-
 	<div class="container-fluid" style="width:70%;">
 		<div class="row">
 			<div class="col-md-12">
-				<form class="form-horizontal" role="form">
+				<form class="form-horizontal" role="form" method="post" action="/StudyCloud/main">
+					<input type="hidden" name="command" value="REGISTUDY">
 					<table>
 						<tr>
 							<th class="col-sm-2">
@@ -333,9 +197,9 @@ input:focus, select:focus {
 							</th>
 							<td colspan="2" class="col-sm-10 dateTd">
 								<div class="input-group input-daterange" id="datepicker1">
-								    <input type="text" class="form-control" id="sdate1" name="std_start" min="${today}">
+								    <input type="text" class="form-control" name="std_start" data-date-start-date="0d" data-date-format="yyyy-mm-dd" data-date-language="kr" data-date-autoclose="true" placeholder="시작 날짜를 선택해주세요.">
 								    <div class="input-group-addon" id="dateSeperator"> ~ </div>
-								    <input type="text" class="form-control" id="edate1" name="std_end">
+								    <input type="text" class="form-control" name="std_end" data-date-start-date="+7d" data-date-format="yyyy-mm-dd" data-date-language="kr" data-date-autoclose="true" placeholder="종료 날짜를 선택해주세요.">
 								</div>
 							</td>
 						</tr>
@@ -354,20 +218,20 @@ input:focus, select:focus {
 										<label style="color:#000; padding:0;">시간</label>
 									</div>
 									<div class="col-sm-6" style="padding:0; vertical-align: middle;" align="justify">
-										<input name="std_day" type="checkbox" id="mon"><label for="mon">월</label>
-										<input name="std_day" type="checkbox" id="tue"><label for="tue">화</label>
-										<input name="std_day" type="checkbox" id="wed"><label for="wed">수</label>
-										<input name="std_day" type="checkbox" id="thur"><label for="thur">목</label>
-										<input name="std_day" type="checkbox" id="fri"><label for="fri">금</label>
-										<input name="std_day" type="checkbox" id="sat"><label for="sat">토</label>
-										<input name="std_day" type="checkbox" id="sun"><label for="sun">일</label>
+										<input name="std_day" type="checkbox" id="mon" value="월"><label for="mon">월</label>
+										<input name="std_day" type="checkbox" id="tue" value="화"><label for="tue">화</label>
+										<input name="std_day" type="checkbox" id="wed" value="수"><label for="wed">수</label>
+										<input name="std_day" type="checkbox" id="thur" value="목"><label for="thur">목</label>
+										<input name="std_day" type="checkbox" id="fri" value="금"><label for="fri">금</label>
+										<input name="std_day" type="checkbox" id="sat" value="토"><label for="sat">토</label>
+										<input name="std_day" type="checkbox" id="sun" value="일"><label for="sun">일</label>
 									</div>
 									<div class="col-sm-12" style="padding:0;"><hr></div>
 									<div class="col-sm-8" style="padding:0;">
-										<input type="text" name="std_addr" class="rform-control" placeholder="도로명 주소나 지번주소를 입력해주세요" id="address">
+										<input type="text" name="std_addr" class="rform-control" placeholder="위치 확인을 눌러 주소를 찾아주세요" id="std_addr0">
 									</div>
 									<div class="col-sm-2" style="padding:0;">
-										<button type="button" class="btn btn-white" id="submit">위치 확인</button>
+										<button type="button" class="btn btn-white" onclick="popupMapModal('std_addr0')">위치 확인</button>
 									</div>
 									<div class="col-sm-2" style="padding:0; line-height:40px;" align="right">
 										<button class="btn-trans" type="button" onclick="fnAddPlace()"><i class="fa fa-plus-square-o" style="color:#39d2fd;"></i></button>
@@ -381,7 +245,7 @@ input:focus, select:focus {
 								<label>스터디 소개글</label>
 							</th>
 							<td colspan="2">
-								<textarea class="rform-control" style="width: 100%; height: 100px"></textarea>
+								<textarea class="rform-control" name="std_info" style="width: 100%; height: 100px"></textarea>
 							</td>
 						</tr>
 						<tr>
@@ -389,7 +253,7 @@ input:focus, select:focus {
 								<label>스터디 계획</label>
 							</th>
 							<td colspan="2">
-								<textarea class="rform-control" style="width: 100%; height: 100px"></textarea>
+								<textarea class="rform-control" name="std_plan" style="width: 100%; height: 100px"></textarea>
 							</td>
 						</tr>
 						<tr>
@@ -397,7 +261,7 @@ input:focus, select:focus {
 								<label>기타사항</label>
 							</th>
 							<td colspan="2">
-								<textarea class="rform-control" style="width: 100%; height: 100px"></textarea>
+								<textarea class="rform-control" name="std_etc" style="width: 100%; height: 100px"></textarea>
 							</td>
 						</tr>
 						<tr>
@@ -415,18 +279,51 @@ input:focus, select:focus {
 			</div>
 		</div>
 	</div>
-	<!-- footer -->	
-			<div id="footer">
-				<jsp:include page="/WEB-INF/templates/footer.jsp"></jsp:include>
+	<!-- Map modal -->
+			<div class="modal fade" id="mapModal" data-backdrop="static">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<iframe id="myframe" src="/StudyCloud/mapTest.jsp" width="100%" height="500px" style="border:none"></iframe>
+						<div align="center">
+						<button class="btn btn-info" id="mapCheck">주소 확인</button>
+						</div>
+					</div>
+					
+				</div>
 			</div>
+			
+	<!-- 스터디 등록 결과 모달창 -->
+			<div class="modal fade" id="RegisterStdResultModal" data-backdrop="static">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<i class="fa fa-cloud" style="font-size:24px;color:#39d2fd"><strong>스터디 등록</strong></i>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+						<div class="modal-body">
+							스터디 등록에 성공하셨습니다.
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-info" id="regiStdBtn">확인</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		<!-- 스터디 등록 결과 처리 -->
+		<c:if test="${! (empty RegisterStudyResult)}">
+			<script>fnResultModal('${RegisterStudyResult}');</script>
+		</c:if>
+			
+
 </body>
-<script type="text/javascript" src="/StudyCloud/lib/js/bootstrap-datepicker.js" ></script>
-<script type="text/javascript" src="/StudyCloud/lib/js/bootstrap-datepicker.kr.js"  charset="UTF-8"></script>
+<script src="/StudyCloud/lib/js/bootstrap-datepicker.js" ></script>
+<script src="/StudyCloud/lib/js/bootstrap-datepicker.kr.js" charset="UTF-8"></script>
 <script>
 	var placeIdNum = 1;
 	function fnAddPlace() {
-		var param = "timePlace"+placeIdNum++;
-		$.post("stdTimePlaceTemplate.jsp",{	stdPlaceDivId:param } , callback);
+		$.post("/StudyCloud/timePlace/stdTimePlaceTemplate.jsp",{ stdPlaceNum:placeIdNum++ } , callback);
 	}
 	
 	function callback(data) {
@@ -455,6 +352,28 @@ input:focus, select:focus {
 		    $(this).parent().removeClass('focus');
 		});
 	});
+	
+	// mapModal
+	var currentAddrId = "";
+	
+	function popupMapModal(addrId) {
+		currentAddrId = addrId;
+		$('#mapModal').modal();
+	}
+	
+	// mapIframe 값 가져오기
+	$('#mapCheck').click(function(){
+		var frame = document.getElementById("myframe");
+	var getval = $("#myframe").contents().find('#address').val();
+	$("#"+currentAddrId).val(getval);
+	$('#mapModal').modal('hide');
+	});
+	
+
+	$('.input-daterange input').each(function() {
+	    $(this).datepicker('clearDates');
+	});
+
 </script>
 
 </html>
