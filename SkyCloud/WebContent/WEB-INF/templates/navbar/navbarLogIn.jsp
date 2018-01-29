@@ -11,6 +11,17 @@
 <style>
 	#message{color:#39d2fd}
 	nav{background-color: white}
+	.nav-search-input {
+		background-color: none;
+		border:none;
+	}
+	
+	.nav-search-input:focus {
+		background-color: none;
+		border:none;
+		outline:none;
+	}
+
 </style>
 <script>
 	function clickMsg() {
@@ -31,10 +42,11 @@
 					<img alt="Brand" src="/StudyCloud/images/icons/navbar_logo.png" height="100%">
 				</a>
 			</div>
-			<form class="navbar-form navbar-left">
-				<div class="form-group has-feedback">
-					<a style="color:sky" onclick=""><span class="glyphicon glyphicon-search form-control-feedback"></span></a>
-					<input type="search" class="form-control" placeholder="검색할 스터디를 입력하세요"/>
+			<form class="navbar-form navbar-left" action="/StudyCloud/main" method="post">
+				<input type="hidden" name="command" value="SEARCHSTUDY"/>
+				<div class="form-group form-control">
+					<input type="search" class="nav-search-input" placeholder="검색할 스터디를 입력하세요" name="searchTxt"/>
+					<a style="color:sky" href="javascript:fnSearchStudy();"><span class="glyphicon glyphicon-search"></span></a>
 				</div>
 			</form>
 			<a class="navbar-brand" href="javascript:clickMsg()">

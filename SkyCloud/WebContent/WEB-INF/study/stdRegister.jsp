@@ -91,14 +91,14 @@ input[type=radio], input[type=checkbox] {
 input:checked + i.fa { 
 	color : #fff;
     background: #39d2fd; 
-	border-radius:50px; padding: 12px; font-size: 12px;
+	border-radius:50%; padding: 12px; font-size: 12px;
 }
 input + i.fa { color : #39d2fd; padding: 12px; font-size: 12px; }
 
 input:checked + label { 
 	color : #fff;
     background: #39d2fd; 
-	border-radius:25px; font-size: 12px;
+	border-radius:50%; font-size: 12px;
 	padding-right: 8px;	padding-left: 8px;
 	padding-top: 5px;	padding-bottom: 5px;
 }
