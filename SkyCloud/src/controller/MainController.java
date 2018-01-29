@@ -147,8 +147,19 @@ public class MainController extends HttpServlet {
 			
 			break;
 			
-		case "SEARCHSTUDY":
+
+		case "SEARCHSTUDY"://스터디 검색 처리
+			String searchTxt = request.getParameter("searchTxt");
+			stdDao = new StudyDao();
+			stdList = (ArrayList<Study>)stdDao.getSearchStudyListOnNavbar(searchTxt);
+			request.setAttribute("stdList", stdList);
+			request.setAttribute("Loaded", true);
+			bodyInclude = "/main.jsp";
+			break;
 			
+		case "GOMNGSTUDY"://스터디 매니징 클라우드로 이동
+			bodyInclude = "/WEB-INF/study/manager.jsp";
+
 			break;
 		}
 		request.setAttribute("bodyInclude", bodyInclude);

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
+
 import bean.MemberDao;
 import bean.StudyDao;
 import bean.Util;
@@ -23,6 +24,7 @@ import model.Member;
 import bean.AttendanceDao;
 import model.Attendance;
 import model.StudyTimePlace;
+
 
 
 
@@ -42,12 +44,12 @@ public class AjaxController extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		String command = request.getParameter("command");
 
+
 		AttendanceDao attendanceDao;
 		Attendance att;
 		MemberDao md = new MemberDao();
 				
 		
-
 		switch(command) {
 		case "VALIDITYTEST_REGISTER_EMAIL":
 			response.setContentType("text/plain");
@@ -57,6 +59,7 @@ public class AjaxController extends HttpServlet {
 			out.print(md.getValidEmail(email));
 			break;
 			
+
 		case "VALIDITYTEST_REGISTER_NAME":
 			response.setContentType("text/plain");
 			String name = request.getParameter("name");
