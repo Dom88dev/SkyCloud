@@ -59,6 +59,68 @@ td, tr {
 			}
 		}
 	</script>
+<script>
+	// 이메일 중복검사 ajax
+	/*
+	$(document).ready(function (){
+		$("#email").focusout(function(){
+			var email = $("#email").val();
+			$.ajax({
+				type:"POST",
+				url:"/StudyCloud/ajax?command=VALIDITYTEST_REGISTER_EMAIL",
+				data:{email : email},
+				success:function(result){
+					if(result == 1){
+						$("#emailValid2").text("사용할 수 있는 이메일 입니다.").val();
+					}
+					else if(result == 2){
+						$("#emailValid2").text("1").val();
+					}
+					else{
+						$("#emailValid2").text("중복된 이메일입니다.").val();
+					}
+				}
+			})
+		})
+
+	})
+	// 닉네임 중복검사 ajax
+	/*
+	$(document).ready(function(){
+		var userName = $("#name").val();
+		$.ajax({
+			type:"POST",
+			url:"/StudyCloud/ajax?command=VALIDITYTEST_REGISTER_NAME",
+			data:{userName : userName},
+			success:function(result){
+				if(result == 1){
+					$("#emailValid").text("사용할 수 있는 닉네임 입니다.").val();
+				}
+				else{
+					$("#emailValid").text("중복된 닉네임입니다.").val();
+				}
+			}
+		})
+	})
+	// 전화번호 중복검사 ajax
+	$(document).ready(function(){
+		var userTel = $("tel").val();
+		$.ajax({
+			type:"POST",
+			url:"/StudyCloud/ajax?command=VALIDITYTEST_REGISTER_TEL",
+			data:{userTel : userTel},
+			success:function(result){
+				if(result == 1){
+					$("#emailValid").text("사용할 수 있는 전화번호 입니다.").val();
+				}
+				else{
+					$("#emailValid").text("중복된 전화번호입니다.").val();
+				}
+			}
+		})
+	})
+	*/
+</script>	
 <body>
 	<!-- 오늘 날짜 객체 생성 -->
 	<jsp:useBean id="date" class="java.util.Date"/>
@@ -115,7 +177,7 @@ td, tr {
 										<label class="mtext-info mfont-size control-label col-sm-3"><strong style="color: #39d2fd">비밀번호</strong></label>
 									</div>
 									<div class="col-sm-9">
-										<input type="password" id="pw" name="pw" class="mform-control" style="width: 100%;font-size:15px; border: 1px solid #39d2fd;" placeholder="비밀번호는 영문/숫자/특수문자 포함 6자이상" required="required"/>
+										<input type="password" id="pw" name="pw" class="mform-control" style="width: 100%;font-size:15px; border: 1px solid #39d2fd;" placeholder="비밀번호는 영문/숫자/특수문자 포함 16자이상" required="required"/>
 										<div id="pwValid" style="color: #F56E6E;font-size: 13px;text-align: left;"></div>
 									</div>
 								</div>
@@ -185,7 +247,7 @@ td, tr {
 								<div style="margin-top: 10px;margin-bottom: 10px;border-top : 1px solid #dcdcdc;"></div>
 								<div>
 									<div>
-										<button id="registerbtn" style="width: 100%;height: 50px; border: 0;background-color:#39d2fd;color: white;margin: auto;">회원 가입</button>
+										<button id="registerbtn" type="button" style="width: 100%;height: 50px; border: 0;background-color:#39d2fd;color: white;margin: auto;">회원 가입</button>
 									</div>
 								</div>
 								<div>
@@ -200,7 +262,6 @@ td, tr {
 			</form>
 		</div>
 		
-		
 		<!-- 회원가입결과 확인 모달 -->
 		<div class="modal fade" id="modal" data-backdrop="static">
 			<div class="modal-dialog">
@@ -213,6 +274,29 @@ td, tr {
 					</div>
 					<div class="modal-footer">
 						<button class="btn btn-info" data-dismiss="modal">확인</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- 유효성 검사 모달 -->
+		<div class="container">
+			<div class="row">
+				<div class="col-md-9">
+					<div class="modal fade" id="registermodal" data-backdrop="static">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h3 style="color: #787878">회원 가입</h3>
+								</div>
+								<div class="modal-body">
+									<span style="color: #787878">입력이 올바르게 않거나, 비어있는 공간이 있습니다.</span>
+								</div>
+								<div class="modal-footer">
+									<button class="btn btn-primary" data-dismiss="modal" style="background: #39d2fd; border: 0">닫기</button>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -243,22 +327,53 @@ td, tr {
 	});
 </script>
 <script>
+	function callbackName(result){
+		alert("result : " + result);
+		if(result == 0){
+			$("#nameValid").text("사용할 수 있는 닉네임 입니다.").val();
+		}
+		else{
+			$("#nameValid").text("중복된 닉네임입니다.").val();
+		}
+	}
+
 	// 이메일 유효성 검사
 	$(document).ready(function(){
 		$("#email").focusout(function(){
-			var val =$(this).val();
+			
+			// var val =$(this).val();
+			
+			var email =$(this).val();
 			var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
 			
-			if(val==""|val==null){
+			if(email==""|email==null){
 				$("#emailValid").text("필수 정보입니다.").val();
 			}
-			else if(!re.test(val)){
+			else if(!re.test(email)){
 				$("#emailValid").text("이메일 입력이 부정확합니다.").val();
 			}
 			else{
-				$("#emailValid").text("사용가능합니다.").val();
+				//$("#emailValid").text("사용가능합니다.").val();
+				var email = $("#email").val();
+				alert(email);
+				//$.post("/StudyCloud/ajax?command=VALIDITYTEST_REGISTER_EMAIL",{	email:param } , callbackEmail);
+				
+				$.ajax({
+					type:"POST",
+					url:"/StudyCloud/ajax?command=VALIDITYTEST_REGISTER_EMAIL",
+					data:{email : email},
+					success:function(result){
+						alert("result : " + result);
+						if(result == 0){
+							$("#emailValid").text("중복된 이메일입니다.").val();
+						}
+						else{
+							$("#emailValid").text("사용할 수 있는 이메일 입니다.").val();
+						}
+					}
+				})
+				
 				$("#emailValid").val("1");
-			//확인
 			}
 
 		})
@@ -314,15 +429,25 @@ td, tr {
 				$("#nameValid").text("최대 12자, 입력이 부정확합니다.").val();
 			}
 			else{
+				var name = $("#name").val();
+				alert(name);
+
 				$.ajax({
-					type:"GET",
-					url:"main?command=REGIMEMBER"
-				}).done(function(data){
-					alert(data);
+					type:"POST",
+					url:"/StudyCloud/ajax?command=VALIDITYTEST_REGISTER_NAME",
+					data:{name : name},
+					success:function(result){
+						alert("result : " + result);
+						if(result == 0){
+							$("#nameValid").text("중복된 닉네임입니다.").val();
+						}
+						else{
+							$("#nameValid").text("사용할 수 있는 닉네임 입니다.").val();
+						}
+					}
 				})
-				$("#nameValid").text("사용가능합니다.").val();
+
 				$("#nameValid").val("1");
-			//확인
 			}
 
 		}) 
@@ -337,10 +462,26 @@ td, tr {
 			}
 			else if(!re.test(val)){
 				$("#telValid").text("연락처 입력이 부정확합니다.").val();
-				$("#bornValid").val("0");
 			}
 			else{
-				$("#telValid").text("사용가능합니다.").val();
+				var tel = $("#tel").val();
+				alert(tel);
+
+				$.ajax({
+					type:"POST",
+					url:"/StudyCloud/ajax?command=VALIDITYTEST_REGISTER_TEL",
+					data:{tel : tel},
+					success:function(result){
+						alert("result : " + result);
+						if(result == 0){
+							$("#telValid").text("중복된 연락처입니다.").val();
+						}
+						else{
+							$("#telValid").text("사용할 수 있는 연락처입니다.").val();
+						}
+					}
+				})
+				
 				$("#telValid").val("1");
 			//확인
 			}
@@ -357,7 +498,6 @@ td, tr {
 			}
 			else if(!re.test(val)){
 				$("#bornValid").text("입력이 부정확합니다. 1900-01-01~").val();
-				$("#bornValid").val("0");
 			}
 			else{
 				$("#bornValid").text("사용가능합니다.").val();
@@ -370,13 +510,13 @@ td, tr {
 		$("#registerbtn").click(function(){
 			if($("#emailValid").val() == "1" && $("#pwValid").val() == "1" && $("#pwcValid").val() == "1" && $("#nameValid").val() == "1" && $("#telValid").val() == "1" && $("#bornValid").val() == "1"){
 				alert("호출1");
+				$("#registerbtn").attr("type", "submit");
 				
 			}
 			else{
-				alert("호출2");
+				$("#registermodal").modal();
 			}
 		});
-
 	});
 	
 </script>

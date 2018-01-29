@@ -51,7 +51,7 @@ public class StudyDao {
 	//모든 스터디 리스트를 구하는 메서드
 	public List<Study> getAllStduyList() {
 		ArrayList<Study> list = new ArrayList<>();
-		String sql = "select * from study";
+		String sql = "select * from study order by std_id desc";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -81,17 +81,24 @@ public class StudyDao {
 	public List<Study> getStduyList() {
 		ArrayList<Study> list = (ArrayList<Study>)getAllStduyList();
 		ArrayList<Study> stdList = new ArrayList<>();
-		String sql = "select count(email) from applies group by std_id having std_id = ? and apply_status='accept'";
+		String sql = "select count(email), apply_status from applies group by std_id, apply_status having std_id = ?";
 		try {
 			conn = pool.getConnection();
 			for(Study s : list) {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, s.getStd_id());
 				rs = pstmt.executeQuery();
-				rs.next();
-				if(s.getStd_max()>rs.getInt(1)){
-					if(System.currentTimeMillis()<s.getStd_end().getTime()){
-						stdList.add(s);
+				while(rs.next()) {
+					int memNum = rs.getInt(1);
+					String status = rs.getString(2);
+					System.out.println(memNum + "/"+s.getStd_max());
+					if(status.equals("accept")) {
+						if(s.getStd_max()>memNum){
+							System.out.println(System.currentTimeMillis() + " : "+ s.getStd_end().getTime());
+							if(System.currentTimeMillis()<s.getStd_end().getTime()){
+								stdList.add(s);
+							}
+						}
 					}
 				}
 			}
@@ -103,15 +110,95 @@ public class StudyDao {
 		return stdList;
 	}
 	
+	//study테이블에 insert 처리 후 std_id 반환
 	public int insertStudy(Study s) {
 		int result = 0;
-		//TODO study테이블에 insert 처리 후 std_id 반환
+		
+		try {
+			conn = pool.getConnection();
+			String sql = "insert into STUDY values(seq_std.nextVal, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, s.getStd_name());
+			pstmt.setInt(2, s.getStd_max());
+			pstmt.setDate(3, s.getStd_start());
+			pstmt.setDate(4, s.getStd_end());
+			pstmt.setString(5, s.getStd_info());
+			pstmt.setString(6, s.getStd_plan());
+			pstmt.setString(7, s.getStd_etc());
+			pstmt.setString(8, s.getStd_gender());
+			pstmt.setString(9, s.getStd_category());
+			pstmt.setString(10, s.getEmail());
+			result = pstmt.executeUpdate();
+			
+			if(result>0) {//if insert 성공했다면 std_id를 가져옴.
+				sql="select std_id from STUDY where std_name=? and std_max=? and std_start=? and std_end=? and std_info=? and std_plan=? and std_etc=? and std_gender=? and std_category=? and email=? order by std_id desc";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, s.getStd_name());
+				pstmt.setInt(2, s.getStd_max());
+				pstmt.setDate(3, s.getStd_start());
+				pstmt.setDate(4, s.getStd_end());
+				pstmt.setString(5, s.getStd_info());
+				pstmt.setString(6, s.getStd_plan());
+				pstmt.setString(7, s.getStd_etc());
+				pstmt.setString(8, s.getStd_gender());
+				pstmt.setString(9, s.getStd_category());
+				pstmt.setString(10, s.getEmail());
+				rs = pstmt.executeQuery();
+				rs.next();
+				result = rs.getInt("std_id");
+			}
+		} catch(Exception err) {
+			System.out.println("insertStudy() 에러 : "+err);
+			err.printStackTrace();
+		} finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
 		return result;
 	}
 	
+	
+	// study_timeplace테이블에 insert 처리
 	public int insertStudyTimePlace(StudyTimePlace tp) {
 		int result = 0;
-		//TODO study_timeplace테이블에 insert 처리
+		
+		try {
+			conn = pool.getConnection();
+			String sql = "insert into STUDY_TIMEPLACE values(?, ?, ?, ?, ?)";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, tp.getStd_time());
+			pstmt.setInt(2, tp.getStd_hour());
+			pstmt.setString(3, tp.getStd_addr());
+			pstmt.setString(4, tp.getStd_day());
+			pstmt.setInt(5, tp.getStd_id());
+			result = pstmt.executeUpdate();
+			
+		} catch(Exception err) {
+			System.out.println("insertStudyTimePlace() 에러 : "+err);
+			err.printStackTrace();
+		} finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
 		return result;
 	}
+	
+	//study 테이블 내 수정
+	public int updateStudy(int std_id, Study std) {
+		int result=0;
+		String sql = "";
+		return result;
+	}
+
+	
+	//Study 검색 (스터디 이름과 소개 내용으로 검색)
+	public List<Study> getSearchStudyListOnNavbar(String search) {
+		ArrayList<Study> list = (ArrayList<Study>)getAllStduyList();
+		ArrayList<Study> stdList = new ArrayList<>();
+		for(Study s : list) {
+			if(s.getStd_name().contains(search) || s.getStd_info().contains(search))	stdList.add(s);
+		}
+		return stdList;
+	}
+
 }

@@ -38,6 +38,18 @@
     	background-color: #fff !important;
 	}
 	
+	.panel-footer p {
+    	width:100%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: 3; /* 라인수 */
+		-webkit-box-orient: vertical;
+		word-wrap:break-word; 
+		line-height: 1.2em;
+		height: 3.6em; /* line-height 가 1.2em 이고 3라인을 자르기 때문에 height는 1.2em * 3 = 3.6em */
+	}
+	
 	.panel-footer .btn {
 	    margin: 15px 0;
 	    background-color: #39d2fd;
@@ -49,13 +61,13 @@
 	<div class="col-md-4" style="margin:5">
 		<div class="panel panel-default text-center">
 			<div class="panel-heading">
-	          <img src="/StudyCloud/images/categories/language.png" width="100%">
+	          <img src="/StudyCloud/images/categories/${stdList[param.index].std_category}.png" width="100%">
 	        </div>
 			<div class="panel-body">
-	          <h3>미드 정복</h3>
+	          <h3>${stdList[param.index].std_name}</h3>
 	        </div>
 	        <div class="panel-footer">
-	          <p>모집합니다.</p>
+	          <p>${stdList[param.index].std_info}</p>
 	          <button class="btn btn-lg">자세히 보기</button>
 	        </div>
 		</div>

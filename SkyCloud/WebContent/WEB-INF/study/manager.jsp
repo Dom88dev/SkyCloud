@@ -70,12 +70,7 @@
 </style>
 </head>
 <body>
-	<!-- navbar -->
-	<div id="navbar" class="navbar navbar-fixed-top">
-		<jsp:include page="/WEB-INF/templates/navbar/navbarLogOut.jsp"></jsp:include>
-	</div>
-	
-	<div class="container-fluid" style="margin-top: 70px;">
+	<div class="container-fluid" style="margin-top: 50px;">
 		<!-- nav tabs -->
 		<div class="row">
 			<div class="col-md-12">
@@ -117,9 +112,5 @@
 			
 		</div>
 	</div>
-	<!-- footer -->	
-			<div id="footer">
-				<jsp:include page="/WEB-INF/templates/footer.jsp"></jsp:include>
-			</div>
 </body>
 </html>
