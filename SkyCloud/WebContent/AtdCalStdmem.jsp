@@ -60,12 +60,21 @@
 						});
 		$('.mybutton').click(function(){
 			var param;
-			$.post("/ajax",{AttStatus:param},callback);
+			$.ajax({
+				type: "post",
+				url: "/ajax",
+				data: userData,
+				dataType: "json",
+				success: function(obj){
+					showStatus(obj);
+				}
+			});
+			//$.post("/ajax",{AttStatus:param},callback);
 		});
 	});
 	
-	function callback(data){
-		if(data=="att"){
+	function callback(obj){
+		if(obj=="att"){
 			alert('출석 완료!');
 			$('div.fc-bg')
 					.find('td.fc-today')
@@ -75,7 +84,7 @@
 					.find(
 							'button.fc-myAttendButton-button')
 					.css('display', 'none');
-		}else if(date=="late"){
+		}else if(obj=="late"){
 			alert('지각입니다.');
 			$('div.fc-bg')
 					.find('td.fc-today')
@@ -118,7 +127,10 @@ body {
 <body>
 	<div id='wrap'>
 		<div id=mybutton>
+		<form method="post">
+			<input type="hidden" name="command" value="CHECKATT"/>
 			<button type=button class="btn" style="float: right">출석</button>
+		</form>
 		</div>
 		<div id='calendar'></div>
 		<div style='clear: both'></div>

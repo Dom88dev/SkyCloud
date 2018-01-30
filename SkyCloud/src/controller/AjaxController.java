@@ -12,6 +12,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.ws.RequestWrapper;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import bean.AttendanceDao;
 import model.Attendance;
@@ -43,13 +48,21 @@ public class AjaxController extends HttpServlet {
 			int att = Integer.parseInt((String) request.getSession().getAttribute("mystd_id"));
 			attendanceDao = new AttendanceDao();
 			String status=null;
+			String jstatus=null;
+
 			try {
 				status = attendanceDao.InsertAttStatus(att);
+				Gson gson = new Gson();
+				JsonObject obj = new JsonObject();
+				
+				obj.addProperty("status", status);
+				
+				jstatus = gson.toJson(obj);
 				
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-			out.println(status);
+			out.println(jstatus);
 			break;
 			
 		case "UPDATE_ATTSTATUS": //출결 수정
