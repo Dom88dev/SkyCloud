@@ -54,24 +54,26 @@
 				$.ajax({
 					url : "/ajax",
 					type : "GET",
+					data : {
+						command : "CNTSTATUS"
+					},
 					dataType : "json",
 					success : function(data) {
+						
+						var jData = $.parseJSON(data);
 						var events = [];
-						$.each(json, function(i, obj) {
+						if (jsonData) {
+							$(jsonData).each(function(i, obj) {
 								var titleStr;
-								var attstatus = "att";
-								var latestatus = "late";
-								var absstatus = "abs";
-								var obsstatus = "obs";
-								var status = obj.staus;
-								if (attstatus.equals(status)) {
-									titleStr = "출석 [" + status.size + "]건";
-								} else if (latestatus.equals(status)) {
-									titleStr = "지각 [" + obj.title + "]건";
-								} else if (absstatus.equals(status)) {
-									titleStr = "공결 [" + obj.title + "]건";
-								} else if (obsstatus.equals(status)) {
-									titleStr = "병결 [" + obj.title + "]건";
+
+								if (jData.attcnt != null) {
+									titleStr = "출석 [" + jData.attcnt + "]건";
+								} else if (jData.latecnt != null) {
+									titleStr = "지각 [" + jData.latecnt + "]건";
+								} else if (jData.abscnt != null) {
+									titleStr = "결석 [" + jData.abscnt + "]건";
+								} else if (jData.obscnt != null) {
+									titleStr = "공결 [" + jData.obscnt + "]건";
 								}
 
 								events.push({
@@ -95,6 +97,14 @@
 				$('.modal').modal('show');
 			},*/
 			eventClick : function(event, element) {
+				$.ajax({
+					type : "post",
+					url : "/ajax",
+					data : {command:"GET_ATTSTATUS",email:data.email},
+					success : function(data) {
+						showAttStatus(data);
+					}
+				});
 				$('.modal').modal('show');
 				$('.modal').find('#title').val(event.title);
 			},
@@ -107,8 +117,16 @@
 		});
 		// Whenever the user clicks on the "save" button om the dialog
 		$('#save-event').on('click', function() {
-			var title = $('.rselect> option:selected').val();
+			var title = $('select option:selected').val();
 			$('#calendar').fullCalendar('removeEvents', event.title);
+			$.ajax({
+				type : "GET",
+				url : "/ajax",
+				data : {command:"UPDATE_ATTSTATUS", status:$('select option:selected').val()},
+				success : function(data){
+					
+				}
+			})
 			if (title) {
 				var eventData = {
 					title : $('.rselect> option:selected').val(),
@@ -124,6 +142,26 @@
 			// hide modal
 			$('.modal').modal('hide');
 		});
+		$.ajax({
+			
+		});
+		function showAttStatus(data){
+			var tab = document.querySelector('#att-table');
+			var atdstatus;
+			for(var i=0; i<data.length; i++){
+				if((data[i].atd_status).equals("att")){
+					atdstatus = "출석";
+				}else if((data[i].atd_status).equals("late")){
+					atdstatus = "지각";
+				}else if((data[i].atd_status).equals("abs")){
+					atdstatus = "결석";
+				}else if((data[i].atd_status).equals("obs")){
+					atdstatus = "공결";
+				}
+				html += '<tr><td>'+data[i].email+'</td><td><select class="rselect" name="status_select"><option value="'+data[i].atd_status+'">'+atdstatus+'</option>'
+				+'</select></td></tr>';
+			}
+		}
 	});
 </script>
 <style>
@@ -168,7 +206,7 @@ body {
 	<div id='wrap'>
 		<div id='calendar'></div>
 		<div id='datepicker'></div>
-		<c:param name="command" value="UPDATE_ATTSTATUS"></c:param>
+		<c:set var="command" value="UPDATE_ATTSTATUS"></c:set>
 		<div class="modal fade" tabindex="-1" role="dialog">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
@@ -186,7 +224,8 @@ body {
 								<label class="col-xs-4" for="title">���</label> 
 								<input type="text" name="title" id="title" />
 							</div>-->
-							<div class="col-md-12" id="att-table">
+							<div class="col-md-12">
+							<form action="/StudyCloud/AtdCalStdleader" method="post">
 								<table class="table">
 									<thead>
 										<tr>
@@ -194,10 +233,10 @@ body {
 											<th class="text-center">출결 현황</th>
 										</tr>
 									</thead>
-									<tbody>
+									<tbody id="att-table">
 										<tr>
 											<td>Mark</td>
-											<td><select class="rselect">
+											<td><select class="rselect" name="status_select">
 													<option value="att">출석</option>
 													<option value="late">지각</option>
 													<option value="abs">결석</option>
@@ -233,13 +272,14 @@ body {
 										</tr>
 									</tbody>
 								</table>
+								</form>
 							</div>
 						</div>
 
 					</div>
 					<div class="modal-footer">
 						<form method="post" action="/StudyCloud/AtdCalStdleader">
-							<input type="hidden" name="command" value="UPDATE_ATTSTATUS">
+							<!--<input type="hidden" name="command" value="UPDATE_ATTSTATUS">  -->
 							<button type="button" class="btn btn-default"
 								data-dismiss="modal">닫기</button>
 							<button type="submit" class="btn btn-primary" id="save-event">출결
