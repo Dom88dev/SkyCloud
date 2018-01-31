@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,11 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 
 import bean.AttendanceDao;
-
+import bean.StudyDao;
 import model.Attendance;
+import model.Study;
 
 
 /**
@@ -40,6 +39,13 @@ public class AjaxController extends HttpServlet {
 		
 		AttendanceDao attendanceDao;
 		Attendance vo;
+		StudyDao stdDao = new StudyDao();
+		ArrayList<Study> stdList = (ArrayList<Study>)stdDao.getStduyList();
+		for(Study s : stdList) {
+			System.out.println(s.getStd_id());
+		}
+		request.setAttribute("stdList", stdList);
+		
 		switch(command) {
 		case "VALIDITYTEST_REGISTER":
 			response.setContentType("text/plain");
@@ -113,7 +119,10 @@ public class AjaxController extends HttpServlet {
 			
 		case "UPDATE_STATUS": //출결 업데이트
 			attendanceDao = new AttendanceDao();
-			attendanceDao.UpdateStatus(upstatus, email);
+			int r = attendanceDao.UpdateStatus(upstatus, email);
+			
+			out.println(r);
+			break;
 		}
 	}
 

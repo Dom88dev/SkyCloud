@@ -59,7 +59,7 @@
 					},
 					dataType : "json",
 					success : function(data) {
-						
+
 						var jData = $.parseJSON(data);
 						var events = [];
 						if (jsonData) {
@@ -100,7 +100,10 @@
 				$.ajax({
 					type : "post",
 					url : "/ajax",
-					data : {command:"GET_ATTSTATUS",email:data.email},
+					data : {
+						command : "GET_ATTSTATUS",
+						email : data.email
+					},
 					success : function(data) {
 						showAttStatus(data);
 					}
@@ -122,11 +125,14 @@
 			$.ajax({
 				type : "GET",
 				url : "/ajax",
-				data : {command:"UPDATE_ATTSTATUS", status:$('select option:selected').val()},
-				success : function(data){
-					
+				data : {
+					command : "UPDATE_STATUS",
+					status : $('select option:selected').val()
+				},
+				success : function(data) {
+					alert('출결이 정상적으로 수정되었습니다.');
 				}
-			})
+			});
 			if (title) {
 				var eventData = {
 					title : $('.rselect> option:selected').val(),
@@ -143,26 +149,29 @@
 			$('.modal').modal('hide');
 		});
 		$.ajax({
-			
+
 		});
-		function showAttStatus(data){
-			var tab = document.querySelector('#att-table');
-			var atdstatus;
-			for(var i=0; i<data.length; i++){
-				if((data[i].atd_status).equals("att")){
-					atdstatus = "출석";
-				}else if((data[i].atd_status).equals("late")){
-					atdstatus = "지각";
-				}else if((data[i].atd_status).equals("abs")){
-					atdstatus = "결석";
-				}else if((data[i].atd_status).equals("obs")){
-					atdstatus = "공결";
-				}
-				html += '<tr><td>'+data[i].email+'</td><td><select class="rselect" name="status_select"><option value="'+data[i].atd_status+'">'+atdstatus+'</option>'
-				+'</select></td></tr>';
-			}
-		}
 	});
+	function showAttStatus(data) {
+		var tab = document.querySelector('#att-table');
+		var atdstatus;
+		for (var i = 0; i < data.length; i++) {
+			if ((data[i].atd_status).equals("att")) {
+				atdstatus = "출석";
+			} else if ((data[i].atd_status).equals("late")) {
+				atdstatus = "지각";
+			} else if ((data[i].atd_status).equals("abs")) {
+				atdstatus = "결석";
+			} else if ((data[i].atd_status).equals("obs")) {
+				atdstatus = "공결";
+			}
+			html += '<tr><td>'
+					+ data[i].email
+					+ '</td><td><select class="rselect" name="status_select"><option value="'+data[i].atd_status+'">'
+					+ atdstatus + '</option>' + '</select></td></tr>';
+			tab.innerHTML = html;
+		}
+	}
 </script>
 <style>
 body {
@@ -225,66 +234,29 @@ body {
 								<input type="text" name="title" id="title" />
 							</div>-->
 							<div class="col-md-12">
-							<form action="/StudyCloud/AtdCalStdleader" method="post">
-								<table class="table">
-									<thead>
-										<tr>
-											<th class="text-center">이름</th>
-											<th class="text-center">출결 현황</th>
-										</tr>
-									</thead>
-									<tbody id="att-table">
-										<tr>
-											<td>Mark</td>
-											<td><select class="rselect" name="status_select">
-													<option value="att">출석</option>
-													<option value="late">지각</option>
-													<option value="abs">결석</option>
-													<option value="oaa">공결</option>
-											</select></td>
-										</tr>
-										<tr>
-											<td>Jacob</td>
-											<td><select class="rselect">
-													<option value="att">출석</option>
-													<option value="late">지각</option>
-													<option value="abs">결석</option>
-													<option value="oaa">공결</option>
-											</select></td>
-										</tr>
-										<tr>
-											<td>Larry</td>
-											<td><select class="rselect">
-													<option value="att">출석</option>
-													<option value="late">지각</option>
-													<option value="abs">결석</option>
-													<option value="oaa">공결</option>
-											</select></td>
-										</tr>
-										<tr>
-											<td>김희진</td>
-											<td><select class="rselect">
-													<option value="att">출석</option>
-													<option value="late">지각</option>
-													<option value="abs">결석</option>
-													<option value="oaa">공결</option>
-											</select></td>
-										</tr>
-									</tbody>
-								</table>
+								<form action="/StudyCloud/AtdCalStdleader" method="post">
+								<input type="hidden" value="${stdList[param.index].std_id}" name="stdId">
+									<table class="table">
+										<thead>
+											<tr>
+												<th class="text-center">이름</th>
+												<th class="text-center">출결 현황</th>
+											</tr>
+										</thead>
+										<tbody id="att-table">
+
+										</tbody>
+									</table>
 								</form>
 							</div>
 						</div>
 
 					</div>
 					<div class="modal-footer">
-						<form method="post" action="/StudyCloud/AtdCalStdleader">
-							<!--<input type="hidden" name="command" value="UPDATE_ATTSTATUS">  -->
-							<button type="button" class="btn btn-default"
-								data-dismiss="modal">닫기</button>
-							<button type="submit" class="btn btn-primary" id="save-event">출결
-								수정</button>
-						</form>
+						<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+						<button type="submit" class="btn btn-primary" id="save-event">출결
+							수정</button>
+
 					</div>
 				</div>
 				<!-- /.modal-content -->

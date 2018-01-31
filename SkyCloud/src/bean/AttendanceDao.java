@@ -146,20 +146,21 @@ public class AttendanceDao {
 		return msg;
 	}
 	//잘못된 출석 상태 수정하기
-	public void UpdateStatus(String upatd, String email) {
+	public int UpdateStatus(String upatd, String email) {
+		int result=0;
 		String sql = "update attendance set atd_status=? where email=?";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, upatd);
 			pstmt.setString(2, email);
-			pstmt.executeUpdate();
-			
+			result = pstmt.executeUpdate();
 		} catch(Exception e) {
 			System.out.println("UpdateAttStatus() 에러 : "+e);
 		} finally {
 			pool.freeConnection(conn, pstmt);
 		}
+		return result;
 	}
 	
 

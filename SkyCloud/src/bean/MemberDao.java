@@ -119,5 +119,29 @@ public class MemberDao {
 		System.out.println("tel 결과 : "+result);
 		return result;
 	}
-	
+	//회원정보 수정
+	public int UpdateMemInfo(Member m){
+		int result=0;
+		String sql = "update member set pw=?, name=?, tel=? where email=?";
+		try {
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, m.getPw());
+			pstmt.setString(2, m.getName());
+			pstmt.setString(3, m.getTel());
+			pstmt.setString(4, m.getEmail());
+			result = pstmt.executeUpdate();
+		} catch(Exception e) {
+			System.out.println("UpdateMemInfo() 에러 : "+e);
+		} finally {
+			pool.freeConnection(conn, pstmt);
+		}
+		return result;
+	}
+	//회원탈퇴시 정보 삭제
+	public int deleteMem() {
+		int result=0;
+		
+		return result;
+	}
 }

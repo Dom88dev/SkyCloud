@@ -65,33 +65,36 @@
 			$.ajax({
 				type : "post",
 				url : "/ajax",
-				data : userData,
+				data : {
+					command : "CHECKATT"
+				},
 				dataType : "json",
 				success : function(obj) {
+					alert('출석 완료!');
 					showStatus(obj);
 				}
 			});
-			//$.post("/ajax",{AttStatus:param},callback);
 		});
 	});
 
-	function callback(obj) {
-		if (obj == "att") {
-			alert('출석 완료!');
-			$('div.fc-bg')
-					.find('td.fc-today')
-					.prepend(
-							"<img src='/StudyCloud/images/icons/atd.png' width='100' height='80' align='center'>");
-			$('div.fc-right').find('button.fc-myAttendButton-button').css(
-					'display', 'none');
-		} else if (obj == "late") {
-			alert('지각입니다.');
-			$('div.fc-bg')
-					.find('td.fc-today')
-					.prepend(
-							"<img src='/StudyCloud/images/icons/atd.png' width='100' height='80' align='center'>");
-			$('div.fc-right').find('button.fc-myAttendButton-button').css(
-					'display', 'none');
+	function showStatus(obj) {
+		var jData = $.parseJSON(data);
+		if (jsonData) {
+			$(jsonData).each(function(i, obj) {
+				if ((jData.status).equals("att")) {
+					$('div.fc-bg').find('td.fc-today').prepend("<img src='/StudyCloud/images/icons/atd.png' width='100' height='80' align='center'>");
+					$('div.fc-right').find('button.fc-myAttendButton-button').css('display', 'none');
+				} else if ((jData.status).equals("late")) {
+					$('div.fc-bg').find('td.fc-today').prepend("<img src='/StudyCloud/images/icons/late.png' width='100' height='80' align='center'>");
+					$('div.fc-right').find('button.fc-myAttendButton-button').css('display', 'none');
+				} else if ((jData.status).equals("abs")) {
+					$('div.fc-bg').find('td.fc-today').prepend("<img src='/StudyCloud/images/icons/abs.png' width='100' height='80' align='center'>");
+					$('div.fc-right').find('button.fc-myAttendButton-button').css('display', 'none');
+				} else if ((jData.status).equals("obs")) {
+					$('div.fc-bg').find('td.fc-today').prepend("<img src='/StudyCloud/images/icons/obs.png' width='100' height='80' align='center'>");
+					$('div.fc-right').find('button.fc-myAttendButton-button').css('display', 'none');
+				}
+			});
 		}
 	}
 </script>
@@ -131,7 +134,7 @@ body {
 	<div id='wrap'>
 		<div id=mybutton>
 			<form method="post">
-				<input type="hidden" name="command" value="CHECKATT" />
+				<input type="hidden" name="stdId" value="${stdList[param.index].std_id}" />
 				<button type=button class="btn" style="float: right">출석</button>
 			</form>
 		</div>

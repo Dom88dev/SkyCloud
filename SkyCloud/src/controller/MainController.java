@@ -161,6 +161,19 @@ public class MainController extends HttpServlet {
 			bodyInclude = "/WEB-INF/study/manager.jsp";
 
 			break;
+			
+		case "UPDATEINFO": //회원 수정 처리
+			mem = new Member();
+
+			mem.setPw(request.getParameter("pw"));
+			mem.setName(request.getParameter("name"));
+			mem.setTel(request.getParameter("tel"));
+
+			memDao = new MemberDao();
+			int rs = memDao.UpdateMemInfo(mem);
+			request.setAttribute("upInfoResult", rs);
+			bodyInclude = "/upMemInfo.jsp";
+			break;
 		}
 		request.setAttribute("bodyInclude", bodyInclude);
 		RequestDispatcher view = request.getRequestDispatcher(url);
