@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import model.Study;
 import model.StudyTimePlace;
@@ -25,7 +27,7 @@ public class StudyDao {
 	
 	public List<StudyTimePlace> getTimePlaceList(int std_id) {
 		ArrayList<StudyTimePlace> list = new ArrayList<>();
-		String sql = "select * from study_timeplace where std_id=?";
+		String sql = "select * from study_timeplace where std_id=? order by std_addr, std_time, std_hour desc";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -127,6 +129,8 @@ public class StudyDao {
 				for(int id : stdIds) {
 					if(s.getStd_id() == id)	{//내가 가입한 스터디 걸러내기
 						if(System.currentTimeMillis()<s.getStd_end().getTime()){//종료가 안된 스터디만 걸러내기
+							ArrayList<StudyTimePlace> tpList = Util.getOrderedDays(s);
+							s.setTimePlaceList(tpList);
 							stdList.add(s);
 						}
 					}
