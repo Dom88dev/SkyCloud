@@ -13,9 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bean.ApplyDao;
+import bean.AttendanceDao;
 import bean.MemberDao;
 import bean.StudyDao;
 import bean.Util;
+import model.Attendance;
 import model.Member;
 import model.Study;
 import model.StudyTimePlace;
@@ -45,6 +47,7 @@ public class MainController extends HttpServlet {
 		Study std;
 		StudyTimePlace stp;
 		ApplyDao applyDao;
+		AttendanceDao attDao;
 		
 		switch(command){
 		
@@ -173,8 +176,29 @@ public class MainController extends HttpServlet {
 			memDao = new MemberDao();
 			int rs = memDao.UpdateMemInfo(mem);
 			request.setAttribute("upInfoResult", rs);
+
 			bodyInclude = "/upMemInfo.jsp";
 			break;
+			
+		case "DELETEMEM": //회원 탈퇴 처리
+			mem = new Member();
+			mem.setEmail(request.getParameter("email"));
+
+			memDao = new MemberDao();
+			int res = memDao.UpdateMemInfo(mem);
+			request.setAttribute("delInfoResult", res);
+			bodyInclude = "/delMemInfo.jsp";
+
+
+			break;
+			
+		case "PRINTCAL": //출석부 
+			stdDao = new StudyDao();
+			stdId = Integer.parseInt((String) request.getParameter("stdId"));
+			String stdemail = stdDao.getLeaderEmail(stdId);
+			
+			request.setAttribute("stdEmail", stdemail);
+			
 		}
 		request.setAttribute("bodyInclude", bodyInclude);
 		RequestDispatcher view = request.getRequestDispatcher(url);

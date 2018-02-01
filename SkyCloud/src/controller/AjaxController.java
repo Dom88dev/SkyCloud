@@ -142,6 +142,7 @@ public class AjaxController extends HttpServlet {
 				out.print(msg1);
 				out.flush();
 			}
+			break;
 			
 		case "UPDATE_STATUS": //출결 업데이트
 			attendanceDao = new AttendanceDao();

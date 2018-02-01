@@ -234,5 +234,25 @@ public class StudyDao {
 		}
 		return stdList;
 	}
+	
+	//스터디장 이메일 가져오기
+	public String getLeaderEmail(int std_id) {
+		String result = null;
+		String sql="select email from study where std_id=?";
+		try {
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, std_id);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				result=(rs.getString("email"));
+			}
+		} catch(Exception e) {
+			System.out.println("getLeaderEmail() 에러 : "+e);
+		} finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+		return result;
+	}
 
 }
