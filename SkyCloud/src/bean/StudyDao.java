@@ -200,5 +200,34 @@ public class StudyDao {
 		}
 		return stdList;
 	}
-
+	
+	//StudyInfo 검색 (스터디 상세보기)
+	public Study getStudyInfo(int std_id) {
+		String sql = "select * from STUDY where std_id=?";
+		Study std = null;
+		try {
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, std_id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				std = new Study();
+				std.setStd_id(rs.getInt("std_id"));
+				std.setStd_name(rs.getString("std_name"));
+				std.setStd_max(rs.getInt("std_max"));
+				std.setStd_start(rs.getDate("std_start"));
+				std.setStd_end(rs.getDate("std_end"));
+				std.setStd_info(rs.getString("std_info"));
+				std.setStd_plan(rs.getString("std_plan"));
+				std.setStd_etc(rs.getString("std_etc"));
+				std.setStd_gender(rs.getString("std_gender"));
+			}
+		}catch(Exception err) {
+			System.out.println("getStudyInfo() 에러 : "+err);
+			err.printStackTrace();
+		}finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+		return std;
+	}
 }
