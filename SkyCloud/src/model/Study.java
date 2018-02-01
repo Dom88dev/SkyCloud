@@ -17,6 +17,7 @@ public class Study {
 	private String email;
 	private List<StudyTimePlace> timePlaceList;
 	
+	
 	public void setStudy(int stdId, String stdName, int stdMax, Date stdStart, Date stdEnd, String stdInfo, String stdPlan, String stdEtc, String stdGender, String stdCate, String email){
 		setStd_id(stdId);
 		setStd_name(stdName);

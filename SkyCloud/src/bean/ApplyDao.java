@@ -59,5 +59,6 @@ public class ApplyDao {
 			pool.freeConnection(conn, pstmt, rs);
 		}
 		return result;
+		
 	}
 }

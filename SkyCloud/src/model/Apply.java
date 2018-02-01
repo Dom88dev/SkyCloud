@@ -8,6 +8,7 @@ public class Apply {
 	private String apply_content;
 	private long apply_datetime;
 	
+	
 	public void setApply(int appliy_id, String email, int std_id, String apply_status, String apply_content, long apply_datetime) {
 		setApply_id(appliy_id);
 		setEmail(email);
