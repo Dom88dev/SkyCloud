@@ -228,11 +228,6 @@ body {
 					</div>
 					<div class="modal-body">
 						<div class="row">
-							<!-- 
-							<div class="col-xs-12">
-								<label class="col-xs-4" for="title">���</label> 
-								<input type="text" name="title" id="title" />
-							</div>-->
 							<div class="col-md-12">
 								<form action="/StudyCloud/AtdCalStdleader" method="post">
 								<input type="hidden" value="${stdList[param.index].std_id}" name="stdId">
