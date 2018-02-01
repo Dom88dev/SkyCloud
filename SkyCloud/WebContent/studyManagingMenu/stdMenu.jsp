@@ -44,9 +44,6 @@
 			<jsp:include page='/studyManagingMenu/attendance.jsp'></jsp:include>
 		</div>
 	</div>
-	<!-- studyHome -->
-	
-
 <script>
 function fnChangeStdMenuInclude(data) {
 	var page = "";

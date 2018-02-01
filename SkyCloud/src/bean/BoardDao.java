@@ -15,6 +15,7 @@ public class BoardDao {
 	private ResultSet rs;
 	private DBConnectionMgr pool;
 	
+	
 	public BoardDao() {
 		try {
 			pool = DBConnectionMgr.getInstance();

@@ -5,6 +5,6 @@
 	<title>Insert title here</title>
 </head>
 <body>
-homeworkBoard.jsp / ${index}
+homeworkBoard.jsp
 </body>
 </html>

@@ -12,6 +12,7 @@ public class Notice {
 	private int replies_cnt;
 	private List<BoardFile> files;
 	
+	
 	public void setNotice(int b_id, int std_id, String title, String content, long b_datetime, int view_cnt, int replies_cnt) {
 		setB_id(b_id);
 		setStd_id(std_id);

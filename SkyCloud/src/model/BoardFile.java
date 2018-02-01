@@ -9,6 +9,7 @@ public class BoardFile {
 	private String b_file3_name;
 	private String b_file3;
 	
+	
 	public int getB_id() {
 		return b_id;
 	}

@@ -46,13 +46,13 @@
 		</div>
 		<div class="col-md-6">
 			<h4>시간 및 장소</h4>
-			<div id="studyTimePlaceDiv">
-				<c:set value="${myStdList[index].timePlaceList}" var="timeplaceList"></c:set>
+			<c:set value="${myStdList[index].timePlaceList}" var="timeplaceList"></c:set>
 				<c:forEach begin="0" end="${fn:length(timeplaceList) - 1}" step="1" var="j">
+				<div id="studyTimePlaceDiv">
 					<i class="glyphicon glyphicon-time">${timeplaceList[j].std_time} ~ ${timeplaceList[j].std_time + (timeplaceList[j].std_hour * 100)}</i><span>${timeplaceList[j].std_day}</span>요일<br>
 					<i class="glyphicon glyphicon-map-marker">${timeplaceList[j].std_addr}</i>
-				</c:forEach>
-			</div>
+				</div>
+			</c:forEach>
 		</div>
 	</div>
 	<div class="col-md-2">

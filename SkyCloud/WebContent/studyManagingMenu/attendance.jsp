@@ -5,7 +5,7 @@
 	<title>Insert title here</title>
 </head>
 <body>
-attendance.jsp / ${index}
+attendance.jsp
 <script>alert("${index}");</script>
 </body>
 </html>
