@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,11 +13,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+
+import bean.ApplyDao;
 
 import bean.AttendanceDao;
+
+import bean.BoardDao;
+import bean.MemberDao;
 import bean.StudyDao;
 import model.Attendance;
+import model.Homework;
+import model.Member;
+import model.Notice;
 import model.Study;
 
 
@@ -30,14 +41,26 @@ public class AjaxController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
 		response.setHeader("Cache-Control", "no-cache");
 		PrintWriter out = response.getWriter();
 		String command = request.getParameter("command");
 		String upstatus = request.getParameter("status");
 		String email = request.getParameter("email");
-		int att = Integer.parseInt((String) request.getParameter("stdId"));
+		int stdId;
 		
 		AttendanceDao attendanceDao;
+		Attendance att;
+		Member mem;
+		MemberDao memDao;
+		BoardDao boardDao;
+		Notice notice;
+		ApplyDao apDao;
+		ArrayList<Notice> nList;
+		Homework homework;
+		ArrayList<Homework> hList;
+		JsonObject jobj;
 		Attendance vo;
 		StudyDao stdDao = new StudyDao();
 		ArrayList<Study> stdList = (ArrayList<Study>)stdDao.getStduyList();
@@ -45,6 +68,7 @@ public class AjaxController extends HttpServlet {
 			System.out.println(s.getStd_id());
 		}
 		request.setAttribute("stdList", stdList);
+
 		
 		switch(command) {
 		case "VALIDITYTEST_REGISTER":
@@ -56,9 +80,9 @@ public class AjaxController extends HttpServlet {
 			attendanceDao = new AttendanceDao();
 			String status=null;
 			String jstatus=null;
-
+			stdId = Integer.parseInt((String) request.getParameter("stdId"));
 			try {
-				status = attendanceDao.InsertAttStatus(att);
+				status = attendanceDao.InsertAttStatus(stdId);
 				Gson gson = new Gson();
 				JsonObject obj = new JsonObject();
 				
@@ -74,12 +98,13 @@ public class AjaxController extends HttpServlet {
 		
 		case "CNTSTATUS":	//출결 상황 카운트
 			attendanceDao = new AttendanceDao();
+			stdId = Integer.parseInt((String) request.getParameter("stdId"));
 			int attCnt = 0;
 			int lateCnt = 0;
 			int absCnt = 0;
 			int obsCnt = 0;
 			String statuscnt = null;
-			ArrayList<Attendance> list = (ArrayList<Attendance>) attendanceDao.getAttendenceList(att);
+			ArrayList<Attendance> list = (ArrayList<Attendance>) attendanceDao.getAttendenceList(stdId);
 			
 			for(Attendance a : list) {
 				if(a.getAtd_status().equals("att")) {
@@ -93,14 +118,14 @@ public class AjaxController extends HttpServlet {
 				}
 			}
 			Gson gson = new Gson();
-			JsonObject obj = new JsonObject();
+			jobj = new JsonObject();
 			
-			obj.addProperty("attcnt", attCnt);
-			obj.addProperty("latecnt", lateCnt);
-			obj.addProperty("abscnt", absCnt);
-			obj.addProperty("obscnt", obsCnt);
+			jobj.addProperty("attcnt", attCnt);
+			jobj.addProperty("latecnt", lateCnt);
+			jobj.addProperty("abscnt", absCnt);
+			jobj.addProperty("obscnt", obsCnt);
 			
-			statuscnt = gson.toJson(obj);
+			statuscnt = gson.toJson(jobj);
 			
 			out.println(statuscnt);
 			break;
@@ -108,7 +133,8 @@ public class AjaxController extends HttpServlet {
 		case "GET_ATTSTATUS": //출결 가져오기
 			vo = new Attendance();
 			attendanceDao = new AttendanceDao();
-			vo.setStd_id(att);
+			stdId = Integer.parseInt((String) request.getParameter("stdId"));
+			vo.setStd_id(stdId);
 			
 			String msg1 = attendanceDao.getAttStatus(vo);
 			
@@ -123,7 +149,40 @@ public class AjaxController extends HttpServlet {
 			
 			out.println(r);
 			break;
+			
+		case "MNG_CHANGESTUDY":
+			response.setContentType("text/html");
+			System.out.println(request.getParameter("index") +"/"+request.getParameter("includeStdMenu"));
+			request.getSession().setAttribute("index", request.getParameter("index"));
+			request.getSession().setAttribute("includeStdMenu", request.getParameter("includeStdMenu"));
+			out.print("/StudyCloud/studyManagingMenu/");
+			break;
+			
+		case "LOADSTUDYINFO":
+			response.setContentType("text/plain");
+			memDao = new MemberDao();
+			mem = memDao.getMemberByEmail(request.getParameter("leaderEmail"));
+			jobj = new JsonObject();
+			jobj.add("leader", new Gson().toJsonTree(mem));
+			boardDao = new BoardDao();
+			stdId = Integer.parseInt(request.getParameter("stdId"));
+			nList = (ArrayList<Notice>) boardDao.getNoticeList(stdId);
+			hList = (ArrayList<Homework>) boardDao.getHomeworkList(stdId);
+			JsonArray jarrayNList = (JsonArray) new Gson().toJsonTree(nList,
+		            new TypeToken<List<Notice>>() {
+		            }.getType());
+			JsonArray jarrayHList = (JsonArray) new Gson().toJsonTree(hList,
+		            new TypeToken<List<Homework>>() {
+		            }.getType());
+			jobj.add("noticeList", jarrayNList);
+			jobj.add("homeworkList", jarrayHList);
+			apDao = new ApplyDao();
+			jobj.addProperty("currentMemNum", apDao.getCurrentMembersNum(stdId));
+			String jsonData = new Gson().toJson(jobj);
+			out.print(jsonData);
+			break;
 		}
+		out.close();
 	}
 
 	/**

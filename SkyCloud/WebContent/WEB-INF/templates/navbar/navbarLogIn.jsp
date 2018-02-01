@@ -1,13 +1,4 @@
-<%@page import="java.net.InetAddress"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-	<title>navbar before logging in</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="/StudyCloud/lib/bootstrap337/css/bootstrap.min.css" />
-<script src="/StudyCloud/lib/bootstrap337/js/jquery-3.2.1.min.js"></script>
-<script src="/StudyCloud/lib/bootstrap337/js/bootstrap.min.js"></script>
 <style>
 	#message{color:#39d2fd}
 	nav{background-color: white}
@@ -34,8 +25,6 @@
 		$("#logOutModal").modal();
 	}
 </script>
-</head>
-<body>
 	<!-- navbar -->
 	<nav class="navbar navbar-fixed-top">
 		<div class="container-fluid">
@@ -65,5 +54,3 @@
 			</div>
 		</div>
 	</nav>
-</body>
-</html>
