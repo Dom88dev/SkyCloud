@@ -174,6 +174,17 @@ public class MainController extends HttpServlet {
 			request.setAttribute("upInfoResult", rs);
 			bodyInclude = "/upMemInfo.jsp";
 			break;
+			
+		case "DELETEMEM": //회원 탈퇴 처리
+			mem = new Member();
+
+			mem.setEmail(request.getParameter("email"));
+
+			memDao = new MemberDao();
+			int res = memDao.UpdateMemInfo(mem);
+			request.setAttribute("delInfoResult", res);
+			bodyInclude = "/delMemInfo.jsp";
+			break;
 		}
 		request.setAttribute("bodyInclude", bodyInclude);
 		RequestDispatcher view = request.getRequestDispatcher(url);

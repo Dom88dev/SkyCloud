@@ -139,9 +139,19 @@ public class MemberDao {
 		return result;
 	}
 	//회원탈퇴시 정보 삭제
-	public int deleteMem() {
+	public int deleteMem(Member m) {
 		int result=0;
-		
+		String sql = "delete member where email=?";
+		try {
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, m.getEmail());
+			result = pstmt.executeUpdate();
+		} catch(Exception e) {
+			System.out.println("UpdateMemInfo() 에러 : "+e);
+		} finally {
+			pool.freeConnection(conn, pstmt);
+		}
 		return result;
 	}
 }
