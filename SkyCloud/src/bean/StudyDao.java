@@ -49,9 +49,9 @@ public class StudyDao {
 	}
 	
 	//모든 스터디 리스트를 구하는 메서드
-	public List<Study> getAllStduyList() {
+	public List<Study> getAllStduyList(String order) {
 		ArrayList<Study> list = new ArrayList<>();
-		String sql = "select * from study order by std_id desc";
+		String sql = "select * from study order by "+order+" desc";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -79,7 +79,7 @@ public class StudyDao {
 	
 	//메인페이지 및 스터디 검색 페이지에서 뿌려줄 스터디 목록을 구하는 메서드(정원이 다 차지 않은 스터디 리스트)
 	public List<Study> getStduyList() {
-		ArrayList<Study> list = (ArrayList<Study>)getAllStduyList();
+		ArrayList<Study> list = (ArrayList<Study>)getAllStduyList("std_id");
 		ArrayList<Study> stdList = new ArrayList<>();
 		String sql = "select count(email), apply_status from applies group by std_id, apply_status having std_id = ?";
 		try {
@@ -91,10 +91,8 @@ public class StudyDao {
 				while(rs.next()) {
 					int memNum = rs.getInt(1);
 					String status = rs.getString(2);
-					System.out.println(memNum + "/"+s.getStd_max());
 					if(status.equals("accept")) {
 						if(s.getStd_max()>memNum){
-							System.out.println(System.currentTimeMillis() + " : "+ s.getStd_end().getTime());
 							if(System.currentTimeMillis()<s.getStd_end().getTime()){
 								stdList.add(s);
 							}
@@ -104,6 +102,38 @@ public class StudyDao {
 			}
 		} catch(Exception e) {
 			System.out.println("getStudyList() 에러 : "+e);
+		} finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+		return stdList;
+	}
+	
+	//내가 가입한 스터디 목록을 불러온다.
+	public List<Study> getMyStudy(String email) {
+		ArrayList<Study> list = (ArrayList<Study>)getAllStduyList("std_category, std_id");
+		ArrayList<Study> stdList = new ArrayList<>();
+		String sql = "select std_id from APPLIES where email = ? and apply_status = ?";
+		try {
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, email);
+			pstmt.setString(2,  "accept");
+			rs = pstmt.executeQuery();
+			ArrayList<Integer> stdIds = new ArrayList<>();
+			while(rs.next()) {
+				stdIds.add(rs.getInt("std_id"));
+			}
+			for(Study s : list) {
+				for(int id : stdIds) {
+					if(s.getStd_id() == id)	{//내가 가입한 스터디 걸러내기
+						if(System.currentTimeMillis()<s.getStd_end().getTime()){//종료가 안된 스터디만 걸러내기
+							stdList.add(s);
+						}
+					}
+				}
+			}
+		} catch(Exception e) {
+			System.out.println("getMyStudyList() 에러 : "+e);
 		} finally {
 			pool.freeConnection(conn, pstmt, rs);
 		}
@@ -192,7 +222,7 @@ public class StudyDao {
 	
 	//Study 검색 (스터디 이름과 소개 내용으로 검색)
 	public List<Study> getSearchStudyListOnNavbar(String search) {
-		ArrayList<Study> list = (ArrayList<Study>)getAllStduyList();
+		ArrayList<Study> list = (ArrayList<Study>)getAllStduyList("std_id");
 		ArrayList<Study> stdList = new ArrayList<>();
 		for(Study s : list) {
 			if(s.getStd_name().contains(search) || s.getStd_info().contains(search))	stdList.add(s);

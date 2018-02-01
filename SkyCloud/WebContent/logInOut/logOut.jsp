@@ -19,7 +19,7 @@
 	
 	function fnConfirmLogOut() {
 		window.parent.closeModal();
-		window.parent.location.reload();
+		window.parent.location = "/StudyCloud/index.jsp";
 	}
 </script>
 </head>

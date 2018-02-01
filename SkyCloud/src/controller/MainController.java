@@ -51,9 +51,6 @@ public class MainController extends HttpServlet {
 		case "LOADSTUDYLIST"://메인페이지에 스터디 목록 로딩 작업
 			stdDao = new StudyDao();
 			ArrayList<Study> stdList = (ArrayList<Study>)stdDao.getStduyList();
-			for(Study s : stdList) {
-				System.out.println(s.getStd_id());
-			}
 			request.setAttribute("stdList", stdList);
 			request.setAttribute("Loaded", true);
 			bodyInclude = "/main.jsp";
@@ -90,7 +87,7 @@ public class MainController extends HttpServlet {
 			break;
 			
 		case "LOGOUT"://로그아웃 처리 작업 - modal이기 때문에 url을 변경
-			request.getSession().removeAttribute("email");
+			request.getSession().invalidate();
 			request.setAttribute("logout", true);
 			url = "/logInOut/logOut.jsp";
 			break;
@@ -108,7 +105,6 @@ public class MainController extends HttpServlet {
 			while(paramEnums.hasMoreElements()) {//파라미터 이름들을 어레이 리스트에 답아준다.
 				String str = paramEnums.nextElement();
 				paramNames.add(str);
-				System.out.println(str+" = " + params.get(str)[0]);
 			}
 			for(String n : paramNames) {//요일에 해당하는 String[]을 어레이 리스트에 담아준다.
 				if(n.contains("std_day")) stdDays.add(params.get(n));
@@ -158,6 +154,12 @@ public class MainController extends HttpServlet {
 			
 		case "GOMNGSTUDY"://스터디 매니징 클라우드로 이동
 			bodyInclude = "/WEB-INF/study/manager.jsp";
+			stdDao = new StudyDao();
+			stdList = (ArrayList<Study>) stdDao.getMyStudy(email);
+			request.getSession().setAttribute("myStdList", stdList);
+			request.getSession().setAttribute("index", 0);
+			request.getSession().setAttribute("includeStdMenu", "stdHome");
+			request.getSession().setAttribute("includeApplyMenu", "applyList.jsp");
 			break;
 		}
 		request.setAttribute("bodyInclude", bodyInclude);
