@@ -1,13 +1,15 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <!DOCTYPE html>
 <html>
 <head>
-<title>Insert title here</title>
-<meta charset="utf-8">
+<title>Study Cloud</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="/StudyCloud/lib/bootstrap337/css/bootstrap.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="/StudyCloud/lib/bootstrap337/js/jquery.min.js"></script>
-<script type="text/javascript" src="/StudyCloud/lib/bootstrap337/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/StudyCloud/lib/bootstrap337/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="/StudyCloud/lib/bootstrap337/js/jquery-3.2.1.min.js"></script>
+<script src="/StudyCloud/lib/bootstrap337/js/bootstrap.min.js"></script>
 <style>
 	.rlist-group-item {
 		width: 70%;
@@ -38,9 +40,7 @@
 	    border-bottom-left-radius: 4px;
 	    border-bottom-right-radius: 4px;
 	}
-    body{
-     	font-style: 맑은 고딕;
-    }
+    
 	.name-tag {
 		position: relative;
 	    display: block;
@@ -68,49 +68,59 @@
 	}
 	
 </style>
+<script>
+	var currentIndex = 0;
+	var currentMenu = "stdHome";
+	function fnSetIndex(index) {
+		currentIndex = index;
+		$.post("/StudyCloud/ajax", {"command":"MNG_CHANGESTUDY", "index":index, "includeStdMenu":currentMenu}, 
+				function(data) {
+					fnChangeStdMenuInclude(data);
+			});
+	}
+	
+	function fnSetCurrentStdMenu(menu) {
+		currentMenu = menu;
+		$.post("/StudyCloud/ajax", {"command":"MNG_CHANGESTUDY", "index":currentIndex, "includeStdMenu":menu}, 
+				function(data) {
+					fnChangeStdMenuInclude(data);
+			});
+	}
+	function fnSetCurrentApplyMenu(menu) {
+		
+	}
+</script>
 </head>
 <body>
 	<div class="container-fluid" style="margin-top: 50px;">
 		<!-- nav tabs -->
-		<div class="row">
-			<div class="col-md-12">
-				<ul class="nav nav-tabs">
-					<li role="presentation" class="active dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">나의 스터디 <span class="caret"></span></a>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">미드정복!</a></li>
-							<li><a href="#">Another action</a></li>
-						</ul>
-					</li>
-					<li><a href="#">스터디 신청목록</a></li>
-				</ul>
+		<div class="col-md-12">
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#studyManager" data-toggle="tab">나의 스터디</a></li>
+				<li><a href="#applyList" data-toggle="tab">스터디 신청목록</a></li>
+			</ul>
+			
+		<!-- 탭화면 -->
+			<div class="tab-content">
+			<!-- 스터디 매니져 화면 -->
+				<div id="studyManager" class="tab-pane fade in active">
+					<div id="mngMenuDiv">
+						<jsp:include page="/studyManagingMenu/stdMenu.jsp"></jsp:include>
+					</div>
+				</div>
+			<!-- 스터디 신청 목록 화면 -->
+				<div id="applyList" class="tab-pane fade">
+					<h3>Menu 1</h3>
+  					<p>Some content in menu 1.</p>
+				</div>
 			</div>
 		</div>
-		<!-- nav pills -->
-		<div class="row" style="margin-top: 10px">
-			<div class="col-md-2" style="border:0px;">
-				<ul class="nav rnav-pills nav-stacked text-center">
-					<li class="active">
-	                <a href="#">스터디 홈</a>
-	              </li>
-	              <li>
-	                <a href="#">공지사항</a>
-	              </li>
-	              <li>
-	                <a href="#">과제</a>
-	              </li>
-	              <li>
-	                <a href="#">출석부</a>
-	              </li>
-				</ul>
-			</div>
-			
-			<!-- studyHome -->
-			<div style="margin-top: 10px">
-				<jsp:include page="/WEB-INF/study/studyHome.jsp"></jsp:include>
-			</div>
-			
-		</div>
+		
+		<!-- 페이지 변경을 위한 밸류값을 저장하는 div들.. -->
+		
+		
+		
+		
 	</div>
 </body>
 </html>

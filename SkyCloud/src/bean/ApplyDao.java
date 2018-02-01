@@ -42,4 +42,22 @@ public class ApplyDao {
 		}
 		return result;
 	}
+	
+	public int getCurrentMembersNum(int std_id) {
+		int result = 0;
+		try {
+			String sql = "select count(email) from APPLIES group by std_id, apply_status having apply_status = 'accept' and std_id = ?";
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, std_id);
+			rs = pstmt.executeQuery();
+			rs.next();
+			result = rs.getInt(1);
+		} catch (Exception e) {
+			System.out.println("getCurrentMembersNum() 에러 : "+e);
+		} finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+		return result;
+	}
 }
