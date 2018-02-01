@@ -58,22 +58,28 @@ public class Util {
 					days = "월";
 				}
 				if(m.containsKey("화")) {
-					days+="/화";
+					if(days.isEmpty()) days = "화";
+					else days+=" / 화";
 				}
 				if(m.containsKey("수")) {
-					days+="/수";
+					if(days.isEmpty()) days = "수";
+					else days+=" / 수";
 				}
 				if(m.containsKey("목")) {
-					days+="/목";
+					if(days.isEmpty()) days = "목";
+					else days+=" / 목";
 				}
 				if(m.containsKey("금")) {
-					days+="/금";
+					if(days.isEmpty()) days = "금";
+					else days+=" / 금";
 				}
 				if(m.containsKey("토")) {
-					days+="/토";
+					if(days.isEmpty()) days = "토";
+					else days+=" / 토";
 				}
 				if(m.containsKey("일")) {
-					days+="/일";
+					if(days.isEmpty()) days = "일";
+					else days+=" / 일";
 				}
 				daysList.add(days);
 		}

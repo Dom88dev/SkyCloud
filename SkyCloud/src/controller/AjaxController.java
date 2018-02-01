@@ -182,6 +182,20 @@ public class AjaxController extends HttpServlet {
 			String jsonData = new Gson().toJson(jobj);
 			out.print(jsonData);
 			break;
+		case "LOADNOTICE":
+			response.setContentType("text/plain");
+			jobj = new JsonObject();
+			boardDao = new BoardDao();
+			stdId = Integer.parseInt(request.getParameter("stdId"));
+			nList = (ArrayList<Notice>) boardDao.getNoticeList(stdId);
+			jarrayNList = (JsonArray) new Gson().toJsonTree(nList,
+		            new TypeToken<List<Notice>>() {
+		            }.getType());
+			jobj.add("noticeList", jarrayNList);
+			jobj.addProperty("currentPage", 0);
+			jsonData = new Gson().toJson(jobj);
+			out.print(jsonData);
+			break;
 		}
 		out.close();
 	}
