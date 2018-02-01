@@ -2,6 +2,7 @@
 <style>
 	#message{color:#39d2fd}
 	nav{background-color: white}
+
 	.nav-search-input {
 		background-color: none;
 		border:none;
@@ -12,6 +13,7 @@
 		border:none;
 		outline:none;
 	}
+
 
 </style>
 <script>

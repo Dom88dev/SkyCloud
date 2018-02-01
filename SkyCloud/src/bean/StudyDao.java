@@ -219,6 +219,7 @@ public class StudyDao {
 		String sql = "";
 		return result;
 	}
+
 	
 	//Study 검색 (스터디 이름과 소개 내용으로 검색)
 	public List<Study> getSearchStudyListOnNavbar(String search) {
@@ -229,4 +230,5 @@ public class StudyDao {
 		}
 		return stdList;
 	}
+
 }

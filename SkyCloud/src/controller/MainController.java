@@ -143,6 +143,7 @@ public class MainController extends HttpServlet {
 			
 			break;
 			
+
 		case "SEARCHSTUDY"://스터디 검색 처리
 			String searchTxt = request.getParameter("searchTxt");
 			stdDao = new StudyDao();
@@ -160,6 +161,19 @@ public class MainController extends HttpServlet {
 			request.getSession().setAttribute("index", 0);
 			request.getSession().setAttribute("includeStdMenu", "stdHome");
 			request.getSession().setAttribute("includeApplyMenu", "applyList.jsp");
+			break;
+			
+		case "UPDATEINFO": //회원 수정 처리
+			mem = new Member();
+
+			mem.setPw(request.getParameter("pw"));
+			mem.setName(request.getParameter("name"));
+			mem.setTel(request.getParameter("tel"));
+
+			memDao = new MemberDao();
+			int rs = memDao.UpdateMemInfo(mem);
+			request.setAttribute("upInfoResult", rs);
+			bodyInclude = "/upMemInfo.jsp";
 			break;
 		}
 		request.setAttribute("bodyInclude", bodyInclude);
