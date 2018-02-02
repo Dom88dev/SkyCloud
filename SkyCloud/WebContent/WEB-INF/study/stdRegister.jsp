@@ -162,9 +162,12 @@ input:focus, select:focus {
 			  								<option value="etc">기타</option>
 										</select>
 									</div>
-									<input type="text" class="rform-control col-sm-10" name="std_name"
-										placeholder="등록할 스터디명을 입력">
+									<div>
+									<input type="text" class="rform-control col-sm-10" name="std_name" id="std_name"
+										placeholder="등록할 스터디명을 입력" required="required">
+									</div>	
 								</div>
+								<div id="stdName" style="padding-left: 20%; color: #F56E6E;font-size: 13px;"></div>
 							</td>
 						</tr>
 						<tr>
@@ -173,33 +176,38 @@ input:focus, select:focus {
 							</th>
 							<td colspan="2" class="col-sm-10">
 								<div class="form-group" style="line-height: 35px;">
-									<input type="number" class="rform-control col-sm-2" name="std_max" placeholder="인원 수" min="2">
-									<div class="col-sm-10">
-										<label class="radio-control">
-											<input type="radio" value="M" name="std_gender">
-											<i class="fa fa-mars"> 남자만</i>
-										</label>
-										<label class="radio-control">
-											<input type="radio"	name="std_gender" value="F">
-											<i class="fa fa-venus"> 여자만</i>
-										</label>
-										<label class="radio-control">
-											<input type="radio" name="std_gender" value="B" checked="checked">
-											<i class="fa fa-venus-mars"> 성별무관</i>
-										</label>
+									<div>
+										<div>
+											<input type="number" class="rform-control col-sm-2" name="std_max" id="std_max" placeholder="인원 수" min="2" required="required">
+										</div>
+										<div class="col-sm-10">
+											<label class="radio-control">
+												<input type="radio" value="M" name="std_gender">
+												<i class="fa fa-mars"> 남자만</i>
+											</label>
+											<label class="radio-control">
+												<input type="radio"	name="std_gender" value="F">
+												<i class="fa fa-venus"> 여자만</i>
+											</label>
+											<label class="radio-control">
+												<input type="radio" name="std_gender" value="B" checked="checked">
+												<i class="fa fa-venus-mars"> 성별무관</i>
+											</label>
+										</div>
 									</div>
 								</div>
 							</td>
 						</tr>
+						
 						<tr>
 							<th class="col-sm-2">
 								<label>스터디 기간</label>
 							</th>
 							<td colspan="2" class="col-sm-10 dateTd">
 								<div class="input-group input-daterange" id="datepicker1">
-								    <input type="text" class="form-control" name="std_start" data-date-start-date="0d" data-date-format="yyyy-mm-dd" data-date-language="kr" data-date-autoclose="true" placeholder="시작 날짜를 선택해주세요.">
-								    <div class="input-group-addon" id="dateSeperator"> ~ </div>
-								    <input type="text" class="form-control" name="std_end" data-date-start-date="+7d" data-date-format="yyyy-mm-dd" data-date-language="kr" data-date-autoclose="true" placeholder="종료 날짜를 선택해주세요.">
+								   	<input type="text" id="startDate" class="form-control" name="std_start" data-date-start-date="0d" data-date-format="yyyy-mm-dd" data-date-language="kr" data-date-autoclose="true" placeholder="시작 날짜를 선택해주세요." required="required" />
+								   	<div class="input-group-addon" id="dateSeperator"> ~ </div>
+								    <input type="text" id="EndDate" class="form-control" name="std_end" data-date-start-date="+7d" data-date-format="yyyy-mm-dd" data-date-language="kr" data-date-autoclose="true" placeholder="종료 날짜를 선택해주세요." required="required" />
 								</div>
 							</td>
 						</tr>
@@ -228,7 +236,7 @@ input:focus, select:focus {
 									</div>
 									<div class="col-sm-12" style="padding:0;"><hr></div>
 									<div class="col-sm-8" style="padding:0;">
-										<input type="text" name="std_addr" class="rform-control" placeholder="위치 확인을 눌러 주소를 찾아주세요" id="std_addr0">
+										<input type="text" name="std_addr" class="rform-control" placeholder="위치 확인을 눌러 주소를 찾아주세요" id="std_addr0" required="required">
 									</div>
 									<div class="col-sm-2" style="padding:0;">
 										<button type="button" class="btn btn-white" onclick="popupMapModal('std_addr0')">위치 확인</button>
@@ -245,7 +253,7 @@ input:focus, select:focus {
 								<label>스터디 소개글</label>
 							</th>
 							<td colspan="2">
-								<textarea class="rform-control" name="std_info" style="width: 100%; height: 100px"></textarea>
+								<textarea class="rform-control" name="std_info" style="width: 100%; height: 100px" required="required"></textarea>
 							</td>
 						</tr>
 						<tr>
@@ -253,7 +261,7 @@ input:focus, select:focus {
 								<label>스터디 계획</label>
 							</th>
 							<td colspan="2">
-								<textarea class="rform-control" name="std_plan" style="width: 100%; height: 100px"></textarea>
+								<textarea class="rform-control" name="std_plan" style="width: 100%; height: 100px" required="required"></textarea>
 							</td>
 						</tr>
 						<tr>
@@ -261,7 +269,7 @@ input:focus, select:focus {
 								<label>기타사항</label>
 							</th>
 							<td colspan="2">
-								<textarea class="rform-control" name="std_etc" style="width: 100%; height: 100px"></textarea>
+								<textarea class="rform-control" name="std_etc" style="width: 100%; height: 100px" required="required"></textarea>
 							</td>
 						</tr>
 						<tr>
@@ -375,5 +383,48 @@ input:focus, select:focus {
 	});
 
 </script>
-
+<!-- 유효성 검사 -->
+<script>
+	$(document).ready(function(){
+		$("#std_name").focusout(function(){
+			var val = $(this).val();
+			var re =/^[0-9a-zA-Z가-힣]{6,16}$/;
+			if(val == ""| val == null){
+				$("#stdName").text("스터디명을 입력해주세요.").val();
+			}
+			else if(!re.test(val)){
+				$("#stdName").text("6자이상, 16이하로 작성해주세요.").val();
+			}
+			else{
+				//$("#stdName").text("사용가능합니다.").val();
+				
+				$.ajax({
+					type:"POST",
+					url:"/StudyCloud/ajax?command=STD_VALID_REGISTER_STDNAME",
+					data:{email : "${email}"},
+					success:function(result){
+						alert("result : " + result);
+						if(result == 0){
+							$("#stdName").text("사용할 수 있는 스터디명입니다.").val();
+						}
+						else{
+							$("#stdName").text("중복된 스터디명입니다.").val();
+						}
+					}
+				})
+			}
+		})
+	})
+</script>
 </html>
+
+
+
+
+
+
+
+
+
+
+

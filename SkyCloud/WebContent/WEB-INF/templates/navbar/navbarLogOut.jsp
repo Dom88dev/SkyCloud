@@ -25,6 +25,9 @@
 	function fnSearchStudy() {
 		$("form.navbar-form").submit();
 	}
+	function fnLogoutStd(){
+		$("#logOutStdModal").modal();
+	}
 </script>
 	<!-- navbar -->
 	<nav class="navbar navbar-fixed-top">
@@ -44,7 +47,7 @@
 			<div class="navbar-inner">
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav navbar-right">
-						<li class="text-info"><a href="#">스터디 등록</a></li>
+						<li class="text-info"><a href="javascript:fnLogoutStd();">스터디 등록</a></li>
 						<li class="text-info"><a href="/StudyCloud/main?command=GOREGISTER">회원가입</a></li>
 						<li class="text-info"><a href="javascript:fnPopupLogIn();">로그인</a></li>
 					</ul>
