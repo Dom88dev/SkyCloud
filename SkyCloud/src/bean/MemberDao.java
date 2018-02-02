@@ -80,7 +80,6 @@ public class MemberDao {
 		}finally {
 			pool.freeConnection(conn, pstmt, rs);
 		}
-		System.out.println("email 결과 : "+result);
 		return result;
 	}
 	

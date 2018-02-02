@@ -69,12 +69,30 @@ public class AjaxController extends HttpServlet {
 		}
 		request.setAttribute("stdList", stdList);
 
-		
 		switch(command) {
-		case "VALIDITYTEST_REGISTER":
+		// 이메일 중복 검사 Ajax
+		case "VALIDITYTEST_REGISTER_EMAIL":
 			response.setContentType("text/plain");
+			memDao = new MemberDao();
+			out.print(memDao.getValidEmail(email));
 			break;
 			
+		// 닉네임 중복 검사 Ajax
+		case "VALIDITYTEST_REGISTER_NAME":
+			response.setContentType("text/plain");
+			String name = request.getParameter("name");
+			memDao = new MemberDao();
+			out.print(memDao.getValidName(name));
+			break;
+			
+		// 연락처 중복 검사 Ajax
+		case "VALIDITYTEST_REGISTER_TEL":
+			response.setContentType("text/plain");
+			String tel = request.getParameter("tel");
+			memDao = new MemberDao();
+			out.print(memDao.getValidTel(tel));
+			break;
+
 		case "CHECKATT": //출석버튼 눌렀을때 작업
 			
 			attendanceDao = new AttendanceDao();
@@ -94,6 +112,15 @@ public class AjaxController extends HttpServlet {
 				e.printStackTrace();
 			}
 			out.println(jstatus);
+			break;
+
+			
+		//스터디 등록 시 이메일를 이용하여 스터디명 중복 검사 Ajax
+		case "STD_VALID_REGISTER_STDNAME":
+			response.setContentType("text/plain");
+			String stdEmail = request.getParameter("email");
+			stdDao = new StudyDao();
+			out.print(stdDao.getValidStdEmail(stdEmail));
 			break;
 		
 		case "CNTSTATUS":	//출결 상황 카운트

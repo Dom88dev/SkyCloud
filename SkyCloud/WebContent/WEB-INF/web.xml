@@ -25,4 +25,13 @@
     <servlet-name>ajax</servlet-name>
     <url-pattern>/ajax</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>sendEmail</servlet-name>
+    <servlet-class>controller.SendEmailController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>sendEmail</servlet-name>
+    <url-pattern>/sendEmail</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

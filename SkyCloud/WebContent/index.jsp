@@ -37,7 +37,6 @@
 		</c:choose>
 	</div>
 
-
 	<div class="container-fluid" style="margin-top:50px">
 		<div class="row">
 	<!--  body -->	
@@ -70,6 +69,20 @@
 				</div>
 			</div>
 			
+		<!-- 로그아웃 상태시 스터디 등록 모달창 -->	
+	 		<div class="modal fade" id="logOutStdModal" data-backdrop="static">
+	 			<div class="modal-dialog modal-sm">
+	 				<div class="modal-content">
+	 					<div class="modal-body">
+							<h4 style="text-align: center;color: #6e6e6e">로그인이 필요합니다.</h4>
+		 					<div style="text-align: center;padding-top: 20px">
+		 						<button class="btn btn-primary" data-dismiss="modal" style="background: #39d2fd;border: 0;">닫기</button>
+		 					</div>
+		 				</div>
+	 				</div>
+	 			</div>
+	 		</div>
+	 		
 		</div>
 	</div>
 </body>

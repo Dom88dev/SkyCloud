@@ -59,68 +59,6 @@ td, tr {
 			}
 		}
 	</script>
-<script>
-	// 이메일 중복검사 ajax
-	/*
-	$(document).ready(function (){
-		$("#email").focusout(function(){
-			var email = $("#email").val();
-			$.ajax({
-				type:"POST",
-				url:"/StudyCloud/ajax?command=VALIDITYTEST_REGISTER_EMAIL",
-				data:{email : email},
-				success:function(result){
-					if(result == 1){
-						$("#emailValid2").text("사용할 수 있는 이메일 입니다.").val();
-					}
-					else if(result == 2){
-						$("#emailValid2").text("1").val();
-					}
-					else{
-						$("#emailValid2").text("중복된 이메일입니다.").val();
-					}
-				}
-			})
-		})
-
-	})
-	// 닉네임 중복검사 ajax
-	/*
-	$(document).ready(function(){
-		var userName = $("#name").val();
-		$.ajax({
-			type:"POST",
-			url:"/StudyCloud/ajax?command=VALIDITYTEST_REGISTER_NAME",
-			data:{userName : userName},
-			success:function(result){
-				if(result == 1){
-					$("#emailValid").text("사용할 수 있는 닉네임 입니다.").val();
-				}
-				else{
-					$("#emailValid").text("중복된 닉네임입니다.").val();
-				}
-			}
-		})
-	})
-	// 전화번호 중복검사 ajax
-	$(document).ready(function(){
-		var userTel = $("tel").val();
-		$.ajax({
-			type:"POST",
-			url:"/StudyCloud/ajax?command=VALIDITYTEST_REGISTER_TEL",
-			data:{userTel : userTel},
-			success:function(result){
-				if(result == 1){
-					$("#emailValid").text("사용할 수 있는 전화번호 입니다.").val();
-				}
-				else{
-					$("#emailValid").text("중복된 전화번호입니다.").val();
-				}
-			}
-		})
-	})
-	*/
-</script>	
 <body>
 	<!-- 오늘 날짜 객체 생성 -->
 	<jsp:useBean id="date" class="java.util.Date"/>
@@ -141,14 +79,21 @@ td, tr {
 					<div class="container">
 						<div class="mform">
 							<div>
-							<div>
-								<div style="border: 0">
-									<div align="center">
-										<img alt="로고" src="/StudyCloud/images/icons/navbar_logo.png">
+							
+						<!-- 로고  -->
+						
+								<div>
+									<div style="border: 0">
+										<div align="center">
+											<img alt="로고" src="/StudyCloud/images/icons/navbar_logo.png">
+										</div>
 									</div>
 								</div>
-							</div>
-							<div style="margin-top: 10px;margin-bottom: 10px;border-top : 1px solid #dcdcdc;"></div>
+								
+								<div style="margin-top: 10px;margin-bottom: 10px;border-top : 1px solid #dcdcdc;"></div>
+						
+						<!-- 이메일 입력 란 -->	
+							
 								<div class="form-group has-success has-feedback" style="border-top : 0;">
 									<div>
 										<label class="mtext-info mfont-size control-label col-sm-3"><strong style="color: #39d2fd">이메일</strong></label>
@@ -160,7 +105,7 @@ td, tr {
 										</div>
 										<div>
 											<div style="float:left;width:33%;">
-												<button type="button" id='input' class="memail-authentication" name="email" >  email 인증  </button>
+												<button type="button" id='inputEmail' class="memail-authentication" name="email" >  email 인증  </button>
 											</div>
 											<div style="float:right;width:63%;background:red;">	
 												<span id="certification" class="memail-confirm mfont-size" style="display; text-align:center; ;position:absolute ;width:230px;font-size:14px;">이메일 인증 확인</span>
@@ -169,9 +114,12 @@ td, tr {
 										</div>
 										<div id="emailValid" style="color: #F56E6E;font-size: 13px;text-align: left;"></div>
 									</div>
-									
 								</div>
+								
 								<div style="margin-top: 10px;margin-bottom: 10px;border-top : 1px solid #dcdcdc;"></div>
+						
+						<!-- 비밀번호 입력란 -->	
+								
 								<div class="form-group has-success has-feedback">
 									<div>
 										<label class="mtext-info mfont-size control-label col-sm-3"><strong style="color: #39d2fd">비밀번호</strong></label>
@@ -181,7 +129,11 @@ td, tr {
 										<div id="pwValid" style="color: #F56E6E;font-size: 13px;text-align: left;"></div>
 									</div>
 								</div>
+								
 								<div style="margin-top: 10px;margin-bottom: 10px;border-top : 1px solid #dcdcdc;"></div>
+								
+						<!-- 비밀번호 확인 입력란 -->	
+						
 								<div class="form-group has-success has-feedback">
 									<div>
 										<label class="mtext-info mfont-size control-label col-sm-3"><strong style="color: #39d2fd">비밀번호 확인</strong></label>
@@ -191,7 +143,11 @@ td, tr {
 										<div id="pwcValid" style="color: #F56E6E;font-size: 13px;text-align: left;"></div>
 									</div>
 								</div>
+								
 								<div style="margin-top: 10px;margin-bottom: 10px;border-top : 1px solid #dcdcdc;"></div>
+								
+						<!-- 닉네임 입력란 -->		
+								
 								<div class="form-group has-success has-feedback">
 									<div>
 										<label class="mtext-info mfont-size control-label col-sm-3"><strong style="color: #39d2fd">닉네임</strong></label>
@@ -201,7 +157,11 @@ td, tr {
 										<div id="nameValid" style="color: #F56E6E;font-size: 13px;text-align: left;"></div>
 									</div>
 								</div>
+								
 								<div style="margin-top: 10px;margin-bottom: 10px;border-top : 2px solid #dcdcdc;"></div>
+								
+						<!-- 연락처 입력란 -->		
+								
 								<div class="form-group has-success has-feedback">
 									<div>
 										<label class="mtext-info mfont-size control-label col-sm-3"><strong style="color: #39d2fd">연락처</strong></label>
@@ -211,7 +171,11 @@ td, tr {
 										<div id="telValid" style="color: #F56E6E;font-size: 13px;text-align: left;"></div>
 									</div>
 								</div>
+								
 								<div style="margin-top: 10px;margin-bottom: 10px;border-top : 1px solid #dcdcdc;"></div>
+								
+						<!-- 성별 입력 토클박스 -->		
+								
 								<div class="form-group has-success has-feedback">
 									<div>
 										<div>
@@ -234,7 +198,11 @@ td, tr {
 										</div>
 									</div>
 								</div>
+								
 								<div style="margin-top: 10px;margin-bottom: 10px;border-top : 1px solid #dcdcdc;"></div>
+								
+						<!-- 생년월일 입력란 -->		
+								
 								<div class="form-group has-success has-feedback">
 									<div>
 										<label class="mtext-info mfont-size control-label col-sm-3"><strong style="color: #39d2fd">생년월일</strong></label>
@@ -244,17 +212,23 @@ td, tr {
 										<div id="bornValid" style="color: #F56E6E;font-size: 13px;text-align: left;"></div>
 									</div>
 								</div>
+								
 								<div style="margin-top: 10px;margin-bottom: 10px;border-top : 1px solid #dcdcdc;"></div>
+								
+						<!-- 회원 가입 버튼  -->		
+								
 								<div>
 									<div>
 										<button id="registerbtn" type="button" style="width: 100%;height: 50px; border: 0;background-color:#39d2fd;color: white;margin: auto;">회원 가입</button>
 									</div>
 								</div>
+								
 								<div>
 									<div>
 									<div style="margin-top: 10px;margin-bottom: 10px;border-top : 1px double #ffffff"></div>
 									</div>
 								</div>
+								
 							</div>
 						</div>
 					</div>
@@ -301,6 +275,29 @@ td, tr {
 				</div>
 			</div>
 		</div>
+		
+		<!-- 이메일 인증 모달 -->
+		<div class="container">
+		 	<div class="row">
+		 		<div class="col-md-9">
+		 			<div class="modal fade" id="emailNumModal" data-backdrop="static">
+		 				<div class="modal-dialog modal-sm">
+		 					<div class="modal-content">
+		 						<div class="modal-header">
+		 							<h3>이메일 인증</h3>
+		 						</div>
+		 						<div class="modal-body">
+									<input type="text" id="emailNum" name="emailNum" class="mform-control" style="width: 100%; font-size:15px; border: 1px solid #39d2fd;" placeholder="인증번호 입력" required="required" />
+		 						</div>
+		 						<div class="modal-footer">
+		 							<button class="btn btn-primary" data-dismiss="modal" id="emailConformBtn">확인</button>
+		 						</div>
+		 					</div>
+		 				</div>
+		 			</div>
+		 		</div>
+		 	</div>
+	 </div>
 		
 	</div>
 	
@@ -353,9 +350,8 @@ td, tr {
 				$("#emailValid").text("이메일 입력이 부정확합니다.").val();
 			}
 			else{
-				//$("#emailValid").text("사용가능합니다.").val();
 				var email = $("#email").val();
-				alert(email);
+				//alert(email);
 				//$.post("/StudyCloud/ajax?command=VALIDITYTEST_REGISTER_EMAIL",{	email:param } , callbackEmail);
 				
 				$.ajax({
@@ -363,12 +359,12 @@ td, tr {
 					url:"/StudyCloud/ajax?command=VALIDITYTEST_REGISTER_EMAIL",
 					data:{email : email},
 					success:function(result){
-						alert("result : " + result);
+						//alert("result : " + result);
 						if(result == 0){
-							$("#emailValid").text("중복된 이메일입니다.").val();
+							$("#emailValid").text("사용할 수 있는 이메일입니다.").val();
 						}
 						else{
-							$("#emailValid").text("사용할 수 있는 이메일 입니다.").val();
+							$("#emailValid").text("중복된 이메일입니다.").val();
 						}
 					}
 				})
@@ -437,12 +433,12 @@ td, tr {
 					url:"/StudyCloud/ajax?command=VALIDITYTEST_REGISTER_NAME",
 					data:{name : name},
 					success:function(result){
-						alert("result : " + result);
+						//alert("result : " + result);
 						if(result == 0){
-							$("#nameValid").text("중복된 닉네임입니다.").val();
+							$("#nameValid").text("사용할 수 있는 닉네임입니다.").val();
 						}
 						else{
-							$("#nameValid").text("사용할 수 있는 닉네임 입니다.").val();
+							$("#nameValid").text("중복된 닉네임입니다.").val();
 						}
 					}
 				})
@@ -472,12 +468,12 @@ td, tr {
 					url:"/StudyCloud/ajax?command=VALIDITYTEST_REGISTER_TEL",
 					data:{tel : tel},
 					success:function(result){
-						alert("result : " + result);
+						//alert("result : " + result);
 						if(result == 0){
-							$("#telValid").text("중복된 연락처입니다.").val();
+							$("#telValid").text("사용할 수 있는 연락처입니다.").val();
 						}
 						else{
-							$("#telValid").text("사용할 수 있는 연락처입니다.").val();
+							$("#telValid").text("중복된 연락처입니다.").val();
 						}
 					}
 				})
@@ -506,10 +502,10 @@ td, tr {
 			}
 
 		})
-
+		//가입 버튼
 		$("#registerbtn").click(function(){
 			if($("#emailValid").val() == "1" && $("#pwValid").val() == "1" && $("#pwcValid").val() == "1" && $("#nameValid").val() == "1" && $("#telValid").val() == "1" && $("#bornValid").val() == "1"){
-				alert("호출1");
+				//alert("호출1");
 				$("#registerbtn").attr("type", "submit");
 				
 			}
@@ -518,6 +514,68 @@ td, tr {
 			}
 		});
 	});
-	
+</script>
+<%
+	String emailNum = request.getParameter("emailNum");
+	if(emailNum != null){
+%>
+	<script>
+		$(document).ready(function(){
+			$("#emailConformBtn").click(function(){
+				if($("emailNum").val() == '<%=emailNum%>'){
+					alert("하하하 호출")
+				}
+				else{
+					alert("흐흐흐 호출")
+				}
+			})
+		})
+	</script>
+<%		
+	}
+%>
+<script>
+	$(document).ready(function(){
+		//이메일 인증 버튼
+		$("#inputEmail").click(function(){
+			alert("호출1")
+			alert('호출 : '+'<%=emailNum%>');
+			var email = $("#email").val();
+			$.ajax({
+				type:"POST",
+				url:"/StudyCloud/sendEmail",
+				data:{email : email},
+				success:function(){
+					alert("호출2");
+					//alert(data);
+					$("#emailNumModal").modal();
+				}
+			})
+		})
+	})
 </script>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
