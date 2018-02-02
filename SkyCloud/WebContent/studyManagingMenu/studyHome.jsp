@@ -62,6 +62,11 @@
 				}
 		});
 	})();
+	
+	//위치확인 모달창 띄우는 function
+	function fnMapPopup(addr) {
+		alert(addr);
+	}
 </script>
 <style>
 	div#studyTitleDiv {
@@ -86,6 +91,24 @@
 		color: white;
    		text-shadow: -1px 0 #39d2fd, 0 1px #39d2fd, 1px 0 #39d2fd, 0 -1px #39d2fd;
 	}
+	
+	button.btn-white {
+	border: 0.4px solid #39d2fd;
+	color: #39d2fd;
+	background-color: #ffffff;
+	border-radius: 3em;
+}
+
+button.btn-white:active, button.btn-white.active, .open>.dropdown-toggle.btn-white {
+	color: #39d2fd;
+	background-color: #ffffff;
+	border: 0.4px solid #39d2fd;
+	box-shadow: 0 4px 8px 0 rgba(57, 210, 253, 0.2), 0 6px 20px 0 rgba(57, 210, 253, 0.19);
+	outline:none;
+}
+
+button.btn-white:hover {	border: 0.4px solid #39d2fd;	color: #39d2fd;	background-color: #fff; }
+button.btn-white:focus {	border: 0.4px solid #39d2fd;	color: #39d2fd;	background-color: #fff;	outline:none;	}
 </style>
 <div class="col-md-12" align="center">
 	<div class="col-md-9">
@@ -113,7 +136,7 @@
 				<c:forEach begin="0" end="${fn:length(timeplaceList) - 1}" step="1" var="j">
 				<div class="studyTimePlaceDiv">
 					<i class="glyphicon glyphicon-time">${timeplaceList[j].std_time} ~ ${timeplaceList[j].std_time + (timeplaceList[j].std_hour * 100)}</i>&nbsp;<span>${timeplaceList[j].std_day}</span>요일<br>
-					<i class="glyphicon glyphicon-map-marker">${timeplaceList[j].std_addr}</i>
+					<i class="glyphicon glyphicon-map-marker">${timeplaceList[j].std_addr}</i>&nbsp;<button class="btn-white" onclick="fnMapPopup('${timeplaceList[j].std_addr}')">위치 확인</button>
 				</div>
 			</c:forEach>
 		</div>
