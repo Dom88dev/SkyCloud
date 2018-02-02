@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,72 +8,134 @@
 <link rel="stylesheet" href="/StudyCloud/lib/bootstrap337/css/bootstrap.min.css" />
 <script src="/StudyCloud/lib/bootstrap337/js/jquery-3.2.1.min.js"></script>
 <script src="/StudyCloud/lib/bootstrap337/js/bootstrap.min.js"></script>
+<style>
+	.image-control {
+    width: 100%;
+    height: 300px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #39d2fd;
+}
+
+button.btn-info:active {
+	border: 0.4px solid #39d2fd;
+	box-shadow: 0 4px 8px 0 rgba(57, 210, 253, 0.2), 0 6px 20px 0 rgba(57, 210, 253, 0.19);
+	outline:none;
+}
+button.btn-info{ width:100%; height:50%; background-color:#39d2fd; }
+
+.fixedTable td {
+	border-top: 1px solid #ddd !important;
+}
+.table>tbody+tbody {
+	border-top: none;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th,
+	.table>thead>tr>td, .table>thead>tr>th {
+	padding: 8px;
+	line-height: 1.42857143;
+	vertical-align: top;
+	border-top: none
+}
+
+.table>thead>tr>th {
+	vertical-align: bottom;
+	border-bottom: none
+}
+
+.affix{
+	left:57%;
+}
+
+.category-img{
+	width:90%;
+	height:311px; 
+	margin:5%; 
+	border:1px solid #39d2fd;
+}
+</style>
 </head>
-<body>
-	<div class="col-md-7">
-		<div class="col-md-3">
-			<h4 class="name-tag">
-				<span class="glyphicon glyphicon-cloud"></span>미드 홀릭
-			</h4>
-			<h5>010-1234-5678</h5>
-		</div>
-		<div class="col-md-9 text-center">
-			<h2>[어학]미드 정복 !</h2>
-			<h5>
-				2018.01.03~2018.04.08 <small>&nbsp;1/10명</small>
-			</h5>
-		</div>
-		<div class="col-md-6 ">
-			<h3>소개</h3>
-			<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-				Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque
-				penatibus et magnis dis parturient montes, nascetur ridiculus mus..</p>
-		</div>
-		<div class="col-md-6">
-			<h3>장소 및 시간</h3>
-			<p>
-				Lorem ipsum dolor sit amet, consectetur adipisici elit, <br>sed
-				eiusmod tempor incidunt ut labore et dolore magna aliqua. <br>Ut
-				enim ad minim veniam, quis nostrud
-			</p>
-		</div>
-		<div class="col-md-6">
-			<h3>스터디 계획</h3>
-			<p>
-				Lorem ipsum dolor sit amet, consectetur adipisici elit, <br>sed
-				eiusmod tempor incidunt ut labore et dolore magna aliqua. <br>Ut
-				enim ad minim veniam, quis nostrud
-			</p>
-		</div>
-		<div class="col-md-6">
-			<h3>참고 사항</h3>
-			<p>
-				Lorem ipsum dolor sit amet, consectetur adipisici elit, <br>sed
-				eiusmod tempor incidunt ut labore et dolore magna aliqua. <br>Ut
-				enim ad minim veniam, quis nostrud
-			</p>
-		</div>
-	</div>
-	<div class="col-md-3">
-		<div class="col-md-12 ">
-			<a class="btn btn-lg rbtn-primary">출석체크</a>
-		</div>
-		<div class="col-md-12 ">
-			<br>
-			<ul class="list-group">
-				<li class="rlist-group-item active">공지사항</li>
-				<li class="rlist-group-item ">공지사항 1</li>
-				<li class="rlist-group-item ">공지사항 2</li>
-				<li class="rlist-group-item ">공지사항 3</li>
-			</ul>
-		</div>
-		<div class="col-md-12 ">
-			<ul class="list-group ">
-				<li class="rlist-group-item active">과제</li>
-				<li class="rlist-group-item ">과제 1</li>
-				<li class="rlist-group-item ">과제 2</li>
-			</ul>
-		</div>
-	</div>
+<body style="background-color:#e6e6e6;">
+    <div class="container-fluid" style="width:80%;" >
+		<div class="row">
+			<div class="col-md-7 col-sm-7 col-xs-7" style="background-color:#fff; padding:15px" align="center">
+					<c:choose>
+						<c:when test="${std.std_category == 'lang'}"><img class="category-img" src="/StudyCloud/images/categories/lang.png"/> </c:when>
+						<c:when test="${std.std_category == 'job'}"><img class="category-img" src="/StudyCloud/images/categories/job.png"/> </c:when>
+						<c:when test="${std.std_category == 'cert'}"><img class="category-img" src="/StudyCloud/images/categories/cert.png"/> </c:when>
+						<c:when test="${std.std_category == 'bea'}"><img class="category-img" src="/StudyCloud/images/categories/bea.png"/> </c:when>
+						<c:when test="${std.std_category == 'spt'}"><img class="category-img" src="/StudyCloud/images/categories/spt.png"/> </c:when>
+						<c:when test="${std.std_category == 'etc'}"><img class="category-img" src="/StudyCloud/images/categories/etc.png"/> </c:when>
+					</c:choose>
+  					 <table  style="width:90%; margin-right:5%; margin-left:5%;">
+						<tr>
+							<td style="line-height: 32px;">
+								<i class="glyphicon glyphicon-tower" style="font-size:16px; color:#02b2e3;"> ${mem.name}</i>
+							</td>
+							<td style="line-height: 32px;">
+								<i class="glyphicon glyphicon-calendar" style="font-size:16px;color:#02b2e3;"> ${std.std_start}~${std.std_end} </i>
+							</td>
+						</tr>
+						<tr style="margin-top:3%;">
+							<td style="line-height: 32px;">
+								<i class="glyphicon glyphicon-phone" style="font-size:16px; color:#02b2e3;"> ${mem.tel }</i>
+							</td>
+							<td style="line-height: 32px;">
+								<i class="glyphicon glyphicon-user" style="font-size:16px;color:#02b2e3;"> ${std.std_max}명</i>
+							</td>
+						</tr>
+				</table>
+				
+				<table class="table"  style="width:90%; margin:5%;">
+					<tr>
+						<td>
+						<h2>스터디 소개글</h2>
+						${std.std_info}
+						</td>
+					</tr>
+					<tr>
+						<td>
+						<h2>스터디 계획</h2>
+						${std.std_plan }
+						</td>
+					</tr>
+					<tr>
+						<td>
+						<h2>기타 사항</h2>
+						${std.std_etc }
+						</td>
+					</tr>
+				</table>
+					
+			
+     		</div><!-- end of col-md-8 -->
+     		<div class="col-md-3 col-sm-3 col-xs-3" style="background-color:#fff; margin-left:20px;" data-spy="affix">
+					<table class="fixedTable table" style="min-height: 300px">
+						<tr>
+							<td style="height:20%;vertical-align: middle"><label><b>스터디명&nbsp;:</b></label>   ${std.std_name }</td>
+						</tr>
+						<tr>
+							<td style="height:20%;vertical-align: middle" ><label><b>장소&nbsp;:</b></label> </td>
+						</tr>
+						<tr>
+							<td style="height:20%; vertical-align: middle"><label><b>가능시간&nbsp;:</b></label></td>
+						</tr>
+						<tr>
+							<td style="height:20%;vertical-align: middle"><label><b>요일&nbsp;:</b></label> </td>
+						</tr>
+						<tr>
+							<th style="height:20%;">
+							<button class="btn btn-info">스터디 신청</button>
+							</th>
+						</tr>
+					</table>
+					
+     			</div><!-- end of col-md-4 -->
+      </div><!-- end of row -->
+    </div><!-- end of container -->
+
 </body>
 </html>
