@@ -48,30 +48,30 @@ public class AjaxController extends HttpServlet {
 		AttendanceDao attendanceDao;
 		Attendance att;
 		MemberDao md = new MemberDao();
+		StudyDao sd = new StudyDao();
 				
 		
 		switch(command) {
+		// 이메일 중복 검사 Ajax
 		case "VALIDITYTEST_REGISTER_EMAIL":
 			response.setContentType("text/plain");
 			String email = request.getParameter("email");
-			System.out.println(email);
 			md = new MemberDao();
 			out.print(md.getValidEmail(email));
 			break;
 			
-
+		// 닉네임 중복 검사 Ajax
 		case "VALIDITYTEST_REGISTER_NAME":
 			response.setContentType("text/plain");
 			String name = request.getParameter("name");
-			System.out.println(name);
 			md = new MemberDao();
 			out.print(md.getValidName(name));
 			break;
 			
+		// 연락처 중복 검사 Ajax
 		case "VALIDITYTEST_REGISTER_TEL":
 			response.setContentType("text/plain");
 			String tel = request.getParameter("tel");
-			System.out.println(tel);
 			md = new MemberDao();
 			out.print(md.getValidTel(tel));
 			break;
@@ -90,7 +90,14 @@ public class AjaxController extends HttpServlet {
 			}
 			out.println(status);
 			break;
-
+			
+		//스터디 등록 시 이메일를 이용하여 스터디명 중복 검사 Ajax
+		case "STD_VALID_REGISTER_STDNAME":
+			response.setContentType("text/plain");
+			String stdEmail = request.getParameter("email");
+			sd = new StudyDao();
+			out.print(sd.getValidStdEmail(stdEmail));
+			break;
 		}
 		
 		out.close();

@@ -200,5 +200,23 @@ public class StudyDao {
 		}
 		return stdList;
 	}
+	
+	//study 등록 유효성 검사
+	public int getValidStdEmail(String stdEmail) {
+		int result = 0;
+		String sql = "select std_name from STUDY where email = ?";
+		try {
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, stdEmail);
+			rs = pstmt.executeQuery();
+			if(rs.next()) result = 1;
+		} catch (Exception err) {
+			System.out.println("getValidStdEmail() 에러 : " + err);
+		} finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+		return result;
+	}
 
 }
