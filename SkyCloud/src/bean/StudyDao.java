@@ -144,6 +144,26 @@ public class StudyDao {
 		return stdList;
 	}
 	
+	// StudyInfo에 뿌려질 studyTimePlace값 가져오는 메서드
+	public List<StudyTimePlace> getStudyTimePlaceById(int std_id) {
+		String sql = "select * from study_timeplace where std_id=?";
+		ArrayList<StudyTimePlace> list = new ArrayList<StudyTimePlace>();
+		try {
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, std_id);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				
+			}
+		}catch(Exception err) {
+			System.out.println("getStudyTimePlaceById() 에러 : "+err);
+		}finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+		return list;
+	}
+	
 	//study테이블에 insert 처리 후 std_id 반환
 	public int insertStudy(Study s) {
 		int result = 0;
@@ -256,6 +276,7 @@ public class StudyDao {
 				std.setStd_plan(rs.getString("std_plan"));
 				std.setStd_etc(rs.getString("std_etc"));
 				std.setStd_gender(rs.getString("std_gender"));
+				std.setStd_category(rs.getString("std_category"));
 			}
 		}catch(Exception err) {
 			System.out.println("getStudyInfo() 에러 : "+err);

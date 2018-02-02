@@ -145,8 +145,11 @@ public class MainController extends HttpServlet {
 		case "GETSTUDYINFO"://스터디 상세 정보 처리
 				int studyId = Integer.parseInt(request.getParameter("stdId"));
 				stdDao = new StudyDao();
+				memDao = new MemberDao();
+				mem = memDao.getMemberByEmail(email);
 				std = stdDao.getStudyInfo(studyId);
 				request.setAttribute("std", std);
+				request.setAttribute("mem", mem);
 				bodyInclude = "/studyInfo.jsp";
 			break;
 			
