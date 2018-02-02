@@ -248,6 +248,11 @@ public class StudyDao {
 			if(rs.next()) result = 1;
 		} catch (Exception err) {
 			System.out.println("getValidStdEmail() 에러 : " + err);
+		} finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+		return result;
+	}
 
 	//스터디장 이메일 가져오기
 	public String getLeaderEmail(int std_id) {
