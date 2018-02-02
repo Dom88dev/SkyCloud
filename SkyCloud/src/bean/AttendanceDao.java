@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import model.Attendance;
+import model.Member;
 import model.Study;
 import model.StudyTimePlace;
 
@@ -118,10 +119,49 @@ public class AttendanceDao {
 		}
 		return status;
 	}
-	//스터디 수강하는 사람들의 출석상태 업데이트/가져오기
-	
+	//3. 출결현황 출력하기
+	public String getAttStatus(Attendance a){
+		String sql = String.format("select email, atd_status from attendance where std_id='%s'", a.getStd_id());
+		String msg = null;
+		try {
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			msg = "[";
+			while(rs.next()){
+				if(!rs.isFirst()) msg += ",";
+				msg += "{";
+				msg += "\"email\" : "+ rs.getString("email")+",";
+				msg += "\"atd_status\" : " + rs.getString("atd_status")+"\"";
+				msg += "}";
+			}
+			msg += "]";
+			return msg;
+			
+		} catch(Exception e) {
+			System.out.println("UpdateAttStatus() 에러 : "+e);
+		} finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+		return msg;
+	}
 	//잘못된 출석 상태 수정하기
-	
+	public int UpdateStatus(String upatd, String email) {
+		int result=0;
+		String sql = "update attendance set atd_status=? where email=?";
+		try {
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, upatd);
+			pstmt.setString(2, email);
+			result = pstmt.executeUpdate();
+		} catch(Exception e) {
+			System.out.println("UpdateAttStatus() 에러 : "+e);
+		} finally {
+			pool.freeConnection(conn, pstmt);
+		}
+		return result;
+	}
 	
 
 }

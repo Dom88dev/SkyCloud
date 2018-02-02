@@ -7,6 +7,7 @@ public class StudyTimePlace {
 	private String std_day;	 //스터디 요일(월/화/수/목/금/토/일)
 	private int std_id;	 //스터디 아이디
 	
+	
 	public void setStudyTimePlace(int std_id, String std_time, int std_hour, String std_addr, String std_day) {
 		setStd_id(std_id);
 		setStd_time(std_time);

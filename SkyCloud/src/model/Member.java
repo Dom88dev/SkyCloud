@@ -10,6 +10,7 @@ public class Member {
 	private String gender;
 	private Date born;
 	
+	
 	public void setMember(String email, String pw, String name, String tel, String gender, Date born) {
 		setEmail(email);
 		setPw(pw);
