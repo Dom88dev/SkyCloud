@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -35,6 +36,8 @@ public class SendEmailController extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		System.out.println("접속 성공");
 		
+		PrintWriter out = response.getWriter();
+		
 		String email = request.getParameter("email");
 		System.out.println("email보내기 :" + email);
 		
@@ -49,8 +52,8 @@ public class SendEmailController extends HttpServlet {
 		
 		System.out.println(emailNum);
 		
-		RequestDispatcher view = request.getRequestDispatcher("/register.jsp?emailNum="+emailNum);
-		view.forward(request, response);
+		out.println(emailNum);
+		
 	}
 
 	/**

@@ -5,7 +5,6 @@
 <html>
 <head>
 <title>Insert title here</title>
-
 <link rel='stylesheet' href="/StudyCloud/lib/bootstrap337/css/form-con.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="/StudyCloud/lib/bootstrap337/css/bootstrap.min.css" />
@@ -297,10 +296,9 @@ td, tr {
 		 			</div>
 		 		</div>
 		 	</div>
-	 </div>
+		 </div>
 		
 	</div>
-	
 	<!-- 회원가입 결과 처리 -->
 	<c:if test="${!(empty RegisterResult)}">
 		<script>regiResultModal('${RegisterResult}');</script>
@@ -515,45 +513,26 @@ td, tr {
 		});
 	});
 </script>
-<%
-	String emailNum = request.getParameter("emailNum");
-	if(emailNum != null){
-%>
-	<script>
-		$(document).ready(function(){
-			$("#emailConformBtn").click(function(){
-				if($("emailNum").val() == '<%=emailNum%>'){
-					alert("하하하 호출")
-				}
-				else{
-					alert("흐흐흐 호출")
-				}
-			})
-		})
-	</script>
-<%		
-	}
-%>
 <script>
 	$(document).ready(function(){
 		//이메일 인증 버튼
 		$("#inputEmail").click(function(){
 			alert("호출1")
-			alert('호출 : '+'<%=emailNum%>');
 			var email = $("#email").val();
 			$.ajax({
 				type:"POST",
 				url:"/StudyCloud/sendEmail",
 				data:{email : email},
-				success:function(){
+				success:function(data){
 					alert("호출2");
-					//alert(data);
+					alert(data);
 					$("#emailNumModal").modal();
 				}
 			})
 		})
 	})
 </script>
+
 </html>
 
 
