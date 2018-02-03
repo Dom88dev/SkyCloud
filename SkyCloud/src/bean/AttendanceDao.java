@@ -31,7 +31,7 @@ public class AttendanceDao {
 	//해당 스터디를 수강하는 사람들의 정보(이메일)를 가져온다.
 	public List<Attendance> getAttendenceList(int std_id){
 		ArrayList<Attendance> list = new ArrayList<>();
-		String sql="select email from applies where status='accept' and std_id=?";
+		String sql="select email from applies where apply_status='accept' and std_id=?";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -40,7 +40,7 @@ public class AttendanceDao {
 			
 			while(rs.next()) {
 				Attendance  a= new Attendance();
-				a.setAttendance(rs.getInt("atd_id"), rs.getDate("atd_date"), rs.getString("atd_status"), rs.getString("email"), rs.getInt("std_id"));
+				a.setEmail(rs.getString("email"));
 				list.add(a);
 			}
 		} catch(Exception e) {
@@ -52,35 +52,30 @@ public class AttendanceDao {
 	}
 	/*출석버튼 눌렀을때 상태 변경(스터디 시작시간보다 늦으면 지각, 스터디 하는요일에
 	버튼이 안눌렸으면 결석(공결, 무단결석...))*/
-	
-	//1. 스터디 시작시간과 스터디 요일 가져오기
-	public List<StudyTimePlace> getStudyTime() {
-		ArrayList<StudyTimePlace> list = new ArrayList<>();
-		Study s = new Study();
-		String sql = "select std_time, std_day from study_timeplace where std_id=?";
+		
+	//1.스터디 시작시간 가져오기
+	public String getStdTime(int std_id) {
+		String time=null;
+		String sql="select std_time from study_timeplace where std_id=?";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, s.getStd_id());
+			pstmt.setInt(1, std_id);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				StudyTimePlace st = new StudyTimePlace();
-				st.setStd_id(s.getStd_id());
-				st.setStd_day(rs.getString("std_day"));
 				st.setStd_time(rs.getString("std_time"));
-				list.add(st);
 			}
 		} catch(Exception e) {
 			System.out.println("getTimePlaceList() 에러 : "+e);
 		} finally {
 			pool.freeConnection(conn, pstmt, rs);
 		}
-		return list;	
+		return time;
 	}
 	//2. 출석버튼 눌렀을 때 상태 변경
-	public String InsertAttStatus(int std_id) throws ParseException {
+	public String InsertAttStatus(int std_id, String email) throws ParseException {
 		int result = 0;
-		StudyTimePlace st = new StudyTimePlace();
 		SimpleDateFormat sdf = new SimpleDateFormat("HHmm");
 		SimpleDateFormat rsdf = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar calendar = Calendar.getInstance();
@@ -88,32 +83,30 @@ public class AttendanceDao {
 		String reDay = rsdf.format(calendar.getTime());
 		Date currentDay = rsdf.parse(reDay);
 		
+		java.sql.Date sqlDate = new java.sql.Date(currentDay.getTime());
+		
 		String status=null;
 		try {
 			conn = pool.getConnection();
 			String sql = "insert into attendance values(seq_atd.nextVal,?,?,?,?)";
-			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setDate(1, (java.sql.Date) currentDay);
-			if((st.getStd_time()).compareTo(currentTime)<0) {
+			pstmt.setDate(1, sqlDate);
+			if(getStdTime(std_id).compareTo(currentTime)<0) {
 				pstmt.setString(2, "late");
 				status="late";
-			}else if((st.getStd_time()).compareTo(currentTime)>0) {
+			}else if(getStdTime(std_id).compareTo(currentTime)>0) {
 				pstmt.setString(2, "att");
 				status="att";
 			}else {
 				pstmt.setString(2, "abs");
 				status="abs";
 			}
-			ArrayList<Attendance> list = (ArrayList<Attendance>) getAttendenceList(std_id);
-			for(Attendance a : list) {
-				pstmt.setString(3, a.getEmail());
-			}
+			pstmt.setString(3, email);
 			pstmt.setInt(4, std_id);
 			result = pstmt.executeUpdate();
 			if(result<=0) status="fail";
 		} catch(Exception e) {
-			System.out.println("getTimePlaceList() 에러 : "+e);
+			System.out.println("InsertAttStatus() 에러 : "+e);
 		} finally {
 			pool.freeConnection(conn, pstmt);
 		}
@@ -132,14 +125,14 @@ public class AttendanceDao {
 				if(!rs.isFirst()) msg += ",";
 				msg += "{";
 				msg += "\"email\" : "+ rs.getString("email")+",";
-				msg += "\"atd_status\" : " + rs.getString("atd_status")+"\"";
+				msg += "\"atd_status\" : \"" + rs.getString("atd_status")+"\"";
 				msg += "}";
 			}
 			msg += "]";
 			return msg;
 			
 		} catch(Exception e) {
-			System.out.println("UpdateAttStatus() 에러 : "+e);
+			System.out.println("getAttStatus() 에러 : "+e);
 		} finally {
 			pool.freeConnection(conn, pstmt, rs);
 		}

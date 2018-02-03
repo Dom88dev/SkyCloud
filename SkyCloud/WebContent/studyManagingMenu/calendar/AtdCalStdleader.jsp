@@ -61,20 +61,20 @@
 					dataType : "json",
 					success : function(data) {
 
-						var jData = $.parseJSON(data);
+						//var jData = $.parseJSON(data);
 						var events = [];
-						if (jsonData) {
-							$(jsonData).each(function(i, obj) {
+						if (data) {
+							$(data).each(function(i, obj) {
 								var titleStr;
 
-								if (jData.attcnt != null) {
-									titleStr = "출석 [" + jData.attcnt + "]건";
+								if (data.attcnt != null) {
+									titleStr = "출석 [" + data.attcnt + "]건";
 								} else if (jData.latecnt != null) {
-									titleStr = "지각 [" + jData.latecnt + "]건";
+									titleStr = "지각 [" + data.latecnt + "]건";
 								} else if (jData.abscnt != null) {
-									titleStr = "결석 [" + jData.abscnt + "]건";
+									titleStr = "결석 [" + data.abscnt + "]건";
 								} else if (jData.obscnt != null) {
-									titleStr = "공결 [" + jData.obscnt + "]건";
+									titleStr = "공결 [" + data.obscnt + "]건";
 								}
 
 								events.push({

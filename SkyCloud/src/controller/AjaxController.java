@@ -66,6 +66,7 @@ public class AjaxController extends HttpServlet {
 		ArrayList<Study> stdList = (ArrayList<Study>)stdDao.getStduyList();
 		for(Study s : stdList) {
 			System.out.println(s.getStd_id());
+			System.out.println(s.getEmail());
 		}
 		request.setAttribute("stdList", stdList);
 
@@ -98,9 +99,10 @@ public class AjaxController extends HttpServlet {
 			attendanceDao = new AttendanceDao();
 			String status=null;
 			String jstatus=null;
-			stdId = Integer.parseInt((String) request.getParameter("stdId"));
+			stdId = Integer.parseInt(request.getParameter("stdId"));
 			try {
-				status = attendanceDao.InsertAttStatus(stdId);
+				if(request.getSession().getAttribute("email") != null) email = (String) request.getSession().getAttribute("email");
+				status = attendanceDao.InsertAttStatus(stdId, email);
 				Gson gson = new Gson();
 				JsonObject obj = new JsonObject();
 				
@@ -125,7 +127,8 @@ public class AjaxController extends HttpServlet {
 		
 		case "CNTSTATUS":	//출결 상황 카운트
 			attendanceDao = new AttendanceDao();
-			stdId = Integer.parseInt((String) request.getParameter("stdId"));
+			att = new Attendance();
+			stdId = Integer.parseInt(request.getParameter("stdId"));
 			int attCnt = 0;
 			int lateCnt = 0;
 			int absCnt = 0;
@@ -134,14 +137,21 @@ public class AjaxController extends HttpServlet {
 			ArrayList<Attendance> list = (ArrayList<Attendance>) attendanceDao.getAttendenceList(stdId);
 			
 			for(Attendance a : list) {
-				if(a.getAtd_status().equals("att")) {
-					attCnt++;
-				}else if(a.getAtd_status().equals("late")) {
-					lateCnt++;
-				}else if(a.getAtd_status().equals("abs")) {
-					absCnt++;
-				}else if(a.getAtd_status().equals("obs")) {
-					obsCnt++;
+				try {
+					if(request.getSession().getAttribute("email") != null) email = (String) request.getSession().getAttribute("email");
+					status = attendanceDao.InsertAttStatus(stdId, email);
+					a.setAtd_status(status);
+					if(a.getAtd_status().equals("att")) {
+						attCnt++;
+					}else if(a.getAtd_status().equals("late")) {
+						lateCnt++;
+					}else if(a.getAtd_status().equals("abs")) {
+						absCnt++;
+					}else if(a.getAtd_status().equals("obs")) {
+						obsCnt++;
+					}
+				} catch (ParseException e) {
+					e.printStackTrace();
 				}
 			}
 			Gson gson = new Gson();
@@ -160,7 +170,7 @@ public class AjaxController extends HttpServlet {
 		case "GET_ATTSTATUS": //출결 가져오기
 			vo = new Attendance();
 			attendanceDao = new AttendanceDao();
-			stdId = Integer.parseInt((String) request.getParameter("stdId"));
+			stdId = Integer.parseInt(request.getParameter("stdId"));
 			vo.setStd_id(stdId);
 			
 			String msg1 = attendanceDao.getAttStatus(vo);
@@ -225,12 +235,14 @@ public class AjaxController extends HttpServlet {
 			break;
 			
 		case "LOADLEADERCALENDAR":
-			response.setContentType("text/html");
+			response.setContentType("text/plain");
 			out.print("/StudyCloud/studyManagingMenu/calendar/AtdCalStdleader.jsp");
+			break;
 			
 		case "LOADMEMCALENDAR":
-			response.setContentType("text/html");
+			response.setContentType("text/plain");
 			out.print("/StudyCloud/studyManagingMenu/calendar/AtdCalStdmem.jsp");
+			break;
 			}
 		out.close();
 	}
