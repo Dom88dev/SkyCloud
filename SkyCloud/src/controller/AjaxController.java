@@ -223,7 +223,15 @@ public class AjaxController extends HttpServlet {
 			jsonData = new Gson().toJson(jobj);
 			out.print(jsonData);
 			break;
-		}
+			
+		case "LOADLEADERCALENDAR":
+			response.setContentType("text/html");
+			out.print("/StudyCloud/studyManagingMenu/calendar/AtdCalStdleader.jsp");
+			
+		case "LOADMEMCALENDAR":
+			response.setContentType("text/html");
+			out.print("/StudyCloud/studyManagingMenu/calendar/AtdCalStdmem.jsp");
+			}
 		out.close();
 	}
 

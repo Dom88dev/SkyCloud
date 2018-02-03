@@ -10,15 +10,35 @@
 	<script>
 		alert("${index}");
 	</script>
-	<c:set var="command" value="PRINTCAL" />
-	<c:set var="stdId" value="${stdList[param.index].std_id}" />
-	<c:choose>
-		<c:when test="${sessionScope.email==requestScope.email }">
-			<jsp:include page="/WEB-INF/calendar/AtdCalStdleader.jsp"></jsp:include>
-		</c:when>
-		<c:otherwise>
-			<jsp:include page="/WEB-INF/calendar/AtdCalStdmem.jsp"></jsp:include>
-		</c:otherwise>
-	</c:choose>
+
+		<c:if test="${email==myStdList[index].email}">
+			<script>
+				$.ajax({
+					url : "/StudyCloud/ajax",
+					type : "GET",
+					data : {command: "LOADLEADERCALENDAR"},
+					success : function(data){
+						$.post(data, {}, function(code){
+							$("#stdAttendance").html(code);
+						});
+					}
+				});
+			</script>
+		</c:if>
+		<c:if test="${SessionScope.email != myStdList[index].email}">
+			<script>
+				$.ajax({
+					url : "/StudyCloud/ajax",
+					type : "GET",
+					data : {command: "LOADMEMCALENDAR"},
+					success : function(data){
+						$.post(data, {}, function(code){
+							$("#stdAttendance").html(code);
+						});
+					}
+				});
+			</script>
+		</c:if>
+
 </body>
 </html>

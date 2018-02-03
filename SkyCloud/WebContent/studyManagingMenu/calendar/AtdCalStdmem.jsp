@@ -34,22 +34,6 @@
 			now : new Date(y, m, d),
 			editable : false,
 			aspectRatio : 1.8,
-			/*customButtons : {
-				myAttendButton : {
-					text : '출석',
-					click : function() {
-						alert('출석 완료!');
-						$('div.fc-bg')
-								.find('td.fc-today')
-								.prepend(
-										"<img src='/StudyCloud/images/icons/atd.png' width='100' height='80' align='center'>");
-						$('div.fc-right')
-								.find(
-										'button.fc-myAttendButton-button')
-								.css('display', 'none');
-					}
-				}
-			},*/
 			header : {
 				left : 'today',
 				center : 'prev title next',
@@ -63,10 +47,11 @@
 		$('.mybutton').click(function() {
 			var param;
 			$.ajax({
+				url : "/StudyCloud/ajax",
 				type : "post",
-				url : "/ajax",
 				data : {
-					command : "CHECKATT"
+					command : "CHECKATT",
+					stdId : "${myStdList[index].std_id}"
 				},
 				dataType : "json",
 				success : function(obj) {
@@ -134,7 +119,7 @@ body {
 	<div id='wrap'>
 		<div id=mybutton>
 			<form method="post">
-				<input type="hidden" name="stdId" value="${stdList[param.index].std_id}" />
+				<input type="hidden" name="stdId" value="${myStdList[index].std_id}" />
 				<button type=button class="btn" style="float: right">출석</button>
 			</form>
 		</div>
