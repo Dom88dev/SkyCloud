@@ -2,6 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <link rel="stylesheet" type="text/css" href="/StudyCloud/lib/css/stdRegisterCss.css">
+<script type="text/javascript" src="/StudyCloud/lib/bootstrap337/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/StudyCloud/lib/bootstrap337/js/bootstrap.min.js"></script>
+
 <script>
 	(function() {
 		$.post("/StudyCloud/ajax", {command:"LOADSTUDYINFO", leaderEmail: "${myStdList[index].email}", stdId:"${myStdList[index].std_id}"}, 
@@ -65,8 +68,9 @@
 	
 	//위치확인 모달창 띄우는 function
 	function fnMapPopup(addr) {
-		alert(addr);
-	}
+		$('#mapModal').modal();
+		
+	}	
 </script>
 <style>
 	div#studyTitleDiv {
@@ -158,3 +162,21 @@ button.btn-white:focus {	border: 0.4px solid #39d2fd;	color: #39d2fd;	background
 		</div>
 	</div>
 </div>
+
+<!-- Map modal -->
+			<div class="modal fade" id="mapModal" data-backdrop="static">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<iframe id="myframe" src="/StudyCloud/studyHomeMap.jsp" width="100%" height="500px" style="border:none">
+						</iframe>
+						<div align="center">
+						<button class="btn btn-info" id="mapCheck" >닫기</button>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+
+
+
