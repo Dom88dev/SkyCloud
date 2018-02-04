@@ -192,9 +192,11 @@ function fnPostHomework(){
 		<div class="tbody" id="hTbody" align="center">
 			<div align="center">과제가 없습니다.</div>
 		</div>
-		<div align="right" class="col-md-12">
-			<button id="btnPostHomework" class='btn btn-info' onclick='fnPostHomework()'><i class="fa fa-pencil-square-o">과제 작성</i></button>
-		</div>
+		<c:if test="${email == myStdList[index].email}">
+			<div align="right" class="col-md-12">
+				<button id="btnPostHomework" class='btn btn-info' onclick='fnPostHomework()'><i class="fa fa-pencil-square-o">과제 작성</i></button>
+			</div>
+		</c:if>
 		<div class="tfoot">
 			<div class="col-md-4">
 				<ul class="pager">
