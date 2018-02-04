@@ -34,22 +34,6 @@
 			now : new Date(y, m, d),
 			editable : false,
 			aspectRatio : 1.8,
-			/*customButtons : {
-				myAttendButton : {
-					text : '출석',
-					click : function() {
-						alert('출석 완료!');
-						$('div.fc-bg')
-								.find('td.fc-today')
-								.prepend(
-										"<img src='/StudyCloud/images/icons/atd.png' width='100' height='80' align='center'>");
-						$('div.fc-right')
-								.find(
-										'button.fc-myAttendButton-button')
-								.css('display', 'none');
-					}
-				}
-			},*/
 			header : {
 				left : 'today',
 				center : 'prev title next',
@@ -60,37 +44,38 @@
 			},
 			schedulerLicenseKey : 'GPL-My-Project-Is-Open-Source'
 		});
-		$('.mybutton').click(function() {
-			var param;
+		$('#mybutton').click(function() {
 			$.ajax({
-				type : "post",
-				url : "/ajax",
+				url : "/StudyCloud/ajax",
+				type : "GET",
 				data : {
-					command : "CHECKATT"
+					command : "CHECKATT",
+					stdId:"${myStdList[index].std_id}",
+					email:"${stdList.email}"
 				},
 				dataType : "json",
-				success : function(obj) {
+				success : function(data) {
 					alert('출석 완료!');
-					showStatus(obj);
+					showStatus(data);
 				}
 			});
 		});
 	});
 
-	function showStatus(obj) {
-		var jData = $.parseJSON(data);
-		if (jsonData) {
-			$(jsonData).each(function(i, obj) {
-				if ((jData.status).equals("att")) {
+	function showStatus(data) {
+		//var jData = $.parseJSON(data);
+		if (data) {
+			$(data).each(function(i, obj) {
+				if ((data.status).equals("att")) {
 					$('div.fc-bg').find('td.fc-today').prepend("<img src='/StudyCloud/images/icons/atd.png' width='100' height='80' align='center'>");
 					$('div.fc-right').find('button.fc-myAttendButton-button').css('display', 'none');
-				} else if ((jData.status).equals("late")) {
+				} else if ((data.status).equals("late")) {
 					$('div.fc-bg').find('td.fc-today').prepend("<img src='/StudyCloud/images/icons/late.png' width='100' height='80' align='center'>");
 					$('div.fc-right').find('button.fc-myAttendButton-button').css('display', 'none');
-				} else if ((jData.status).equals("abs")) {
+				} else if ((data.status).equals("abs")) {
 					$('div.fc-bg').find('td.fc-today').prepend("<img src='/StudyCloud/images/icons/abs.png' width='100' height='80' align='center'>");
 					$('div.fc-right').find('button.fc-myAttendButton-button').css('display', 'none');
-				} else if ((jData.status).equals("obs")) {
+				} else if ((data.status).equals("obs")) {
 					$('div.fc-bg').find('td.fc-today').prepend("<img src='/StudyCloud/images/icons/obs.png' width='100' height='80' align='center'>");
 					$('div.fc-right').find('button.fc-myAttendButton-button').css('display', 'none');
 				}
@@ -132,12 +117,7 @@ body {
 </head>
 <body>
 	<div id='wrap'>
-		<div id=mybutton>
-			<form method="post">
-				<input type="hidden" name="stdId" value="${stdList[index].std_id}" />
-				<button type=button class="btn" style="float: right">출석</button>
-			</form>
-		</div>
+		<button type=button id=mybutton class="btn" style="float: right">출석</button>
 		<div id='calendar'></div>
 		<div style='clear: both'></div>
 	</div>

@@ -201,12 +201,6 @@ public class MainController extends HttpServlet {
 
 			break;
 			
-		case "PRINTCAL": //출석부 
-			stdDao = new StudyDao();
-			stdId = Integer.parseInt((String) request.getParameter("stdId"));
-			String stdemail = stdDao.getLeaderEmail(stdId);
-			
-			request.setAttribute("stdEmail", stdemail);
 			
 		}
 		request.setAttribute("bodyInclude", bodyInclude);

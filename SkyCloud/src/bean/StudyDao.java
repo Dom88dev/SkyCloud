@@ -144,26 +144,6 @@ public class StudyDao {
 		return stdList;
 	}
 	
-	// StudyInfo에 뿌려질 studyTimePlace값 가져오는 메서드
-	public List<StudyTimePlace> getStudyTimePlaceById(int std_id) {
-		String sql = "select * from study_timeplace where std_id=?";
-		ArrayList<StudyTimePlace> list = new ArrayList<StudyTimePlace>();
-		try {
-			conn = pool.getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, std_id);
-			rs = pstmt.executeQuery();
-			while(rs.next()) {
-				
-			}
-		}catch(Exception err) {
-			System.out.println("getStudyTimePlaceById() 에러 : "+err);
-		}finally {
-			pool.freeConnection(conn, pstmt, rs);
-		}
-		return list;
-	}
-	
 	//study테이블에 insert 처리 후 std_id 반환
 	public int insertStudy(Study s) {
 		int result = 0;
@@ -258,32 +238,15 @@ public class StudyDao {
 
 	//StudyInfo 검색 (스터디 상세보기)
 	public Study getStudyInfo(int std_id) {
-		String sql = "select * from STUDY where std_id=?";
-		Study std = null;
-		try {
-			conn = pool.getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, std_id);
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				std = new Study();
-				std.setStd_id(rs.getInt("std_id"));
-				std.setStd_name(rs.getString("std_name"));
-				std.setStd_max(rs.getInt("std_max"));
-				std.setStd_start(rs.getDate("std_start"));
-				std.setStd_end(rs.getDate("std_end"));
-				std.setStd_info(rs.getString("std_info"));
-				std.setStd_plan(rs.getString("std_plan"));
-				std.setStd_etc(rs.getString("std_etc"));
-				std.setStd_gender(rs.getString("std_gender"));
-				std.setStd_category(rs.getString("std_category"));
+		ArrayList<Study> list = (ArrayList<Study>)getAllStduyList("std_category, std_id");
+		Study std = new Study();
+		for(Study s : list) {
+			if(s.getStd_id() == std_id) {
+				std = s;
 			}
-		}catch(Exception err) {
-			System.out.println("getStudyInfo() 에러 : "+err);
-			err.printStackTrace();
-		}finally {
-			pool.freeConnection(conn, pstmt, rs);
 		}
+		ArrayList<StudyTimePlace> tpList = Util.getOrderedDays(std);
+		std.setTimePlaceList(tpList);
 		return std;
 	}
 	//study 등록 유효성 검사

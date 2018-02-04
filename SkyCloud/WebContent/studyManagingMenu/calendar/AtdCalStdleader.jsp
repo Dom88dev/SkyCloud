@@ -56,25 +56,25 @@
 					type : "GET",
 					data : {
 						command : "CNTSTATUS",
-						stdId: '${myStdList[index].std_id}'
+						stdId : "${myStdList[index].std_id}"
 					},
 					dataType : "json",
 					success : function(data) {
 
-						var jData = $.parseJSON(data);
+						//var jData = $.parseJSON(data);
 						var events = [];
-						if (jsonData) {
-							$(jsonData).each(function(i, obj) {
+						if (data) {
+							$(data).each(function(i, obj) {
 								var titleStr;
 
-								if (jData.attcnt != null) {
-									titleStr = "출석 [" + jData.attcnt + "]건";
+								if (data.attcnt != null) {
+									titleStr = "출석 [" + data.attcnt + "]건";
 								} else if (jData.latecnt != null) {
-									titleStr = "지각 [" + jData.latecnt + "]건";
+									titleStr = "지각 [" + data.latecnt + "]건";
 								} else if (jData.abscnt != null) {
-									titleStr = "결석 [" + jData.abscnt + "]건";
+									titleStr = "결석 [" + data.abscnt + "]건";
 								} else if (jData.obscnt != null) {
-									titleStr = "공결 [" + jData.obscnt + "]건";
+									titleStr = "공결 [" + data.obscnt + "]건";
 								}
 
 								events.push({
@@ -94,23 +94,23 @@
 			},
 			selectable : true,
 			selectHelper : true,
-			/*select : function(start, end) {
-				$('.modal').modal('show');
-			},*/
+			select : function(start, end) {
+				$('#calmodal').modal('show');
+			},
 			eventClick : function(event, element) {
 				$.ajax({
-					type : "post",
-					url : "/ajax",
+					url : "/StudyCloud/ajax",
+					type : "GET",
 					data : {
 						command : "GET_ATTSTATUS",
-						email : data.email
+						email : "${myStdList[index].email}"
 					},
 					success : function(data) {
 						showAttStatus(data);
 					}
 				});
-				$('.modal').modal('show');
-				$('.modal').find('#title').val(event.title);
+				$('#calmodal').modal('show');
+				$('#calmodal').find('#title').val(event.title);
 			},
 			//editable : true,
 			eventLimit : true,
@@ -124,8 +124,8 @@
 			var title = $('select option:selected').val();
 			$('#calendar').fullCalendar('removeEvents', event.title);
 			$.ajax({
+				url : "/StudyCloud/ajax",
 				type : "GET",
-				url : "/ajax",
 				data : {
 					command : "UPDATE_STATUS",
 					status : $('select option:selected').val()
@@ -144,10 +144,10 @@
 			$('#calendar').fullCalendar('unselect');
 
 			// Clear modal inputs
-			$('.modal').find('input').val('');
+			$('#calmodal').find('input').val('');
 
 			// hide modal
-			$('.modal').modal('hide');
+			$('#calmodal').modal('hide');
 		});
 		$.ajax({
 
@@ -217,7 +217,7 @@ body {
 		<div id='calendar'></div>
 		<div id='datepicker'></div>
 		<c:set var="command" value="UPDATE_ATTSTATUS"></c:set>
-		<div class="modal fade" tabindex="-1" role="dialog">
+		<div id="calmodal" class="modal fade" tabindex="-1" role="dialog">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -231,7 +231,7 @@ body {
 						<div class="row">
 							<div class="col-md-12">
 								<form action="/StudyCloud/AtdCalStdleader" method="post">
-								<input type="hidden" value="${stdList[index].std_id}" name="stdId">
+								<input type="hidden" value="${mystdList[index].std_id}" name="stdId">
 									<table class="table">
 										<thead>
 											<tr>
