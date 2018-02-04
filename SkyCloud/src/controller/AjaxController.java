@@ -278,61 +278,60 @@ public class AjaxController extends HttpServlet {
 			notice.setTitle(multi.getParameter("title"));
 			notice.setContent(multi.getParameter("content"));
 			fileNames = multi.getFileNames();
-			int fileNum = 0;
+			int fileNum = 4;
 			while(fileNames.hasMoreElements()) {
 				String fName = (String)fileNames.nextElement();
-				fileNum++;
+				fileNum--;
 				if(fName == null || fName.equals("")) continue;
 				if(fileNum==1) {
 					bf.setB_file1_name(multi.getOriginalFileName(fName));
-					bf.setB_file1("/upload"+multi.getFilesystemName(fName));					
+					bf.setB_file1(multi.getFilesystemName(fName));					
 				} else if (fileNum==2) {
 					bf.setB_file2_name(multi.getOriginalFileName(fName));
-					bf.setB_file2("/upload"+multi.getFilesystemName(fName));
+					bf.setB_file2(multi.getFilesystemName(fName));
 				} else if(fileNum==3) {
 					bf.setB_file3_name(multi.getOriginalFileName(fName));
-					bf.setB_file3("/upload"+multi.getFilesystemName(fName));
+					bf.setB_file3(multi.getFilesystemName(fName));
 				}
 			}
 			jobj = new JsonObject();
 			boardDao = new BoardDao();
-			int b_id = boardDao.insertNotice(notice);
-			jobj.addProperty("postResult", boardDao.insertBoardFile(b_id, bf));
-			jsonData = new Gson().toJson(jobj);
-			out.print(jsonData);
+			int postResult = boardDao.insertBoardFile(boardDao.insertNotice(notice), bf);
+			if(postResult>0) {
+				request.getRequestDispatcher("/main?command=GOMNGSTUDY&postResult="+postResult).forward(request, response);
+			}
 			break;
 		case "POSTHOMEWORK"://과제 등록
 			homework = new Homework();
 			bf = new BoardFile();
 			homework.setB_datetime(System.currentTimeMillis());
-			long addingTimeForDue = Long.parseLong(multi.getParameter("daysToduedate")) * (1000l*60l*60l*60l*24l);
+			long addingTimeForDue = Long.parseLong(multi.getParameter("daysToduedate")) * (1000l*60l*60l*24l);
 			homework.setDuedate(homework.getB_datetime()+addingTimeForDue);
 			homework.setStd_id(Integer.parseInt(multi.getParameter("stdId")));
 			homework.setTitle(multi.getParameter("title"));
 			homework.setContent(multi.getParameter("content"));
 			fileNames = multi.getFileNames();
-			fileNum = 0;
+			fileNum = 4;
 			while(fileNames.hasMoreElements()) {
 				String fName = (String)fileNames.nextElement();
-				fileNum++;
+				fileNum--;
 				if(fName == null || fName.equals("")) continue;
 				if(fileNum==1) {
 					bf.setB_file1_name(multi.getOriginalFileName(fName));
-					bf.setB_file1("/upload"+multi.getFilesystemName(fName));					
+					bf.setB_file1(multi.getFilesystemName(fName));					
 				} else if (fileNum==2) {
 					bf.setB_file2_name(multi.getOriginalFileName(fName));
-					bf.setB_file2("/upload"+multi.getFilesystemName(fName));
+					bf.setB_file2(multi.getFilesystemName(fName));
 				} else if(fileNum==3) {
 					bf.setB_file3_name(multi.getOriginalFileName(fName));
-					bf.setB_file3("/upload"+multi.getFilesystemName(fName));
+					bf.setB_file3(multi.getFilesystemName(fName));
 				}
 			}
-			jobj = new JsonObject();
 			boardDao = new BoardDao();
-			b_id = boardDao.insertHomework(homework);
-			jobj.addProperty("postResult", boardDao.insertBoardFile(b_id, bf));
-			jsonData = new Gson().toJson(jobj);
-			out.print(jsonData);
+			postResult = boardDao.insertBoardFile(boardDao.insertHomework(homework), bf);
+			if(postResult>0) {
+				request.getRequestDispatcher("/main?command=GOMNGSTUDY&postResult="+postResult).forward(request, response);
+			}
 			break;
 		case "LOADLEADERCALENDAR":
 			response.setContentType("text/plain");

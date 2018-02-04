@@ -173,10 +173,12 @@ public class MainController extends HttpServlet {
 			bodyInclude = "/WEB-INF/study/manager.jsp";
 			stdDao = new StudyDao();
 			stdList = (ArrayList<Study>) stdDao.getMyStudy(email);
-			request.getSession().setAttribute("myStdList", stdList);
-			request.getSession().setAttribute("index", 0);
-			request.getSession().setAttribute("includeStdMenu", "stdHome");
-			request.getSession().setAttribute("includeApplyMenu", "applyList.jsp");
+			HttpSession session = request.getSession();
+			session.setAttribute("myStdList", stdList);
+			session.setAttribute("index", session.getAttribute("index")==null?0:session.getAttribute("index"));
+			session.setAttribute("includeStdMenu", session.getAttribute("includeStdMenu")==null?"stdHome":session.getAttribute("includeStdMenu"));
+			session.setAttribute("includeApplyMenu", "applyList.jsp");
+			request.setAttribute("postResult", request.getParameter("postResult")==null?null:request.getParameter("postResult"));
 			break;
 			
 		case "UPDATEINFO": //회원 수정 처리

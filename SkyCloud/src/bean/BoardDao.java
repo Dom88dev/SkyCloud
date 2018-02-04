@@ -94,8 +94,10 @@ public class BoardDao {
 			pstmt.setString(3, n.getContent());
 			pstmt.setLong(4, n.getB_datetime());
 			result = pstmt.executeUpdate();
+			pool.freeConnection(conn, pstmt, rs);
 			if(result >0) {
-				sql = "select b_id from BOARD where std_id=? and title=? and content=? and b_datetime=? and duedate=null and view_cnt=0 and replies_cnt=0 order by b_id desc";
+				conn = pool.getConnection();
+				sql = "select b_id from BOARD where std_id=? and title=? and content=? and b_datetime=? and duedate=null order by b_id desc";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, n.getStd_id());
 				pstmt.setString(2, n.getTitle());
@@ -127,8 +129,10 @@ public class BoardDao {
 			pstmt.setLong(4, h.getB_datetime());
 			pstmt.setLong(5, h.getDuedate());
 			result = pstmt.executeUpdate();
+			pool.freeConnection(conn, pstmt, rs);
 			if(result >0) {
-				sql = "select b_id from BOARD where std_id=? and title=? and content=? and b_datetime=? and duedate=? and view_cnt=0 and replies_cnt=0 order by b_id desc";
+				conn = pool.getConnection();
+				sql = "select b_id from BOARD where std_id=? and title=? and content=? and b_datetime=? and duedate=? order by b_id desc";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, h.getStd_id());
 				pstmt.setString(2, h.getTitle());
@@ -158,15 +162,15 @@ public class BoardDao {
 			if(bf.getB_file1_name()==null) pstmt.setNull(1, java.sql.Types.NULL);
 			else pstmt.setString(1, bf.getB_file1_name());
 			if(bf.getB_file1()==null) pstmt.setNull(2, java.sql.Types.NULL);
-			else pstmt.setString(2, bf.getB_file1());
+			else pstmt.setString(2, "/upload/"+bf.getB_file1());
 			if(bf.getB_file2_name()==null) pstmt.setNull(3, java.sql.Types.NULL);
 			else pstmt.setString(3, bf.getB_file2_name());
 			if(bf.getB_file2()==null) pstmt.setNull(4, java.sql.Types.NULL);
-			else pstmt.setString(4, bf.getB_file2());
+			else pstmt.setString(4, "/upload/"+bf.getB_file2());
 			if(bf.getB_file3_name()==null) pstmt.setNull(5, java.sql.Types.NULL);
 			else pstmt.setString(5, bf.getB_file3_name());
 			if(bf.getB_file3()==null) pstmt.setNull(6, java.sql.Types.NULL);
-			else pstmt.setString(6, bf.getB_file3());
+			else pstmt.setString(6, "/upload/"+bf.getB_file3());
 			result = pstmt.executeUpdate();
 		} catch(Exception err) {
 			System.out.println("insertBoardFile() 에러 : "+err);

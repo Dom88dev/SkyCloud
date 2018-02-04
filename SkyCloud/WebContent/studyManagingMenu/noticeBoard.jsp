@@ -182,7 +182,7 @@ function fnPostNotice() {
 			<div align="center">공지사항이 없습니다.</div>
 		</div>
 		<c:if test="${email == myStdList[index].email}">
-			<div align="right" class="col-md-12">
+			<div align="right" class="col-md-12" style="margin-top: 0.8em;">
 				<button id="btnPostNotice" class='btn btn-info' onclick='fnPostNotice()'><i class="fa fa-pencil-square-o">공지사항 작성</i></button>
 			</div>
 		</c:if>

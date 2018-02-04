@@ -114,6 +114,17 @@ button.btn-white:active, button.btn-white.active, .open>.dropdown-toggle.btn-whi
 
 button.btn-white:hover {	border: 0.4px solid #39d2fd;	color: #39d2fd;	background-color: #fff; }
 button.btn-white:focus {	border: 0.4px solid #39d2fd;	color: #39d2fd;	background-color: #fff;	outline:none;	}
+div.panel-body div a {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width:100%;
+	display: -webkit-box;
+	-webkit-line-clamp: 1; /* 라인수 */
+	-webkit-box-orient: vertical;
+	word-wrap:break-word; 
+	line-height: 1.2em;
+	heigt:1.2em;
+}
 </style>
 <div class="col-md-12" align="center">
 	<div class="col-md-9">

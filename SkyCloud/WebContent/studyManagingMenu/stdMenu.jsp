@@ -15,23 +15,23 @@
 				</c:choose>
 			</c:forEach>
 		</select>
-		<ul class="nav rnav-pills nav-stacked text-center">
-			<li class="active">
-               <a data-toggle="pill" href="#stdHome" onclick="fnSetCurrentStdMenu('stdHome')">스터디 홈</a>
-             </li>
-             <li>
+		<ul class="nav rnav-pills nav-stacked text-center">	
+			<li>
+				<a data-toggle="pill" href="#stdHome" onclick="fnSetCurrentStdMenu('stdHome')">스터디 홈</a>
+            </li>
+            <li>
                <a data-toggle="pill" href="#stdNotice" onclick="fnSetCurrentStdMenu('stdNotice')">공지사항</a>
-             </li>
-             <li>
+            </li>
+            <li>
                <a data-toggle="pill" href="#stdHomework" onclick="fnSetCurrentStdMenu('stdHomework')">과제</a>
-             </li>
-             <li>
+            </li>
+            <li>
                <a data-toggle="pill" href="#stdAttendance" onclick="fnSetCurrentStdMenu('stdAttendance')">출석부</a>
-             </li>
+            </li>
 		</ul>	
 	</div>
-	<div class="tab-content col-md-10">
-		<div class="tab-pane fade in active" id="stdHome" style="margin-top: 10px">
+	<div class="tab-content col-md-10 StudyMenu">
+		<div class="tab-pane fade" id="stdHome" style="margin-top: 10px">
 			<jsp:include page='/studyManagingMenu/studyHome.jsp'></jsp:include>
 		</div>
 		<div id="stdNotice" class="tab-pane fade" style="margin-top: 10px">
@@ -62,4 +62,10 @@ function fnChangeStdMenuInclude(data) {
 		});
 	//studyManagingMenu폴더를 web-inf안으로 이동시켜서 ajax컨트롤러를 통해 접근하도록 처리가능
 }
+
+(function() {
+	$("select[name='myCurrentStudy']").val('${index}');
+	$("a[href='#${includeStdMenu}']").parent().addClass("active");
+	$("#"+"${includeStdMenu}").addClass("in active");
+})();
 </script>

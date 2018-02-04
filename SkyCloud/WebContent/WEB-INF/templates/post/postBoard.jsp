@@ -58,15 +58,15 @@ label.upload_file_name {
 			</div>
 			<div class="col-md-12" align="left" style="margin-top:0.8em;margin-bottom:0.8em;">
 				<div class="col-md-4">
-					<button type="button" class="btn-white btn-upload">파일 선택<i class="fa fa-file-o"></i></button><label class="upload_file_name"></label>
+					<button type="button" class="btn-white btn-upload">파일 선택<i class="glyphicon glyphicon-paperclip"></i></button><label class="upload_file_name"></label>
 					<input type="file" name="file1" class="file_Upload" onchange="fnChangeFile(this.value, 1)">
 				</div>
 				<div class="col-md-4">
-					<button type="button" class="btn-white btn-upload">파일 선택<i class="fa fa-file-o"></i></button><label class="upload_file_name"></label>
+					<button type="button" class="btn-white btn-upload">파일 선택<i class="glyphicon glyphicon-paperclip"></i></button><label class="upload_file_name"></label>
 					<input type="file" name="file2" class="file_Upload" onchange="fnChangeFile(this.value, 2)">
 				</div>
 				<div class="col-md-4">
-					<button type="button" class="btn-white btn-upload">파일 선택<i class="fa fa-file-o"></i></button><label class="upload_file_name"></label>
+					<button type="button" class="btn-white btn-upload">파일 선택<i class="glyphicon glyphicon-paperclip"></i></button><label class="upload_file_name"></label>
 					<input type="file" name="file3" class="file_Upload" onchange="fnChangeFile(this.value, 3)">
 				</div>
 			</div>
