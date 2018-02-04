@@ -92,7 +92,7 @@ public class AttendanceDao {
 		Date currentDay = rsdf.parse(reDay);
 		
 		java.sql.Date sqlDate = new java.sql.Date(currentDay.getTime());
-		
+		System.out.println(sqlDate);
 		String status=null;
 		try {
 			conn = pool.getConnection();
@@ -100,6 +100,7 @@ public class AttendanceDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setDate(1, sqlDate);
 			if(getStdTime(std_id).compareTo(currentTime)<0) {
+				System.out.println(getStdTime(std_id));
 				pstmt.setString(2, "late");
 				status="late";
 			}else if(getStdTime(std_id).compareTo(currentTime)>0) {
