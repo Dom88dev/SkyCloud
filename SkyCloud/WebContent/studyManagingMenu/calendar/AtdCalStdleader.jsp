@@ -56,7 +56,7 @@
 					type : "GET",
 					data : {
 						command : "CNTSTATUS",
-						stdId : "${myStdList[index].std_id}"
+						stdId:"${myStdList[index].std_id}",
 					},
 					dataType : "json",
 					success : function(data) {
@@ -73,7 +73,7 @@
 									titleStr = "지각 [" + data.latecnt + "]건";
 								} else if (data.abscnt != null) {
 									titleStr = "결석 [" + data.abscnt + "]건";
-								} else if (data.obscnt != null) {
+								} else{
 									titleStr = "공결 [" + data.obscnt + "]건";
 								}
 
@@ -98,17 +98,30 @@
 				$('#calmodal').modal('show');
 			},
 			eventClick : function(event, element) {
+				var s = null;
 				$.ajax({
 					url : "/StudyCloud/ajax",
 					type : "GET",
 					data : {
 						command : "GET_ATTSTATUS",
-						email : "${myStdList[index].email}"
+						stdId:"${myStdList[index].std_id}",
+						email : "${email}"
 					},
+					async: false,
 					success : function(data) {
-						showAttStatus(data);
+						if(data!=null){
+							var tag = "<tr>";
+							for(var i=0;i<data.atd_status.length;i++){
+								tag += "<td>"+ data[i].email+ "</td>";
+								tag +="<td><select class='rselect' name='status_select'><option value='"+data[i].atd_status+"'>"+ atdstatus + "</option></select></td>";
+								tag +="</tr>";
+							}
+							tag += "<tr>";
+							document.getElementById("att-table").innerHTML = tag;
+						}
 					}
 				});
+				
 				$('#calmodal').modal('show');
 				$('#calmodal').find('#title').val(event.title);
 			},
@@ -121,14 +134,14 @@
 		});
 		// Whenever the user clicks on the "save" button om the dialog
 		$('#save-event').on('click', function() {
-			var title = $('select option:selected').val();
+			var title = $('.rselect option:selected').val();
 			//$('#calendar').fullCalendar('removeEvents', event.title);
 			$.ajax({
 				url : "/StudyCloud/ajax",
 				type : "GET",
 				data : {
 					command : "UPDATE_STATUS",
-					status : "$('select option:selected').val()"
+					status : "$('.rselect option:selected').val()"
 				},
 				success : function(data) {
 					alert('출결이 정상적으로 수정되었습니다.');
@@ -152,21 +165,21 @@
 	});
 	function showAttStatus(data) {
 		var tab = document.querySelector('#att-table');
+		alert(tab);
 		var atdstatus;
 		for (var i = 0; i < data.length; i++) {
-			if ((data[i].atd_status).equals("att")) {
+			if (data[i].atd_status=='att') {
+				alert(data[i].atd_status);
 				atdstatus = "출석";
-			} else if ((data[i].atd_status).equals("late")) {
+			} else if (data[i].atd_status=='late') {
 				atdstatus = "지각";
-			} else if ((data[i].atd_status).equals("abs")) {
+			} else if (data[i].atd_status=='abs') {
 				atdstatus = "결석";
-			} else if ((data[i].atd_status).equals("obs")) {
+			} else {
+				alert(data[i].atd_status);
 				atdstatus = "공결";
 			}
-			html += '<tr><td>'
-					+ data[i].email
-					+ '</td><td><select class="rselect" name="status_select"><option value="'+data[i].atd_status+'">'
-					+ atdstatus + '</option>' + '</select></td></tr>';
+			html += '<tr><td>'+ data[i].email+ '</td><td><select class="rselect" name="status_select"><option value="'+data[i].atd_status+'">'+ atdstatus + '</option>' + '</select></td></tr>';
 			tab.innerHTML = html;
 		}
 	}
