@@ -40,7 +40,7 @@ label.upload_file_name {
 		</c:choose>
 	</h2>
 	<div class="col-md-12">
-		<form action="/StudyCloud/ajax" method="post">
+		<form action="/StudyCloud/ajax" method="post" enctype="multipart/form-data">
 			<c:choose>
 				<c:when test="${boardKind == 'notice'}">
 					<input type="hidden" name="command" value="POSTNOTICE">
@@ -49,7 +49,7 @@ label.upload_file_name {
 					<input type="hidden" name="command" value="POSTHOMEWORK">
 				</c:otherwise>
 			</c:choose>
-			<input type="hidden" name="std_id" value="${stdId}">
+			<input type="hidden" name="stdId" value="${stdId}">
 			<div class="col-md-2" align="center" style="margin-top:0.8em;margin-bottom:0.8em;">
 				<label style="font-size: 1em;line-height:2em;color: #39d2fd;">Á¦¸ñ</label>
 			</div>
@@ -76,9 +76,9 @@ label.upload_file_name {
 						<textarea id="notice_content_area" name="content" rows="10" cols="50" class="form-control"></textarea>
 						<script>
 		       				CKEDITOR.replace( 'notice_content_area', {
-		       					'filebrowserUploadUrl':'/lib/ckeditor/upload.jsp?'
-		       					    +'realUrl=/StudyCloud/images/boardUploadImg'
-		       					    +'&realDir=boardUploadImg'
+		       					'filebrowserUploadUrl':'/StudyCloud/lib/ckeditor/upload.jsp?'
+		       					    +'realUrl=/StudyCloud/images/boardUploadImg/'
+		       					    +'&realDir=images/boardUploadImg'
 		       				} );
 		   				</script>
 					</div>
@@ -91,9 +91,9 @@ label.upload_file_name {
 						<textarea id="homework_content_area" name="content" rows="10" cols="50" class="form-control"></textarea>
 						<script>
 			      				CKEDITOR.replace( 'homework_content_area', {
-			      					'filebrowserUploadUrl':'/lib/ckeditor/upload.jsp?'
-			      					    +'realUrl=/StudyCloud/images/boardUploadImg'
-			      					    +'&realDir=boardUploadImg'
+			      					'filebrowserUploadUrl':'/StudyCloud/lib/ckeditor/upload.jsp?'
+			      					    +'realUrl=/StudyCloud/images/boardUploadImg/'
+			      					    +'&realDir=images/boardUploadImg'
 			      				} );
 			  				</script>
 					</div>

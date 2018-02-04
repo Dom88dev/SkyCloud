@@ -81,8 +81,8 @@ public class BoardDao {
 		return hoemworkList;
 	}
 	
-	//공지사항 등록
-	public int insertNotice(Notice n, BoardFile bf) {
+	//공지사항 등록 - b_id 반환 -> 바로 insertBoardFile을 실행할 수 있도록
+	public int insertNotice(Notice n) {
 		int result = 0;
 		String sql = "insert into BOARD values(seq_b.nextVal, ?, ?, ?, ?, null, 0, 0)";
 		try {
@@ -102,9 +102,8 @@ public class BoardDao {
 				pstmt.setString(3, n.getContent());
 				pstmt.setLong(4, n.getB_datetime());
 				rs = pstmt.executeQuery();
-				if(rs.next()) n.setB_id(rs.getInt("b_id"));
+				if(rs.next()) result =  rs.getInt("b_id");
 			}
-			result = insertBoardFile(n.getB_id(), bf);			
 		} catch(Exception err) {
 			System.out.println("insertNotice() 에러 : "+err);
 			err.printStackTrace();
@@ -114,8 +113,8 @@ public class BoardDao {
 		return result;
 	}
 	
-	//과제등록
-	public int insertHomework(Homework h, BoardFile bf) {
+	//과제등록 - b_id 반환 -> 바로 insertBoardFile을 실행할 수 있도록
+	public int insertHomework(Homework h) {
 		int result = 0;
 		String sql = "insert into BOARD values(seq_b.nextVal, ?, ?, ?, ?, ?, 0, 0)";
 		try {
@@ -137,9 +136,8 @@ public class BoardDao {
 				pstmt.setLong(4, h.getB_datetime());
 				pstmt.setLong(5, h.getDuedate());
 				rs = pstmt.executeQuery();
-				if(rs.next()) h.setB_id(rs.getInt("b_id"));
+				if(rs.next()) result =  rs.getInt("b_id");
 			}
-			result = insertBoardFile(h.getB_id(), bf);
 		} catch(Exception err) {
 			System.out.println("insertHomework() 에러 : "+err);
 			err.printStackTrace();
@@ -157,12 +155,18 @@ public class BoardDao {
 			conn = pool.getConnection();
 			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, bf.getB_file1_name());
-			pstmt.setString(2, bf.getB_file1());
-			pstmt.setString(3, bf.getB_file2_name());
-			pstmt.setString(4, bf.getB_file2());
-			pstmt.setString(5, bf.getB_file3_name());
-			pstmt.setString(6, bf.getB_file3());
+			if(bf.getB_file1_name()==null) pstmt.setNull(1, java.sql.Types.NULL);
+			else pstmt.setString(1, bf.getB_file1_name());
+			if(bf.getB_file1()==null) pstmt.setNull(2, java.sql.Types.NULL);
+			else pstmt.setString(2, bf.getB_file1());
+			if(bf.getB_file2_name()==null) pstmt.setNull(3, java.sql.Types.NULL);
+			else pstmt.setString(3, bf.getB_file2_name());
+			if(bf.getB_file2()==null) pstmt.setNull(4, java.sql.Types.NULL);
+			else pstmt.setString(4, bf.getB_file2());
+			if(bf.getB_file3_name()==null) pstmt.setNull(5, java.sql.Types.NULL);
+			else pstmt.setString(5, bf.getB_file3_name());
+			if(bf.getB_file3()==null) pstmt.setNull(6, java.sql.Types.NULL);
+			else pstmt.setString(6, bf.getB_file3());
 			result = pstmt.executeUpdate();
 		} catch(Exception err) {
 			System.out.println("insertBoardFile() 에러 : "+err);

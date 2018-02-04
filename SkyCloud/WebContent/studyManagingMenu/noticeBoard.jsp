@@ -50,7 +50,7 @@ function fnLoadNotice(data) {
 					}
 				}
 			} else {
-				for(var i=beginNumPerPage;i<nList.length; i++) {
+				for(var i=beginNumPerNPage;i<nList.length; i++) {
 					createNoticeRecord(nList, i);
 				}
 			}
@@ -181,9 +181,11 @@ function fnPostNotice() {
 		<div class="tbody" id="nTbody" align="center">
 			<div align="center">공지사항이 없습니다.</div>
 		</div>
-		<div align="right" class="col-md-12">
-			<button id="btnPostNotice" class='btn btn-info' onclick='fnPostNotice()'><i class="fa fa-pencil-square-o">공지사항 작성</i></button>
-		</div>
+		<c:if test="${email == myStdList[index].email}">
+			<div align="right" class="col-md-12">
+				<button id="btnPostNotice" class='btn btn-info' onclick='fnPostNotice()'><i class="fa fa-pencil-square-o">공지사항 작성</i></button>
+			</div>
+		</c:if>
 		<div class="tfoot">
 			<div class="col-md-4">
 				<ul class="pager">
