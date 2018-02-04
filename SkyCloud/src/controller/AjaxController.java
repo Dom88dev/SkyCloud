@@ -46,7 +46,6 @@ public class AjaxController extends HttpServlet {
 		response.setHeader("Cache-Control", "no-cache");
 		PrintWriter out = response.getWriter();
 		String command = request.getParameter("command");
-		String upstatus = request.getParameter("status");
 		String email = request.getParameter("email");
 		int stdId;
 		
@@ -185,7 +184,8 @@ public class AjaxController extends HttpServlet {
 			
 		case "UPDATE_STATUS": //출결 업데이트
 			attendanceDao = new AttendanceDao();
-			int r = attendanceDao.UpdateStatus(upstatus, email);
+			status = request.getParameter("status");
+			int r = attendanceDao.UpdateStatus(status, email);
 			
 			out.println(r);
 			break;
