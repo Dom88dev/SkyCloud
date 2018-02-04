@@ -71,6 +71,7 @@
 	          <form action="/StudyCloud/main" method="post">
 	          	<input type="hidden" value="GETSTUDYINFO" name="command">
 				<input type="hidden" value="${stdList[param.index].std_id}" name="stdId">
+				<input type="hidden" value="${stdList[param.index].email }" name="email">
 	          	<button class="btn btn-lg" type="submit">자세히 보기</button>
 	          </form>
 	        </div>

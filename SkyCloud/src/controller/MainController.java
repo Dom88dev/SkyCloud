@@ -71,6 +71,7 @@ public class MainController extends HttpServlet {
 			memDao = new MemberDao();
 			int result = memDao.insertMember(mem);
 			request.setAttribute("RegisterResult", result);
+			System.out.println("회원가입 처리 작업 : "+result);
 			bodyInclude = "/register.jsp";
 			break;
 			
@@ -145,10 +146,14 @@ public class MainController extends HttpServlet {
 			
 		case "GETSTUDYINFO"://스터디 상세 정보 처리
 				int studyId = Integer.parseInt(request.getParameter("stdId"));
+				String leaderEmail = request.getParameter("email");
 				stdDao = new StudyDao();
 				memDao = new MemberDao();
-				mem = memDao.getMemberByEmail(email);
+				applyDao = new ApplyDao();
+				mem = memDao.getMemberByEmail(leaderEmail);
 				std = stdDao.getStudyInfo(studyId);
+				int currentMember = applyDao.getCurrentMembersNum(studyId);
+				request.setAttribute("currentMember", currentMember);
 				request.setAttribute("std", std);
 				request.setAttribute("mem", mem);
 				bodyInclude = "/studyInfo.jsp";
