@@ -150,7 +150,11 @@ button.btn-white:focus {	border: 0.4px solid #39d2fd;	color: #39d2fd;	background
 		<div align="justify" style="margin-bottom: 4%;">
 			<button class="btn btn-info">출석 체크</button>
 			<c:if test="${email == myStdList[index].email }">
-				<button class="btn btn-white">스터디 수정/삭제<i class="fa fa-cog"></i></button>
+				<form action="/StudyCloud/main" method="post">
+				<input type="hidden" name="command" value="STUDYUPDATEINFO">
+				<input type="hidden" name="stdId" value="${myStdList[index].std_id}">
+				<button class="btn btn-white" type="submit">스터디 수정/삭제<i class="fa fa-cog"></i></button>
+				</form>
 			</c:if>
 		</div>
 		<div class="panel panel-info" id="stdHome_notice">
