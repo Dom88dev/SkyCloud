@@ -4,7 +4,7 @@
 <link rel="stylesheet" type="text/css" href="/StudyCloud/lib/css/boardCss.css">
 <link rel="stylesheet" type="text/css" href="/StudyCloud/lib/css/stdRegisterCss.css">
 <script src="/StudyCloud/lib/ckeditor/ckeditor.js"></script>
-<jsp:useBean id="toDay" class="java.util.Date" />
+<jsp:useBean id="regiDate" class="java.util.Date" />
 <style>
 input.file_Upload {  
   opacity: 0;       /*input type="file" tag 투명하게 처리*/
@@ -32,10 +32,12 @@ label.upload_file_name {
 	<h2 class="boardLabel">
 		<c:choose>
 			<c:when test="${boardKind == 'notice'}">
-				공지사항 작성
+				공지사항 수정
+				<c:set value="${notice}" var="board"/>
 			</c:when>
 			<c:otherwise>
-				과제 작성
+				과제 수정
+				<c:set value="${homework}" var="board"/>
 			</c:otherwise>
 		</c:choose>
 	</h2>
@@ -43,39 +45,39 @@ label.upload_file_name {
 		<form action="/StudyCloud/ajax" method="post" enctype="multipart/form-data">
 			<c:choose>
 				<c:when test="${boardKind == 'notice'}">
-					<input type="hidden" name="command" value="POSTNOTICE">
+					<input type="hidden" name="command" value="UPDATENOTICE">
 				</c:when>
 				<c:otherwise>
-					<input type="hidden" name="command" value="POSTHOMEWORK">
+					<input type="hidden" name="command" value="UPDATEHOMEWORK">
 				</c:otherwise>
 			</c:choose>
-			<input type="hidden" name="stdId" value="${stdId}">
+			<input type="hidden" name="stdId" value="${board.std_id}">
 			<div class="col-md-2" align="center" style="margin-top:0.8em;margin-bottom:0.8em;">
 				<label style="font-size: 1em;line-height:2em;color: #39d2fd;">제목</label>
 			</div>
 			<div class="col-md-10" style="margin-top:0.8em;margin-bottom:0.8em;">
-				<input type="text" name="title" class=" rform-control">
+				<input type="text" name="title" class=" rform-control" value="${board.title}">
 			</div>
 			<div class="col-md-12" align="left" style="margin-top:0.8em;margin-bottom:0.8em;">
 				<div class="col-md-4">
-					<button type="button" class="btn-white btn-upload">파일 선택<i class="fa fa-file-o"></i></button><label class="upload_file_name"></label>
+					<button type="button" class="btn-white btn-upload">파일 선택<i class="glyphicon glyphicon-paperclip"></i></button><label class="upload_file_name">${board.files.b_file1_name}</label>
 					<input type="file" name="file1" class="file_Upload" onchange="fnChangeFile(this.value, 1)">
 				</div>
 				<div class="col-md-4">
-					<button type="button" class="btn-white btn-upload">파일 선택<i class="fa fa-file-o"></i></button><label class="upload_file_name"></label>
+					<button type="button" class="btn-white btn-upload">파일 선택<i class="glyphicon glyphicon-paperclip"></i></button><label class="upload_file_name">${board.files.b_file2_name}</label>
 					<input type="file" name="file2" class="file_Upload" onchange="fnChangeFile(this.value, 2)">
 				</div>
 				<div class="col-md-4">
-					<button type="button" class="btn-white btn-upload">파일 선택<i class="fa fa-file-o"></i></button><label class="upload_file_name"></label>
+					<button type="button" class="btn-white btn-upload">파일 선택<i class="glyphicon glyphicon-paperclip"></i></button><label class="upload_file_name">${board.files.b_file3_name}</label>
 					<input type="file" name="file3" class="file_Upload" onchange="fnChangeFile(this.value, 3)">
 				</div>
 			</div>
 			<c:choose>
 				<c:when test="${boardKind == 'notice'}">
 					<div class="col-md-12">
-						<textarea id="notice_content_area" name="content" rows="10" cols="50" class="form-control"></textarea>
+						<textarea id="notice_modify_content_area" name="content" rows="10" cols="50" class="form-control">${board.content}</textarea>
 						<script>
-		       				CKEDITOR.replace( 'notice_content_area', {
+		       				CKEDITOR.replace( 'notice_modify_content_area', {
 		       					'filebrowserUploadUrl':'/StudyCloud/lib/ckeditor/upload.jsp?'
 		       					    +'realUrl=/StudyCloud/images/boardUploadImg/'
 		       					    +'&realDir=images/boardUploadImg'
@@ -85,12 +87,13 @@ label.upload_file_name {
 				</c:when>
 				<c:otherwise>
 					<div class="col-md-12" style="margin-top:0.8em;margin-bottom:0.8em;" align="left">
-						<i style="color:#39d2fd;"><fmt:formatDate value="${toDay}" pattern="yyyy-MM-dd"/></i>로부터 <input class="rform-control-inline text-info" type="number" name="daysToduedate" size="1" min="0" max="90">일
+						<c:set target="${regiDate}" property="time" value="${board.b_datetime}"/>
+						<i style="color:#39d2fd;"><fmt:formatDate value="${regiDate}" pattern="yyyy-MM-dd"/></i>로부터 <input class="rform-control-inline text-info" type="number" name="daysToduedate" size="1" min="0" max="90" value="${(board.duedate-board.b_datetime)/24/60/60/1000 }">일
 					</div>
 					<div class="col-md-12">
-						<textarea id="homework_content_area" name="content" rows="10" cols="50" class="form-control"></textarea>
+						<textarea id="homework_modify_content_area" name="content" rows="10" cols="50" class="form-control">${board.content}</textarea>
 						<script>
-			      				CKEDITOR.replace( 'homework_content_area', {
+			      				CKEDITOR.replace( 'homework_modify_content_area', {
 			      					'filebrowserUploadUrl':'/StudyCloud/lib/ckeditor/upload.jsp?'
 			      					    +'realUrl=/StudyCloud/images/boardUploadImg/'
 			      					    +'&realDir=images/boardUploadImg'
@@ -100,7 +103,7 @@ label.upload_file_name {
 				</c:otherwise>
 			</c:choose>
 			<div class="col-md-12" style="margin-top:0.8em;margin-bottom:0.8em;">
-				<button type="submit" class="btn btn-info" style="width:30%;">작성</button>
+				<button type="submit" class="btn btn-info" style="width:30%;">수정</button>
 			</div>
 		</form>
 	</div>

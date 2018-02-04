@@ -11,7 +11,7 @@ public class Homework {
 	private long duedate;
 	private int view_cnt;
 	private int replies_cnt;
-	private List<BoardFile> files;
+	private BoardFile files;
 	
 	
 	
@@ -74,11 +74,11 @@ public class Homework {
 	public void setReplies_cnt(int replies_cnt) {
 		this.replies_cnt = replies_cnt;
 	}
-	public List<BoardFile> getFiles() {
+	public BoardFile getFiles() {
 		return files;
 	}
 
-	public void setFiles(List<BoardFile> files) {
+	public void setFiles(BoardFile files) {
 		this.files = files;
 	}
 }

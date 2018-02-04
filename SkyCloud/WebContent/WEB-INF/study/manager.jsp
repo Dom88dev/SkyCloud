@@ -69,8 +69,8 @@
 	
 </style>
 <script>
-	var currentIndex = 0;
-	var currentMenu = "stdHome";
+	var currentIndex = Number("${index}");
+	var currentMenu = "${includeStdMenu}";
 	function fnSetIndex(index) {
 		currentIndex = index;
 		$.post("/StudyCloud/ajax", {"command":"MNG_CHANGESTUDY", "index":index, "includeStdMenu":currentMenu}, 
@@ -88,6 +88,15 @@
 	}
 	function fnSetCurrentApplyMenu(menu) {
 		
+	}
+	
+	function fnPostResultModalPopup(result) {
+		if(Number(result)==0) {
+			$("#postResultModal div.modal-body h4").text("게시물 업로드중 문제가 발생했습니다.");
+		} else {
+			$("#postResultModal div.modal-body h4").text("게시글이 업로드되었습니다.");
+		}
+		$("#postResultModal").modal();
 	}
 </script>
 </head>
@@ -116,10 +125,23 @@
 			</div>
 		</div>
 		
-		<!-- 페이지 변경을 위한 밸류값을 저장하는 div들.. -->
+		<!-- 게시판 업로드 결과 모달 -->
+		<div class="modal fade" id="postResultModal" data-backdrop="static">
+ 			<div class="modal-dialog modal-sm">
+ 				<div class="modal-content">
+ 					<div class="modal-body">
+						<h4 style="text-align: center;color: #6e6e6e">게시글이 업로드되었습니다.</h4>
+	 					<div style="text-align: center;padding-top: 20px">
+	 						<button class="btn btn-info" data-dismiss="modal" style="background: #39d2fd;border: 0;">확인</button>
+	 					</div>
+	 				</div>
+ 				</div>
+ 			</div>
+ 		</div>
 		
-		
-		
+		<c:if test="${! (empty postResult)}">
+			<script>fnPostResultModalPopup('${postResult}');</script>
+		</c:if>
 		
 	</div>
 </body>

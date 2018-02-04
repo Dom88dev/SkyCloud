@@ -137,7 +137,10 @@ function createHomeworkRecord(hList, i) {
 	var viewNumDiv = document.createElement("div");
 	$(viewNumDiv).addClass("col-md-1");
 	
-	$(titleDiv).text(hList[i].title);
+	var title_a = document.createElement("a");
+	$(title_a).text(hList[i].title);
+	$(title_a).attr("href", "javascript:fnReadHomework('"+hList[i].b_id+"')");
+	$(titleDiv).append(title_a);
 	$(uploadHDiv).attr("align", "right");
 	$(uploadHDiv).html("<button class='btn-white' onclick='fnUploadHomework("+hList[i].b_id+")'>과제 올리기</button>");
 	var d = new Date(hList[i].duedate);
@@ -156,6 +159,14 @@ function createHomeworkRecord(hList, i) {
 	var hr = document.createElement("hr");
 	$(hr).addClass("hr col-md-12");
 	$(tBody).append(hr);
+}
+
+//과제 보기
+function fnReadHomework(b_id) {
+	$.post("/StudyCloud/ajax", {"stdId":'${myStdList[index].std_id}', "command":"READHOMEWORK", "b_id":b_id}, 
+			function(code) {
+				$("#${includeStdMenu}").html(code);
+		});
 }
 
 //과제 검색
@@ -193,7 +204,7 @@ function fnPostHomework(){
 			<div align="center">과제가 없습니다.</div>
 		</div>
 		<c:if test="${email == myStdList[index].email}">
-			<div align="right" class="col-md-12">
+			<div align="right" class="col-md-12" style="margin-top: 0.8em;">
 				<button id="btnPostHomework" class='btn btn-info' onclick='fnPostHomework()'><i class="fa fa-pencil-square-o">과제 작성</i></button>
 			</div>
 		</c:if>

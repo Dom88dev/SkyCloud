@@ -217,13 +217,77 @@ public class StudyDao {
 		return result;
 	}
 	
-	//study 테이블 내 수정
-	public int updateStudy(int std_id, Study std) {
+	//study 테이블  update 처리
+	public int updateStudy(Study s) {
 		int result=0;
-		String sql = "";
+		String sql = "update set study std_name=?, std_max=?, std_start=?, std_end=?, std_info=?, std_plan=?, std_etc=?, std_gender=?, std_category=?, std_email=? where std_id=?";
+		try {
+			conn = pool.getConnection();
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, s.getStd_name());
+			pstmt.setInt(2, s.getStd_max());
+			pstmt.setDate(3, s.getStd_start());
+			pstmt.setDate(4, s.getStd_end());
+			pstmt.setString(5, s.getStd_info());
+			pstmt.setString(6, s.getStd_plan());
+			pstmt.setString(7, s.getStd_etc());
+			pstmt.setString(8, s.getStd_gender());
+			pstmt.setString(9, s.getStd_category());
+			pstmt.setString(10, s.getEmail());
+			pstmt.setInt(11, s.getStd_id());
+			result = pstmt.executeUpdate();
+			
+			if(result>0) {//if update 성공했다면 std_id를 가져옴.
+				sql="select std_id from STUDY where std_name=? and std_max=? and std_start=? and std_end=? and std_info=? and std_plan=? and std_etc=? and std_gender=? and std_category=? and email=? order by std_id desc";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, s.getStd_name());
+				pstmt.setInt(2, s.getStd_max());
+				pstmt.setDate(3, s.getStd_start());
+				pstmt.setDate(4, s.getStd_end());
+				pstmt.setString(5, s.getStd_info());
+				pstmt.setString(6, s.getStd_plan());
+				pstmt.setString(7, s.getStd_etc());
+				pstmt.setString(8, s.getStd_gender());
+				pstmt.setString(9, s.getStd_category());
+				pstmt.setString(10, s.getEmail());
+				rs = pstmt.executeQuery();
+				rs.next();
+				result = rs.getInt("std_id");
+			}
+		} catch(Exception err) {
+			System.out.println("insertStudy() 에러 : "+err);
+			err.printStackTrace();
+		} finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
 		return result;
 	}
-
+	
+	//study_timeplace테이블에 update 처리
+	public int updateStudyTimePlace(StudyTimePlace tp) {
+		int result = 0;
+		String sql = "update set STUDY_TIMEPLACE std_time=?, std_hour=?, std_addr=?, std_day=? where std_id=?";
+		
+		try {
+			conn = pool.getConnection();
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, tp.getStd_time());
+			pstmt.setInt(2, tp.getStd_hour());
+			pstmt.setString(3, tp.getStd_addr());
+			pstmt.setString(4, tp.getStd_day());
+			pstmt.setInt(5, tp.getStd_id());
+			result = pstmt.executeUpdate();
+			
+		} catch(Exception err) {
+			System.out.println("insertStudyTimePlace() 에러 : "+err);
+			err.printStackTrace();
+		} finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+		return result;
+	}
 	
 	//Study 검색 (스터디 이름과 소개 내용으로 검색)
 	public List<Study> getSearchStudyListOnNavbar(String search) {

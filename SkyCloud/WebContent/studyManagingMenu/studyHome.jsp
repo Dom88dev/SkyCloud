@@ -27,6 +27,7 @@
 								var div = document.createElement("div");
 								var a = document.createElement("a");
 								$(a).text(nList[i].title);
+								$(a).attr("href", "javascript:fnGoToBoard('stdNotice', '"+nList[i].b_id+"');")
 								div.append(a);
 								$("#stdHome_notice div.panel-body").append(div);
 							}
@@ -35,6 +36,7 @@
 								var div = document.createElement("div");
 								var a = document.createElement("a");
 								$(a).text(nList[i].title);
+								$(a).attr("href", "javascript:fnGoToBoard('stdNotice', '"+nList[i].b_id+"');")
 								div.append(a);
 								$("#stdHome_notice div.panel-body").append(div);
 							}
@@ -48,6 +50,7 @@
 								var div = document.createElement("div");
 								var a = document.createElement("a");
 								$(a).text(hList[i].title);
+								$(a).attr("href", "javascript:fnGoToBoard('stdHomework', '"+hList[i].b_id+"');");
 								div.append(a);
 								$("#stdHome_homework div.panel-body").append(div);
 							}
@@ -56,6 +59,7 @@
 								var div = document.createElement("div");
 								var a = document.createElement("a");
 								$(a).text(hList[i].title);
+								$(a).attr("href", "javascript:fnGoToBoard('stdHomework', '"+hList[i].b_id+"');");
 								div.append(a);
 								$("#stdHome_homework div.panel-body").append(div);
 							}
@@ -70,6 +74,15 @@
 	function fnMapPopup(addr) {
 		$('#mapframe').attr("src","/StudyCloud/studyHomeMap.jsp?addr='"+addr+"'");
 		$('#mapModal').modal();
+	}
+	
+	function fnGoToBoard(menu, b_id) {
+		currentMenu = menu;
+		$.post("/StudyCloud/ajax", {"command":"MNG_CHANGESTUDY", "index":currentIndex, "includeStdMenu":menu}, 
+				function(data) {
+					fnNotifyChangeStdMenu(b_id);
+					fnRemoveSelectStdMenu();
+			});
 	}
 	
 </script>
@@ -114,6 +127,17 @@ button.btn-white:active, button.btn-white.active, .open>.dropdown-toggle.btn-whi
 
 button.btn-white:hover {	border: 0.4px solid #39d2fd;	color: #39d2fd;	background-color: #fff; }
 button.btn-white:focus {	border: 0.4px solid #39d2fd;	color: #39d2fd;	background-color: #fff;	outline:none;	}
+div.panel-body div a {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width:100%;
+	display: -webkit-box;
+	-webkit-line-clamp: 1; /* 라인수 */
+	-webkit-box-orient: vertical;
+	word-wrap:break-word; 
+	line-height: 1.2em;
+	heigt:1.2em;
+}
 </style>
 <div class="col-md-12" align="center">
 	<div class="col-md-9">
@@ -150,7 +174,11 @@ button.btn-white:focus {	border: 0.4px solid #39d2fd;	color: #39d2fd;	background
 		<div align="justify" style="margin-bottom: 4%;">
 			<button class="btn btn-info">출석 체크</button>
 			<c:if test="${email == myStdList[index].email }">
-				<button class="btn btn-white">스터디 수정<i class="fa fa-cog"></i></button>
+				<form action="/StudyCloud/main" method="post">
+				<input type="hidden" name="command" value="STUDYUPDATEINFO">
+				<input type="hidden" name="stdId" value="${myStdList[index].std_id}">
+				<button class="btn btn-white" type="submit">스터디 수정<i class="fa fa-cog"></i></button>
+				</form>
 			</c:if>
 		</div>
 		<div class="panel panel-info" id="stdHome_notice">
