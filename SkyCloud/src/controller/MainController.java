@@ -71,6 +71,7 @@ public class MainController extends HttpServlet {
 			memDao = new MemberDao();
 			int result = memDao.insertMember(mem);
 			request.setAttribute("RegisterResult", result);
+			System.out.println("회원가입 처리 작업 : "+result);
 			bodyInclude = "/register.jsp";
 			break;
 			

@@ -45,12 +45,14 @@ td, tr {
 </script>
 </head>
 	<script>		
-		function regiResultModal(result) {
+		function regiResultModal(result) { 
 			if(result>0){
-				$("div.modal-footer button").click(function(){
+				alert("result : " + result);
+				//$("#emailNumModal").modal();
+				//$("div.modal-footer button").click(function(){
 					window.location.replace("/StudyCloud/index.jsp");
-				});
-				$("#modal").modal();
+				//});
+				
 			} else {
 				$("div.modal-body")[0].innerHTML = "회원가입도중 문제가 발생했습니다.<br>잠시 후 다시 시도해주십시오.";
 				$("div.modal-footer button").addClass("btn btn-danger");
@@ -106,9 +108,7 @@ td, tr {
 											<div style="float:left;width:33%;">
 												<button type="button" id='inputEmail' class="memail-authentication" name="email" >  email 인증  </button>
 											</div>
-											<div style="float:right;width:63%;background:red;">	
-												<span id="certification" class="memail-confirm mfont-size" style="display; text-align:center; ;position:absolute ;width:230px;font-size:14px;">이메일 인증 확인</span>
-											</div>
+											<div style="float:right;width:63%;color: #F56E6E;font-size: 13px;text-align: left;" id="emailNumValid"></div>
 											<div style='clear:both'></div>
 										</div>
 										<div id="emailValid" style="color: #F56E6E;font-size: 13px;text-align: left;"></div>
@@ -236,7 +236,7 @@ td, tr {
 		</div>
 		
 		<!-- 회원가입결과 확인 모달 -->
-		<div class="modal fade" id="modal" data-backdrop="static">
+		<div class="modal fade" id="joinModal" data-backdrop="static">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -246,7 +246,7 @@ td, tr {
 						가입을 축하드립니다.
 					</div>
 					<div class="modal-footer">
-						<button class="btn btn-info" data-dismiss="modal">확인</button>
+						<button class="btn btn-info" data-dismiss="modal" id="joinStd">확인</button>
 					</div>
 				</div>
 			</div>
@@ -287,6 +287,7 @@ td, tr {
 		 						</div>
 		 						<div class="modal-body">
 									<input type="text" id="emailNum" name="emailNum" class="mform-control" style="width: 100%; font-size:15px; border: 1px solid #39d2fd;" placeholder="인증번호 입력" required="required" />
+		 							<div id="emailValidFalse" style="color: #F56E6E;font-size: 13px;text-align: left;"></div>
 		 						</div>
 		 						<div class="modal-footer">
 		 							<button class="btn btn-primary" data-dismiss="modal" id="emailConformBtn">확인</button>
@@ -301,7 +302,7 @@ td, tr {
 	</div>
 	<!-- 회원가입 결과 처리 -->
 	<c:if test="${!(empty RegisterResult)}">
-		<script>regiResultModal('${RegisterResult}');</script>
+		<script>regiResultModal('${RegisterResult}'); alert('${RegisterResult}')</script>
 	</c:if>
 </body>
 <script>
@@ -322,16 +323,6 @@ td, tr {
 	});
 </script>
 <script>
-	function callbackName(result){
-		alert("result : " + result);
-		if(result == 0){
-			$("#nameValid").text("사용할 수 있는 닉네임 입니다.").val();
-		}
-		else{
-			$("#nameValid").text("중복된 닉네임입니다.").val();
-		}
-	}
-
 	// 이메일 유효성 검사
 	$(document).ready(function(){
 		$("#email").focusout(function(){
@@ -523,13 +514,31 @@ td, tr {
 				type:"POST",
 				url:"/StudyCloud/sendEmail",
 				data:{email : email},
+				//dataType:"text",
 				success:function(data){
+					var val = data;
 					alert("호출2");
-					alert(data);
+					alert("받아온 인증 번호: "+val);
 					$("#emailNumModal").modal();
+					$("#emailNum").focusout(function() {
+						alert("입력한 인증 번호 : "+$("#emailNum").val());
+						alert("받아온 인증 번호: "+val);
+						if ($("#emailNum").val() == Number(val)){
+							alert("인증 번호 맞음")
+							$("#emailValidFalse").text("이메일 인증이 완료 되었습니다.").val();
+							$("#emailNumValid").text("이메일 인증이 완료 되었습니다.").val();
+							$("#emailConformBtn").attr("disabled", "inline-block");
+						} else {
+							alert("인증 번호 틀림")
+							$("#emailValidFalse").text("인증번호가 틀렸습니다.").val();
+							$("#emailConformBtn").attr("disabled", "disabled");
+						}
+					})
 				}
 			})
 		})
+		
+		
 	})
 </script>
 

@@ -97,7 +97,6 @@ public class MemberDao {
 		}finally {
 			pool.freeConnection(conn, pstmt, rs);
 		}
-		System.out.println("name 결과 : "+result);
 		return result;
 	}
 	
@@ -115,7 +114,6 @@ public class MemberDao {
 		}finally {
 			pool.freeConnection(conn, pstmt, rs);
 		}
-		System.out.println("tel 결과 : "+result);
 		return result;
 	}
 	//회원정보 수정
