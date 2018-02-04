@@ -291,10 +291,13 @@ public class AjaxController extends HttpServlet {
 			}
 			jobj = new JsonObject();
 			boardDao = new BoardDao();
-			int postResult = boardDao.insertBoardFile(boardDao.insertNotice(notice), bf);
+			
+			int postResult = boardDao.insertNotice(notice);
 			if(postResult>0) {
-				request.getRequestDispatcher("/main?command=GOMNGSTUDY&postResult="+postResult).forward(request, response);
+				postResult = boardDao.getB_IdFromNotice(notice);
 			}
+			postResult = boardDao.insertBoardFile(postResult, bf);
+			request.getRequestDispatcher("/main?command=GOMNGSTUDY&postResult="+postResult).forward(request, response);
 			break;
 		case "POSTHOMEWORK"://과제 등록
 			homework = new Homework();
@@ -323,10 +326,13 @@ public class AjaxController extends HttpServlet {
 				}
 			}
 			boardDao = new BoardDao();
-			postResult = boardDao.insertBoardFile(boardDao.insertHomework(homework), bf);
+			postResult = boardDao.insertHomework(homework);
 			if(postResult>0) {
-				request.getRequestDispatcher("/main?command=GOMNGSTUDY&postResult="+postResult).forward(request, response);
+				postResult = boardDao.getB_IdFromHomework(homework);
 			}
+			
+			postResult = boardDao.insertBoardFile(postResult, bf);
+			request.getRequestDispatcher("/main?command=GOMNGSTUDY&postResult="+postResult).forward(request, response);
 			break;
 		case "UPDATEBOARD":
 			response.setContentType("text/html");
@@ -339,6 +345,85 @@ public class AjaxController extends HttpServlet {
 			}
 			request.setAttribute("boardKind", request.getParameter("board"));
 			request.getRequestDispatcher("/WEB-INF/templates/board/updateBoard.jsp").forward(request, response);
+			break;
+		case "UPDATENOTICE":
+			notice = new Notice();
+			notice.setB_id(Integer.parseInt(multi.getParameter("bId")));
+			notice.setContent(multi.getParameter("content"));
+			notice.setTitle(multi.getParameter("title"));
+			bf = new BoardFile();
+			boolean b1 = multi.getParameter("isChangedFile1").equals("true");
+			boolean b2 = multi.getParameter("isChangedFile2").equals("true");
+			boolean b3 = multi.getParameter("isChangedFile3").equals("true");
+			fileNames = multi.getFileNames();
+			fileNum = 4;
+			while(fileNames.hasMoreElements()) {
+				String fName = (String)fileNames.nextElement();
+				fileNum--;
+				if(fName == null || fName.equals("")) continue;
+				if(fileNum==1) {
+					if(b1) {
+						bf.setB_file1_name(multi.getOriginalFileName(fName));
+						bf.setB_file1(multi.getFilesystemName(fName));
+					}						
+				} else if (fileNum==2) {
+					if(b2) {
+						bf.setB_file2_name(multi.getOriginalFileName(fName));
+						bf.setB_file2(multi.getFilesystemName(fName));
+					}
+				} else if(fileNum==3) {
+					if(b3) {
+						bf.setB_file3_name(multi.getOriginalFileName(fName));
+						bf.setB_file3(multi.getFilesystemName(fName));
+					}
+				}
+			}
+			bf.setB_id(notice.getB_id());
+			boardDao = new BoardDao();
+			int updateResult = boardDao.updateNotice(notice);
+			if(updateResult>0) updateResult = boardDao.updateBoardFile(bf, b1, b2, b3);
+			System.out.println("보드파일 수정 결과 : "+updateResult);
+			request.getRequestDispatcher("/main?command=GOMNGSTUDY&updateResult="+updateResult).forward(request, response);
+			break;
+		case "UPDATEHOMEWORK":
+			homework = new Homework();
+			homework.setB_id(Integer.parseInt(multi.getParameter("bId")));
+			homework.setContent(multi.getParameter("content"));
+			homework.setTitle(multi.getParameter("title"));
+			addingTimeForDue = Long.parseLong(multi.getParameter("daysToduedate")) * (1000l*60l*60l*24l);
+			homework.setDuedate(Long.parseLong(multi.getParameter("datetime"))+addingTimeForDue);
+			bf = new BoardFile();
+			b1 = multi.getParameter("isChangedFile1").equals("true");
+			b2 = multi.getParameter("isChangedFile2").equals("true");
+			b3 = multi.getParameter("isChangedFile3").equals("true");
+			fileNames = multi.getFileNames();
+			fileNum = 4;
+			while(fileNames.hasMoreElements()) {
+				String fName = (String)fileNames.nextElement();
+				fileNum--;
+				if(fName == null || fName.equals("")) continue;
+				if(fileNum==1) {
+					if(b1) {
+						bf.setB_file1_name(multi.getOriginalFileName(fName));
+						bf.setB_file1(multi.getFilesystemName(fName));
+					}						
+				} else if (fileNum==2) {
+					if(b2) {
+						bf.setB_file2_name(multi.getOriginalFileName(fName));
+						bf.setB_file2(multi.getFilesystemName(fName));
+					}
+				} else if(fileNum==3) {
+					if(b3) {
+						bf.setB_file3_name(multi.getOriginalFileName(fName));
+						bf.setB_file3(multi.getFilesystemName(fName));
+					}
+				}
+			}
+			bf.setB_id(homework.getB_id());
+			boardDao = new BoardDao();
+			updateResult = boardDao.updateHomework(homework);
+			if(updateResult>0) updateResult = boardDao.updateBoardFile(bf, b1, b2, b3);
+			request.getRequestDispatcher("/main?command=GOMNGSTUDY&updateResult="+updateResult).forward(request, response);
 			break;
 		case "READNOTICE":
 			boardDao = new BoardDao();

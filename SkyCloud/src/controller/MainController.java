@@ -179,6 +179,7 @@ public class MainController extends HttpServlet {
 			session.setAttribute("includeStdMenu", session.getAttribute("includeStdMenu")==null?"stdHome":session.getAttribute("includeStdMenu"));
 			session.setAttribute("includeApplyMenu", "applyList.jsp");
 			request.setAttribute("postResult", request.getParameter("postResult")==null?null:request.getParameter("postResult"));
+			request.setAttribute("updateResult", request.getParameter("updateResult")==null?null:request.getParameter("updateResult"));
 			break;
 			
 		case "UPDATEINFO": //회원 수정 처리

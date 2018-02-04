@@ -51,7 +51,7 @@ label.upload_file_name {
 					<input type="hidden" name="command" value="UPDATEHOMEWORK">
 				</c:otherwise>
 			</c:choose>
-			<input type="hidden" name="stdId" value="${board.std_id}">
+			<input type="hidden" name="bId" value="${board.b_id}">
 			<div class="col-md-2" align="center" style="margin-top:0.8em;margin-bottom:0.8em;">
 				<label style="font-size: 1em;line-height:2em;color: #39d2fd;">제목</label>
 			</div>
@@ -61,15 +61,15 @@ label.upload_file_name {
 			<div class="col-md-12" align="left" style="margin-top:0.8em;margin-bottom:0.8em;">
 				<div class="col-md-4">
 					<button type="button" class="btn-white btn-upload">파일 선택<i class="glyphicon glyphicon-paperclip"></i></button><label class="upload_file_name">${board.files.b_file1_name}</label>
-					<input type="file" name="file1" class="file_Upload" onchange="fnChangeFile(this.value, 1)">
+					<input type="file" name="file1" class="file_Upload" onchange="fnChangeFile(this.value, 1)"><input type="hidden" name="isChangedFile1" value="false"/>
 				</div>
 				<div class="col-md-4">
 					<button type="button" class="btn-white btn-upload">파일 선택<i class="glyphicon glyphicon-paperclip"></i></button><label class="upload_file_name">${board.files.b_file2_name}</label>
-					<input type="file" name="file2" class="file_Upload" onchange="fnChangeFile(this.value, 2)">
+					<input type="file" name="file2" class="file_Upload" onchange="fnChangeFile(this.value, 2)"><input type="hidden" name="isChangedFile2" value="false"/>
 				</div>
 				<div class="col-md-4">
 					<button type="button" class="btn-white btn-upload">파일 선택<i class="glyphicon glyphicon-paperclip"></i></button><label class="upload_file_name">${board.files.b_file3_name}</label>
-					<input type="file" name="file3" class="file_Upload" onchange="fnChangeFile(this.value, 3)">
+					<input type="file" name="file3" class="file_Upload" onchange="fnChangeFile(this.value, 3)"><input type="hidden" name="isChangedFile3" value="false"/>
 				</div>
 			</div>
 			<c:choose>
@@ -89,6 +89,7 @@ label.upload_file_name {
 					<div class="col-md-12" style="margin-top:0.8em;margin-bottom:0.8em;" align="left">
 						<c:set target="${regiDate}" property="time" value="${board.b_datetime}"/>
 						<i style="color:#39d2fd;"><fmt:formatDate value="${regiDate}" pattern="yyyy-MM-dd"/></i>로부터 <input class="rform-control-inline text-info" type="number" name="daysToduedate" size="1" min="0" max="90" value="${(board.duedate-board.b_datetime)/24/60/60/1000 }">일
+						<input type="hidden" name="datetime" value="${board.b_datetime}">
 					</div>
 					<div class="col-md-12">
 						<textarea id="homework_modify_content_area" name="content" rows="10" cols="50" class="form-control">${board.content}</textarea>
@@ -112,5 +113,6 @@ label.upload_file_name {
 function fnChangeFile(value, i) {
 	var fileName = value.slice(value.lastIndexOf("\\")+1);
 	$("input[name='file"+i+"']").prev().text(fileName);
+	$("input[name='isChangedFile"+i+"']").val("true");
 }
 </script>

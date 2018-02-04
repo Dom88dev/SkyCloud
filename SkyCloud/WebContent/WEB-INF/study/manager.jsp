@@ -98,6 +98,15 @@
 		}
 		$("#postResultModal").modal();
 	}
+	
+	function fnUpdateResultModalPopup(result) {
+		if(Number(result)==0) {
+			$("#postResultModal div.modal-body h4").text("게시물 수정중 문제가 발생했습니다.");
+		} else {
+			$("#postResultModal div.modal-body h4").text("게시글이 수정되었습니다.");
+		}
+		$("#postResultModal").modal();
+	}
 </script>
 </head>
 <body>
@@ -141,6 +150,9 @@
 		
 		<c:if test="${! (empty postResult)}">
 			<script>fnPostResultModalPopup('${postResult}');</script>
+		</c:if>
+		<c:if test="${! (empty updateResult)}">
+			<script>fnUpdateResultModalPopup('${updateResult}');</script>
 		</c:if>
 		
 	</div>

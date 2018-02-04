@@ -175,18 +175,6 @@ public class BoardDao {
 			pstmt.setString(3, n.getContent());
 			pstmt.setLong(4, n.getB_datetime());
 			result = pstmt.executeUpdate();
-			pool.freeConnection(conn, pstmt, rs);
-			if(result >0) {
-				conn = pool.getConnection();
-				sql = "select b_id from BOARD where std_id=? and title=? and content=? and b_datetime=? and duedate=null order by b_id desc";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, n.getStd_id());
-				pstmt.setString(2, n.getTitle());
-				pstmt.setString(3, n.getContent());
-				pstmt.setLong(4, n.getB_datetime());
-				rs = pstmt.executeQuery();
-				if(rs.next()) result =  rs.getInt("b_id");
-			}
 		} catch(Exception err) {
 			System.out.println("insertNotice() 에러 : "+err);
 			err.printStackTrace();
@@ -210,19 +198,6 @@ public class BoardDao {
 			pstmt.setLong(4, h.getB_datetime());
 			pstmt.setLong(5, h.getDuedate());
 			result = pstmt.executeUpdate();
-			pool.freeConnection(conn, pstmt, rs);
-			if(result >0) {
-				conn = pool.getConnection();
-				sql = "select b_id from BOARD where std_id=? and title=? and content=? and b_datetime=? and duedate=? order by b_id desc";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, h.getStd_id());
-				pstmt.setString(2, h.getTitle());
-				pstmt.setString(3, h.getContent());
-				pstmt.setLong(4, h.getB_datetime());
-				pstmt.setLong(5, h.getDuedate());
-				rs = pstmt.executeQuery();
-				if(rs.next()) result =  rs.getInt("b_id");
-			}
 		} catch(Exception err) {
 			System.out.println("insertHomework() 에러 : "+err);
 			err.printStackTrace();
@@ -232,29 +207,164 @@ public class BoardDao {
 		return result;
 	}
 	
+	public int getB_IdFromHomework(Homework h) {
+		int result = 0;
+		String sql = "select b_id from BOARD where std_id=? and title=? and content=? and b_datetime=? and duedate=? order by b_id desc";
+		try{
+			conn = pool.getConnection();
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, h.getStd_id());
+			pstmt.setString(2, h.getTitle());
+			pstmt.setString(3, h.getContent());
+			pstmt.setLong(4, h.getB_datetime());
+			pstmt.setLong(5, h.getDuedate());
+			rs = pstmt.executeQuery();
+			if(rs.next()) result =  rs.getInt("b_id");
+		} catch(Exception err) {
+			System.out.println(" getB_IdFromHomework() 에러 : "+err);
+			err.printStackTrace();
+		} finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+		return result;
+		
+	}
+	
+	public int getB_IdFromNotice(Notice n) {
+		int result = 0;
+		String sql = "select b_id from BOARD where std_id=? and title=? and content=? and b_datetime=? order by b_id desc";
+		try{
+			conn = pool.getConnection();
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, n.getStd_id());
+			pstmt.setString(2, n.getTitle());
+			pstmt.setString(3, n.getContent());
+			pstmt.setLong(4, n.getB_datetime());
+			rs = pstmt.executeQuery();
+			if(rs.next()) result =  rs.getInt("b_id");
+		} catch(Exception err) {
+			System.out.println(" getB_IdFromNotice() 에러 : "+err);
+			err.printStackTrace();
+		} finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+		return result;
+		
+	}
+	
 	//게시판 첨부 파일 등록
 	public int insertBoardFile(int b_id, BoardFile bf) {
 		int result = 0;
-		String sql = "insert into BOARD_FILE values("+b_id+", ?, ?, ?, ?, ?, ?)";
+		String sql = "insert into BOARD_FILE values(?, ?, ?, ?, ?, ?, ?)";
 		try {
 			conn = pool.getConnection();
 			
 			pstmt = conn.prepareStatement(sql);
-			if(bf.getB_file1_name()==null) pstmt.setNull(1, java.sql.Types.NULL);
-			else pstmt.setString(1, bf.getB_file1_name());
-			if(bf.getB_file1()==null) pstmt.setNull(2, java.sql.Types.NULL);
-			else pstmt.setString(2, "/upload/"+bf.getB_file1());
-			if(bf.getB_file2_name()==null) pstmt.setNull(3, java.sql.Types.NULL);
-			else pstmt.setString(3, bf.getB_file2_name());
-			if(bf.getB_file2()==null) pstmt.setNull(4, java.sql.Types.NULL);
-			else pstmt.setString(4, "/upload/"+bf.getB_file2());
-			if(bf.getB_file3_name()==null) pstmt.setNull(5, java.sql.Types.NULL);
-			else pstmt.setString(5, bf.getB_file3_name());
-			if(bf.getB_file3()==null) pstmt.setNull(6, java.sql.Types.NULL);
-			else pstmt.setString(6, "/upload/"+bf.getB_file3());
+			pstmt.setInt(1, b_id);
+			if(bf.getB_file1_name()==null) pstmt.setNull(2, java.sql.Types.NULL);
+			else pstmt.setString(2, bf.getB_file1_name());
+			if(bf.getB_file1()==null) pstmt.setNull(3, java.sql.Types.NULL);
+			else pstmt.setString(3, "/upload/"+bf.getB_file1());
+			if(bf.getB_file2_name()==null) pstmt.setNull(4, java.sql.Types.NULL);
+			else pstmt.setString(4, bf.getB_file2_name());
+			if(bf.getB_file2()==null) pstmt.setNull(5, java.sql.Types.NULL);
+			else pstmt.setString(5, "/upload/"+bf.getB_file2());
+			if(bf.getB_file3_name()==null) pstmt.setNull(6, java.sql.Types.NULL);
+			else pstmt.setString(6, bf.getB_file3_name());
+			if(bf.getB_file3()==null) pstmt.setNull(7, java.sql.Types.NULL);
+			else pstmt.setString(7, "/upload/"+bf.getB_file3());
 			result = pstmt.executeUpdate();
 		} catch(Exception err) {
 			System.out.println("insertBoardFile() 에러 : "+err);
+			err.printStackTrace();
+		} finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+		return result;
+	}
+	
+	
+	public int updateNotice(Notice n) {
+		int result = 0;
+		String sql = "update BOARD set title=?, content=? where b_id=?";
+		try {
+			conn = pool.getConnection();
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, n.getTitle());
+			pstmt.setString(2, n.getContent());
+			pstmt.setInt(3, n.getB_id());
+			result = pstmt.executeUpdate();
+		} catch(Exception err) {
+			System.out.println("updateNotice() 에러 : "+err);
+			err.printStackTrace();
+		} finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+		return result;
+	}
+	
+	public int updateHomework(Homework h) {
+		int result = 0;
+		String sql = "update BOARD set title=?, content=?, duedate=? where b_id=?";
+		try {
+			conn = pool.getConnection();
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, h.getTitle());
+			pstmt.setString(2, h.getContent());
+			pstmt.setLong(3, h.getDuedate());
+			pstmt.setInt(4, h.getB_id());
+			result = pstmt.executeUpdate();
+		} catch(Exception err) {
+			System.out.println("updateHomework() 에러 : "+err);
+			err.printStackTrace();
+		} finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+		return result;
+	}
+	
+	public int updateBoardFile(BoardFile bf, boolean f1, boolean f2, boolean f3) {
+		int result = 0;
+		String updateColumn = "";
+		int cntColumn = 1;
+		if(f1) updateColumn += "b_file1_name=?, b_file1=?, ";
+		if(f2) updateColumn += "b_file2_name=?, b_file2=?, ";
+		if(f3) updateColumn += "b_file3_name=?, b_file3=?, ";
+		String sql = "update BOARD_File set "+ updateColumn +"b_id=? where b_id=?";
+		System.out.println("보드파일 수정 쿼리문 : "+sql);
+		try {
+			conn = pool.getConnection();
+			
+			pstmt = conn.prepareStatement(sql);
+			if(f1) {
+				System.out.println("1시작"+cntColumn);
+				pstmt.setString(cntColumn++, bf.getB_file1_name());
+				pstmt.setString(cntColumn++, bf.getB_file1());
+				System.out.println("1끝"+cntColumn);
+			}
+			if(f2) {
+				System.out.println("2시작"+cntColumn);
+				pstmt.setString(cntColumn++, bf.getB_file2_name());
+				pstmt.setString(cntColumn++, bf.getB_file2());
+				System.out.println("2끝"+cntColumn);
+			}
+			if(f3) {
+				System.out.println("3시작"+cntColumn);
+				pstmt.setString(cntColumn++, bf.getB_file3_name());
+				pstmt.setString(cntColumn++, bf.getB_file3());
+				System.out.println("3끝"+cntColumn);
+			}
+			pstmt.setInt(cntColumn++, bf.getB_id());
+			pstmt.setInt(cntColumn, bf.getB_id());
+			System.out.println("최종"+cntColumn);
+			result = pstmt.executeUpdate();
+			System.out.println("결과 : "+result);
+		} catch(Exception err) {
+			System.out.println("updateBoardFile() 에러 : "+err);
 			err.printStackTrace();
 		} finally {
 			pool.freeConnection(conn, pstmt, rs);
