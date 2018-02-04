@@ -40,7 +40,7 @@
 	<div class="container-fluid" style="margin-top:50px">
 		<div class="row">
 	<!--  body -->	
-			<div id="body">
+			<div id="body" style="min-height: 700px">
 				<jsp:include page="${bodyInclude}"></jsp:include>
 			</div>
 			

@@ -52,10 +52,11 @@
 			},
 			events : function(start, end, timezone, callback) {
 				$.ajax({
-					url : "/ajax",
+					url : "/StudyCloud/ajax",
 					type : "GET",
 					data : {
-						command : "CNTSTATUS"
+						command : "CNTSTATUS",
+						stdId: '${myStdList[index].std_id}'
 					},
 					dataType : "json",
 					success : function(data) {
@@ -230,7 +231,7 @@ body {
 						<div class="row">
 							<div class="col-md-12">
 								<form action="/StudyCloud/AtdCalStdleader" method="post">
-								<input type="hidden" value="${stdList[param.index].std_id}" name="stdId">
+								<input type="hidden" value="${stdList[index].std_id}" name="stdId">
 									<table class="table">
 										<thead>
 											<tr>

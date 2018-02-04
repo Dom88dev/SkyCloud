@@ -134,7 +134,7 @@ body {
 	<div id='wrap'>
 		<div id=mybutton>
 			<form method="post">
-				<input type="hidden" name="stdId" value="${stdList[param.index].std_id}" />
+				<input type="hidden" name="stdId" value="${stdList[index].std_id}" />
 				<button type=button class="btn" style="float: right">출석</button>
 			</form>
 		</div>

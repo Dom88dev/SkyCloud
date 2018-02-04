@@ -223,6 +223,21 @@ public class AjaxController extends HttpServlet {
 			jsonData = new Gson().toJson(jobj);
 			out.print(jsonData);
 			break;
+			
+		case "LOADHOMEWORK":
+			response.setContentType("text/plain");
+			jobj = new JsonObject();
+			boardDao = new BoardDao();
+			stdId = Integer.parseInt(request.getParameter("stdId"));
+			hList = (ArrayList<Homework>) boardDao.getHomeworkList(stdId);
+			jarrayHList = (JsonArray) new Gson().toJsonTree(hList,
+		            new TypeToken<List<Notice>>() {
+		            }.getType());
+			jobj.add("homeworkList", jarrayHList);
+			jobj.addProperty("currentPage", 0);
+			jsonData = new Gson().toJson(jobj);
+			out.print(jsonData);
+			break;
 		}
 		out.close();
 	}
