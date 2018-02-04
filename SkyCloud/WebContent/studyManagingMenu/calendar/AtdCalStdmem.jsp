@@ -39,7 +39,7 @@
 				center : 'prev title next',
 				right : 'myAttendButton'
 			},
-			events:[  	
+			events: function(start, imageurl, callback){ 	
 				$.ajax({
 					url : "/StudyCloud/ajax",
 					type : "GET",
@@ -50,16 +50,25 @@
 					},
 					dataType : "json",
 					success : function(data) {
-						
+						alert(data.start); 
+						var events = [];
+						$(data).each(function(){
+							events.push({
+								start : data.start,
+								imageurl : '/StudyCloud/images/icons/atd.png'
+							});
+						});
+						callback(events);
 					}
-				})
-			],
+				});
+			},
+			eventRender : function(event, eventElement){
+				alert(event.imageurl);
+				eventElement.find('div.fc-day').prepend("<img src='"+event.imageurl+"'width='100' height='80' align='center'>");
+			},			
 			buttonText : {
 				today : "오늘",
-			},
-			eventRender : function(event, element, calEvent){
-				$('div.fc-bg').find('td.fc-today').prepend("<img src='/StudyCloud/images/icons/atd.png' width='100' height='80' align='center'>");
-			},
+			},	
 			schedulerLicenseKey : 'GPL-My-Project-Is-Open-Source'
 		});
 		$('#mybutton').click(function() {

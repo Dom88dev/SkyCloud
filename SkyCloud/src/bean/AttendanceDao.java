@@ -140,7 +140,6 @@ public class AttendanceDao {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			msg = "[";
 			while(rs.next()){
 				if(!rs.isFirst()) msg += ",";
 				msg += "{";
@@ -148,7 +147,7 @@ public class AttendanceDao {
 				msg += "\"atd_status\" : \"" + rs.getString("atd_status")+"\"";
 				msg += "}";
 			}
-			msg += "]";
+			msg +=",";
 			return msg;
 			
 		} catch(Exception e) {
@@ -183,6 +182,7 @@ public class AttendanceDao {
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, email);
 			rs = pstmt.executeQuery();
 			while(rs.next()){
 				status = rs.getString("atd_status");
@@ -200,6 +200,7 @@ public class AttendanceDao {
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, email);
 			rs = pstmt.executeQuery();
 			while(rs.next()){
 				date = new Date(rs.getDate("atd_date").getTime());
