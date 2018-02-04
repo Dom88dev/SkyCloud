@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -117,15 +118,18 @@ button.btn-info{ width:100%; height:50%; background-color:#39d2fd; }
 						<tr>
 							<td style="height:20%;vertical-align: middle"><label><b>스터디명&nbsp;:</b></label>   ${std.std_name }</td>
 						</tr>
+						<c:set value="${std.timePlaceList }" var="timePlaceList"></c:set>
+							<c:forEach begin="0" end="${fn:length(timePlaceList)-1}" step="1" var="j"> 
 						<tr>
-							<td style="height:20%;vertical-align: middle" ><label><b>장소&nbsp;:</b></label> </td>
+							<td style="height:20%;vertical-align: middle" ><label><b>장소&nbsp;:</b></label>&nbsp;&nbsp;<i class="glyphicon glyphicon-map-marker">${timePlaceList[j].std_addr}</i></td>
 						</tr>
 						<tr>
-							<td style="height:20%; vertical-align: middle"><label><b>가능시간&nbsp;:</b></label></td>
+							<td style="height:20%; vertical-align: middle"><label><b>가능시간&nbsp;:</b></label>&nbsp;&nbsp;<i class="glyphicon glyphicon-time">&nbsp;${timePlaceList[j].std_time}~${timePlaceList[j].std_time + (timePlaceList[j].std_hour * 100)}</i></td>
 						</tr>
 						<tr>
-							<td style="height:20%;vertical-align: middle"><label><b>요일&nbsp;:</b></label> </td>
+							<td style="height:20%;vertical-align: middle"><label><b>요일&nbsp;:</b></label>  ${timePlaceList[j].std_day }</td>
 						</tr>
+						</c:forEach>
 						<tr>
 							<th style="height:20%;">
 							<button class="btn btn-info">스터디 신청</button>
