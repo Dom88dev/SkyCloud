@@ -7,9 +7,6 @@
       <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=FCutdjqYcxIgr5S5ObN8&submodules=geocoder"></script>
       <script src="/StudyCloud/lib/bootstrap337/js/jquery-3.2.1.min.js"></script>
   </head>
-  <%
-  	String addr = request.getParameter("addr");
-  %>
   <style>	
   
 	.button{
@@ -29,8 +26,8 @@
     </div>
     
     <script>
-    
-    
+    var addr = ${param.addr};
+
     var map = new naver.maps.Map("map", {
         center: new naver.maps.LatLng(37.3595316, 127.1052133),
         zoom: 10,
@@ -77,7 +74,8 @@
     }
 	
     function initGeocoder() {
-        searchAddressToCoordinate('성남시');
+        
+        searchAddressToCoordinate(addr);
     }
 	
     naver.maps.onJSContentLoaded = initGeocoder;

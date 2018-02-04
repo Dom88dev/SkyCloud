@@ -85,7 +85,13 @@ button.btn-info{ width:100%; height:50%; background-color:#39d2fd; }
 								<i class="glyphicon glyphicon-phone" style="font-size:16px; color:#02b2e3;"> ${mem.tel }</i>
 							</td>
 							<td style="line-height: 32px;">
-								<i class="glyphicon glyphicon-user" style="font-size:16px;color:#02b2e3;"> ${std.std_max}명</i>
+								<i class="glyphicon glyphicon-user" style="font-size:16px;color:#02b2e3;"> 현재인원:${currentMember}명 / 총인원:${std.std_max}명 /
+								<c:choose>
+									<c:when test="${std.std_gender=='M'}">남자만</c:when>
+									<c:when test="${std.std_gender=='F'}">여자만</c:when>
+									<c:when test="${std.std_gender=='B'}">남녀무관</c:when>
+								</c:choose>
+								</i>
 							</td>
 						</tr>
 				</table>

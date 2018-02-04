@@ -68,9 +68,10 @@
 	
 	//위치확인 모달창 띄우는 function
 	function fnMapPopup(addr) {
+		$('#mapframe').attr("src","/StudyCloud/studyHomeMap.jsp?addr='"+addr+"'");
 		$('#mapModal').modal();
-		
-	}	
+	}
+	
 </script>
 <style>
 	div#studyTitleDiv {
@@ -168,10 +169,10 @@ button.btn-white:focus {	border: 0.4px solid #39d2fd;	color: #39d2fd;	background
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<iframe id="myframe" src="/StudyCloud/studyHomeMap.jsp" width="100%" height="500px" style="border:none">
+						<iframe id="mapframe"  width="100%" height="500px" style="border:none">
 						</iframe>
 						<div align="center">
-						<button class="btn btn-info" id="mapCheck" >닫기</button>
+						<button class="btn btn-info" id="mapClose" data-dismiss="modal">닫기</button>
 						</div>
 					</div>
 					
