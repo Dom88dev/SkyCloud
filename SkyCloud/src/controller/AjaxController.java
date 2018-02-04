@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -135,23 +136,24 @@ public class AjaxController extends HttpServlet {
 			int obsCnt = 0;
 			String statuscnt = null;
 			ArrayList<Attendance> list = (ArrayList<Attendance>) attendanceDao.getAttendenceList(stdId);
-			
-			for(Attendance a : list) {
-				try {
-					if(request.getSession().getAttribute("email") != null) email = (String) request.getSession().getAttribute("email");
-					status = attendanceDao.InsertAttStatus(stdId, email);
-					a.setAtd_status(status);
-					if(a.getAtd_status().equals("att")) {
-						attCnt++;
-					}else if(a.getAtd_status().equals("late")) {
-						lateCnt++;
-					}else if(a.getAtd_status().equals("abs")) {
-						absCnt++;
-					}else if(a.getAtd_status().equals("obs")) {
-						obsCnt++;
+			if(list.size()>0) {
+				for(Attendance a : list) {
+					try {
+						if(request.getSession().getAttribute("email") != null) email = (String) request.getSession().getAttribute("email");
+						status = attendanceDao.InsertAttStatus(stdId, email);
+						a.setAtd_status(status);
+						if(a.getAtd_status().equals("att")) {
+							attCnt++;
+						}else if(a.getAtd_status().equals("late")) {
+							lateCnt++;
+						}else if(a.getAtd_status().equals("abs")) {
+							absCnt++;
+						}else if(a.getAtd_status().equals("obs")) {
+							obsCnt++;
+						}
+					} catch (ParseException e) {
+						e.printStackTrace();
 					}
-				} catch (ParseException e) {
-					e.printStackTrace();
 				}
 			}
 			Gson gson = new Gson();
@@ -246,6 +248,13 @@ public class AjaxController extends HttpServlet {
 			jobj.addProperty("currentPage", 0);
 			jsonData = new Gson().toJson(jobj);
 			out.print(jsonData);
+			break;
+		case "POSTBOARD":
+			response.setContentType("text/html");
+			request.setAttribute("stdId", request.getParameter("stdId"));
+			request.setAttribute("boardKind", request.getParameter("board"));
+			RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/templates/post/postBoard.jsp");
+			view.forward(request, response);
 			break;
 		case "LOADLEADERCALENDAR":
 			response.setContentType("text/plain");
