@@ -58,7 +58,8 @@ function fnChangeStdMenuInclude(data) {
 	}
 	$.post(data+page, {}, 
 			function(code) {
-				$("#${includeStdMenu}").html(code);
+				$("#"+currentMenu).html(code);
 		});
+	//studyManagingMenu폴더를 web-inf안으로 이동시켜서 ajax컨트롤러를 통해 접근하도록 처리가능
 }
 </script>

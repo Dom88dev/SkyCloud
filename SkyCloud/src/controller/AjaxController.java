@@ -1,11 +1,14 @@
 package controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,15 +19,16 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import bean.ApplyDao;
-
 import bean.AttendanceDao;
-
 import bean.BoardDao;
 import bean.MemberDao;
 import bean.StudyDao;
 import model.Attendance;
+import model.BoardFile;
 import model.Homework;
 import model.Member;
 import model.Notice;
@@ -46,7 +50,6 @@ public class AjaxController extends HttpServlet {
 		response.setHeader("Cache-Control", "no-cache");
 		PrintWriter out = response.getWriter();
 		String command = request.getParameter("command");
-		String upstatus = request.getParameter("status");
 		String email = request.getParameter("email");
 		int stdId;
 		
@@ -60,6 +63,11 @@ public class AjaxController extends HttpServlet {
 		ArrayList<Notice> nList;
 		Homework homework;
 		ArrayList<Homework> hList;
+		BoardFile bf;
+		String path = getServletContext().getRealPath("upload");
+		int maxSize = 50*1024*1024;
+		MultipartRequest multi = null;
+		Enumeration<?> fileNames;
 		JsonObject jobj;
 		Attendance vo;
 		StudyDao stdDao = new StudyDao();
@@ -69,7 +77,13 @@ public class AjaxController extends HttpServlet {
 			System.out.println(s.getEmail());
 		}
 		request.setAttribute("stdList", stdList);
-
+		
+		//파일업로드시 multipart타입으로 파라미터를 받아줘야함으로 command가 null일시 파일업로드를 하는 멀티파트리퀘스트로 판단, multi를 이용해서 다시 받아준다.
+		if(command == null) {
+			multi = new MultipartRequest(request, path, maxSize, "utf-8", new DefaultFileRenamePolicy());
+			command = multi.getParameter("command");
+		}
+		
 		switch(command) {
 		// 이메일 중복 검사 Ajax
 		case "VALIDITYTEST_REGISTER_EMAIL":
@@ -135,23 +149,24 @@ public class AjaxController extends HttpServlet {
 			int obsCnt = 0;
 			String statuscnt = null;
 			ArrayList<Attendance> list = (ArrayList<Attendance>) attendanceDao.getAttendenceList(stdId);
-			
-			for(Attendance a : list) {
-				try {
-					if(request.getSession().getAttribute("email") != null) email = (String) request.getSession().getAttribute("email");
-					status = attendanceDao.InsertAttStatus(stdId, email);
-					a.setAtd_status(status);
-					if(a.getAtd_status().equals("att")) {
-						attCnt++;
-					}else if(a.getAtd_status().equals("late")) {
-						lateCnt++;
-					}else if(a.getAtd_status().equals("abs")) {
-						absCnt++;
-					}else if(a.getAtd_status().equals("obs")) {
-						obsCnt++;
+			if(list.size()>0) {
+				for(Attendance a : list) {
+					try {
+						if(request.getSession().getAttribute("email") != null) email = (String) request.getSession().getAttribute("email");
+						status = attendanceDao.InsertAttStatus(stdId, email);
+						a.setAtd_status(status);
+						if(a.getAtd_status().equals("att")) {
+							attCnt++;
+						}else if(a.getAtd_status().equals("late")) {
+							lateCnt++;
+						}else if(a.getAtd_status().equals("abs")) {
+							absCnt++;
+						}else if(a.getAtd_status().equals("obs")) {
+							obsCnt++;
+						}
+					} catch (ParseException e) {
+						e.printStackTrace();
 					}
-				} catch (ParseException e) {
-					e.printStackTrace();
 				}
 			}
 			Gson gson = new Gson();
@@ -183,7 +198,8 @@ public class AjaxController extends HttpServlet {
 			
 		case "UPDATE_STATUS": //출결 업데이트
 			attendanceDao = new AttendanceDao();
-			int r = attendanceDao.UpdateStatus(upstatus, email);
+			status = request.getParameter("status");
+			int r = attendanceDao.UpdateStatus(status, email);
 			
 			out.println(r);
 			break;
@@ -244,6 +260,77 @@ public class AjaxController extends HttpServlet {
 		            }.getType());
 			jobj.add("homeworkList", jarrayHList);
 			jobj.addProperty("currentPage", 0);
+			jsonData = new Gson().toJson(jobj);
+			out.print(jsonData);
+			break;
+		case "POSTBOARD"://게시판 등록 화면으로 이동
+			response.setContentType("text/html");
+			request.setAttribute("stdId", request.getParameter("stdId"));
+			request.setAttribute("boardKind", request.getParameter("board"));
+			RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/templates/post/postBoard.jsp");
+			view.forward(request, response);
+			break;
+		case "POSTNOTICE"://공지사항 등록
+			notice = new Notice();
+			bf = new BoardFile();
+			notice.setB_datetime(System.currentTimeMillis());
+			notice.setStd_id(Integer.parseInt(multi.getParameter("stdId")));
+			notice.setTitle(multi.getParameter("title"));
+			notice.setContent(multi.getParameter("content"));
+			fileNames = multi.getFileNames();
+			int fileNum = 0;
+			while(fileNames.hasMoreElements()) {
+				String fName = (String)fileNames.nextElement();
+				fileNum++;
+				if(fName == null || fName.equals("")) continue;
+				if(fileNum==1) {
+					bf.setB_file1_name(multi.getOriginalFileName(fName));
+					bf.setB_file1("/upload"+multi.getFilesystemName(fName));					
+				} else if (fileNum==2) {
+					bf.setB_file2_name(multi.getOriginalFileName(fName));
+					bf.setB_file2("/upload"+multi.getFilesystemName(fName));
+				} else if(fileNum==3) {
+					bf.setB_file3_name(multi.getOriginalFileName(fName));
+					bf.setB_file3("/upload"+multi.getFilesystemName(fName));
+				}
+			}
+			jobj = new JsonObject();
+			boardDao = new BoardDao();
+			int b_id = boardDao.insertNotice(notice);
+			jobj.addProperty("postResult", boardDao.insertBoardFile(b_id, bf));
+			jsonData = new Gson().toJson(jobj);
+			out.print(jsonData);
+			break;
+		case "POSTHOMEWORK"://과제 등록
+			homework = new Homework();
+			bf = new BoardFile();
+			homework.setB_datetime(System.currentTimeMillis());
+			long addingTimeForDue = Long.parseLong(multi.getParameter("daysToduedate")) * (1000l*60l*60l*60l*24l);
+			homework.setDuedate(homework.getB_datetime()+addingTimeForDue);
+			homework.setStd_id(Integer.parseInt(multi.getParameter("stdId")));
+			homework.setTitle(multi.getParameter("title"));
+			homework.setContent(multi.getParameter("content"));
+			fileNames = multi.getFileNames();
+			fileNum = 0;
+			while(fileNames.hasMoreElements()) {
+				String fName = (String)fileNames.nextElement();
+				fileNum++;
+				if(fName == null || fName.equals("")) continue;
+				if(fileNum==1) {
+					bf.setB_file1_name(multi.getOriginalFileName(fName));
+					bf.setB_file1("/upload"+multi.getFilesystemName(fName));					
+				} else if (fileNum==2) {
+					bf.setB_file2_name(multi.getOriginalFileName(fName));
+					bf.setB_file2("/upload"+multi.getFilesystemName(fName));
+				} else if(fileNum==3) {
+					bf.setB_file3_name(multi.getOriginalFileName(fName));
+					bf.setB_file3("/upload"+multi.getFilesystemName(fName));
+				}
+			}
+			jobj = new JsonObject();
+			boardDao = new BoardDao();
+			b_id = boardDao.insertHomework(homework);
+			jobj.addProperty("postResult", boardDao.insertBoardFile(b_id, bf));
 			jsonData = new Gson().toJson(jobj);
 			out.print(jsonData);
 			break;

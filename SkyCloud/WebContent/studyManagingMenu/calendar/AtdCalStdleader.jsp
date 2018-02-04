@@ -122,13 +122,13 @@
 		// Whenever the user clicks on the "save" button om the dialog
 		$('#save-event').on('click', function() {
 			var title = $('select option:selected').val();
-			$('#calendar').fullCalendar('removeEvents', event.title);
+			//$('#calendar').fullCalendar('removeEvents', event.title);
 			$.ajax({
 				url : "/StudyCloud/ajax",
 				type : "GET",
 				data : {
 					command : "UPDATE_STATUS",
-					status : $('select option:selected').val()
+					status : "$('select option:selected').val()"
 				},
 				success : function(data) {
 					alert('출결이 정상적으로 수정되었습니다.');
@@ -148,9 +148,6 @@
 
 			// hide modal
 			$('#calmodal').modal('hide');
-		});
-		$.ajax({
-
 		});
 	});
 	function showAttStatus(data) {

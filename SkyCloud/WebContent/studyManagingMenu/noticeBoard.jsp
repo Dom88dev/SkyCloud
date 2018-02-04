@@ -1,56 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
-<style>
-	div.table {
-		margin: 2%
-	}
-
-	div.thead div {
-		padding:0.5%;
-		font-size: 0.8em;
-		color:white;
-		background-color:#39d2fd;
-	}
-	
-	div.record div {
-		padding:0.5%;
-		font-size: 0.8em;
-		color:#02b2e3;
-	}
-	
-	h3.boardLabel {
-		color: white;
-    	text-shadow: 1px 1px 2px #02b2e3, 0 0 10px #39d2fd, 0 0 5px #9ae8fe;
-	}
-	
-	li.previous a, li.next a, ul.pagination li a {
-		color:#39d2fd;
-	}
-	
-	ul.pagination li a:hover {
-		color:#02b2e3;
-	}
-	
-	ul.pagination li.active a {
-		background-color: #39d2fd;
-		border-color: #02b2e3;
-	}
-	
-	ul.pagination li.active a:hover {
-		background-color: #02b2e3;
-	}
-	
-	hr.hr {
-		margin-top: 0.1em;
-		margin-bottom: 0.1em;
-		padding: 0;
-	}
-	
-	li.previous a.disabledPager, li.next a.disabledPager {
-		background-color:#eee;
-	}
-</style>
+<link rel="stylesheet" type="text/css" href="/StudyCloud/lib/css/boardCss.css">
 <script>
 var recordsPerPage = 10;
 var pagesPerBlock = 5;
@@ -72,6 +23,7 @@ function fnLoadNotice(data) {
 	if(jsonData){
 		var nList = jsonData.noticeList;
 		var tBody = $("div#nTbody");
+		var postBtn = $("button#btnPostNotice");
 		var previousP = $("li#nPrevious");
 		var nextP = $("li#nNext");
 		var pageList = $("ul#nPagination");
@@ -79,6 +31,12 @@ function fnLoadNotice(data) {
 		var totalBlock = Math.ceil(totalPage/pagesPerBlock);
 		tBody.empty();
 		pageList.empty();
+		
+		if("${email == myStdList[index].email}") {
+			postBtn.css("visibility", "visible");
+		} else {
+			postBtn.css("visibility", "hidden");
+		}
 		if(nList.length > 0) {
 			//레코드 처리
 			if(nList.length>recordsPerPage) {
@@ -90,9 +48,9 @@ function fnLoadNotice(data) {
 					for(var i=beginNumPerNPage;i<beginNumPerNPage + recordsPerPage; i++) {
 						createNoticeRecord(nList, i);
 					}
-				}	
+				}
 			} else {
-				for(var i=beginNumPerPage;i<nList.length; i++) {
+				for(var i=beginNumPerNPage;i<nList.length; i++) {
 					createNoticeRecord(nList, i);
 				}
 			}
@@ -192,9 +150,27 @@ function createNoticeRecord(nList, i) {
 	$(tBody).append(hr);
 }
 
+//공지사항 검색
+function fnSearchNotice(){
+	
+}
+
+//공지사항 작성화면으로 넘기는 function
+function fnPostNotice() {
+	$.post("/StudyCloud/ajax", {"stdId":'${myStdList[index].std_id}', "command":"POSTBOARD", "board":"notice"}, 
+		function(code) {
+			$("#${includeStdMenu}").html(code);
+	});
+}
 </script>
 <div class="col-md-12" align="center">
-	<h3 class="boardLabel" align="center">공지사항</h3>
+	<h2 class="boardLabel" align="center">공지사항</h2>
+	<div align="right" id="searchNotice" class="col-md-12">
+		<div class="form-group form-control" style="width: 25%;" align="justify">
+			<input type="search" class="nav-search-input" placeholder="검색할 공지사항을 입력하세요" name="searchTxt" onchange="fnSearchNotice()" style="width:90%;"/>
+			<a style="color:#39d2fd; width:10%;" href="javascript:fnSearchNotice();"><span class="glyphicon glyphicon-search"></span></a>
+		</div>
+	</div>
 	<div class="tableDiv col-md-12" align="justify">
 		<div class="thead" align="center">
 			<div class="col-md-8">제목</div>
@@ -205,6 +181,11 @@ function createNoticeRecord(nList, i) {
 		<div class="tbody" id="nTbody" align="center">
 			<div align="center">공지사항이 없습니다.</div>
 		</div>
+		<c:if test="${email == myStdList[index].email}">
+			<div align="right" class="col-md-12">
+				<button id="btnPostNotice" class='btn btn-info' onclick='fnPostNotice()'><i class="fa fa-pencil-square-o">공지사항 작성</i></button>
+			</div>
+		</c:if>
 		<div class="tfoot">
 			<div class="col-md-4">
 				<ul class="pager">

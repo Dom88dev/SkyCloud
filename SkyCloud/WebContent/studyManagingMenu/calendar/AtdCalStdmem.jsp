@@ -56,7 +56,23 @@
 				dataType : "json",
 				success : function(data) {
 					alert('출석 완료!');
-					showStatus(data);
+					if (data) {
+						$(data).each(function(i, obj) {
+							if (${data.status=='att'}) {
+								$('div.fc-bg').find('td.fc-today').prepend("<img src='/StudyCloud/images/icons/atd.png' width='100' height='80' align='center'>");
+								$('div.wrap').find('button').css('display', 'none');
+							} else if (${data.status=='late'}) {
+								$('div.fc-bg').find('td.fc-today').prepend("<img src='/StudyCloud/images/icons/atd.png' width='100' height='80' align='center'>");
+								$('div.wrap').find('button').css('display', 'none');
+							} else if (${data.status=='abs'}) {
+								$('div.fc-bg').find('td.fc-today').prepend("<img src='/StudyCloud/images/icons/atd.png' width='100' height='80' align='center'>");
+								$('div.wrap').find('button').css('display', 'none');
+							} else{
+								$('div.fc-bg').find('td.fc-today').prepend("<img src='/StudyCloud/images/icons/atd.png' width='100' height='80' align='center'>");
+								$('div.wrap').find('button').css('display', 'none');
+							}
+						});
+					}
 				}
 			});
 		});
@@ -64,23 +80,7 @@
 
 	function showStatus(data) {
 		//var jData = $.parseJSON(data);
-		if (data) {
-			$(data).each(function(i, obj) {
-				if ((data.status).equals("att")) {
-					$('div.fc-bg').find('td.fc-today').prepend("<img src='/StudyCloud/images/icons/atd.png' width='100' height='80' align='center'>");
-					$('div.fc-right').find('button.fc-myAttendButton-button').css('display', 'none');
-				} else if ((data.status).equals("late")) {
-					$('div.fc-bg').find('td.fc-today').prepend("<img src='/StudyCloud/images/icons/late.png' width='100' height='80' align='center'>");
-					$('div.fc-right').find('button.fc-myAttendButton-button').css('display', 'none');
-				} else if ((data.status).equals("abs")) {
-					$('div.fc-bg').find('td.fc-today').prepend("<img src='/StudyCloud/images/icons/abs.png' width='100' height='80' align='center'>");
-					$('div.fc-right').find('button.fc-myAttendButton-button').css('display', 'none');
-				} else if ((data.status).equals("obs")) {
-					$('div.fc-bg').find('td.fc-today').prepend("<img src='/StudyCloud/images/icons/obs.png' width='100' height='80' align='center'>");
-					$('div.fc-right').find('button.fc-myAttendButton-button').css('display', 'none');
-				}
-			});
-		}
+		
 	}
 </script>
 <style>

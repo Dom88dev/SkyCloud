@@ -31,16 +31,24 @@ public class AttendanceDao {
 	//해당 스터디를 수강하는 사람들의 정보(이메일)를 가져온다.
 	public List<Attendance> getAttendenceList(int std_id){
 		ArrayList<Attendance> list = new ArrayList<>();
-		String sql="select email from applies where apply_status='accept' and std_id=?";
+		String sql="select * from attendance where std_id=? and atd_date =?";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, std_id);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String d = sdf.format(new Date());
+			java.sql.Date date = Util.transDate(d);
+			pstmt.setDate(2, date);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
 				Attendance  a= new Attendance();
 				a.setEmail(rs.getString("email"));
+				a.setAtd_id(rs.getInt("atd_id"));
+				a.setAtd_date(rs.getDate("atd_date"));
+				a.setAtd_status(rs.getString("atd_status"));
+				a.setStd_id(rs.getInt("std_id"));
 				list.add(a);
 			}
 		} catch(Exception e) {
@@ -84,7 +92,7 @@ public class AttendanceDao {
 		Date currentDay = rsdf.parse(reDay);
 		
 		java.sql.Date sqlDate = new java.sql.Date(currentDay.getTime());
-		
+		System.out.println(sqlDate);
 		String status=null;
 		try {
 			conn = pool.getConnection();
@@ -92,6 +100,7 @@ public class AttendanceDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setDate(1, sqlDate);
 			if(getStdTime(std_id).compareTo(currentTime)<0) {
+				System.out.println(getStdTime(std_id));
 				pstmt.setString(2, "late");
 				status="late";
 			}else if(getStdTime(std_id).compareTo(currentTime)>0) {

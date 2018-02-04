@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
+<link rel="stylesheet" type="text/css" href="/StudyCloud/lib/css/boardCss.css">
 <script>
 var currentHPage = 0;
 var currentHBlock = 0;
@@ -113,12 +114,20 @@ function fnNextBlockH(cBlock) {
 	
 }
 
+//과제 upload
+function fnUploadHomework(h_id) {
+	
+}
+
+//과제 목록 로딩 및 생성
 function createHomeworkRecord(hList, i) {
 	var tBody = $("div#hTbody");
 	var recordDiv = document.createElement("div");
 	$(recordDiv).addClass("record");
 	var titleDiv = document.createElement("div");
-	$(titleDiv).addClass("col-md-6");
+	$(titleDiv).addClass("col-md-4");
+	var uploadHDiv = document.createElement("div");
+	$(uploadHDiv).addClass("col-md-2");
 	var duedateDiv = document.createElement("div");
 	$(duedateDiv).addClass("col-md-2");
 	var dateDiv = document.createElement("div");
@@ -127,7 +136,10 @@ function createHomeworkRecord(hList, i) {
 	$(rpNumDiv).addClass("col-md-1");
 	var viewNumDiv = document.createElement("div");
 	$(viewNumDiv).addClass("col-md-1");
+	
 	$(titleDiv).text(hList[i].title);
+	$(uploadHDiv).attr("align", "right");
+	$(uploadHDiv).html("<button class='btn-white' onclick='fnUploadHomework("+hList[i].b_id+")'>과제 올리기</button>");
 	var d = new Date(hList[i].duedate);
 	$(duedateDiv).text(d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate());
 	d = new Date(hList[i].b_datetime);
@@ -135,6 +147,7 @@ function createHomeworkRecord(hList, i) {
 	$(rpNumDiv).text(hList[i].replies_cnt);
 	$(viewNumDiv).text(hList[i].view_cnt);
 	recordDiv.append(titleDiv);
+	recordDiv.append(uploadHDiv);
 	recordDiv.append(duedateDiv);
 	recordDiv.append(dateDiv);
 	recordDiv.append(rpNumDiv);
@@ -144,10 +157,30 @@ function createHomeworkRecord(hList, i) {
 	$(hr).addClass("hr col-md-12");
 	$(tBody).append(hr);
 }
+
+//과제 검색
+function fnSearchHomework() {
+	
+}
+
+//과제 작성
+function fnPostHomework(){
+	$.post("/StudyCloud/ajax", {"stdId":'${myStdList[index].std_id}', "command":"POSTBOARD", "board":"homework"}, 
+		function(code) {
+			$("#${includeStdMenu}").html(code);
+	});
+}
+
 </script>
 
 <div class="col-md-12" align="center">
-	<h3 class="boardLabel" align="center">과제</h3>
+	<h2 class="boardLabel" align="center">과제</h2>
+	<div align="right" id="searchHomework" class="col-md-12">
+		<div class="form-group form-control" style="width: 25%;" align="justify">
+			<input type="search" class="nav-search-input" placeholder="검색할 과제를 입력하세요" name="searchTxt" onchange="fnSearchHomework()" style="width:90%;"/>
+			<a style="color:#39d2fd; width:10%;" href="javascript:fnSearchHomework();"><span class="glyphicon glyphicon-search"></span></a>
+		</div>
+	</div>
 	<div class="tableDiv col-md-12" align="justify">
 		<div class="thead" align="center">
 			<div class="col-md-6">제목</div>
@@ -159,6 +192,11 @@ function createHomeworkRecord(hList, i) {
 		<div class="tbody" id="hTbody" align="center">
 			<div align="center">과제가 없습니다.</div>
 		</div>
+		<c:if test="${email == myStdList[index].email}">
+			<div align="right" class="col-md-12">
+				<button id="btnPostHomework" class='btn btn-info' onclick='fnPostHomework()'><i class="fa fa-pencil-square-o">과제 작성</i></button>
+			</div>
+		</c:if>
 		<div class="tfoot">
 			<div class="col-md-4">
 				<ul class="pager">
@@ -176,5 +214,23 @@ function createHomeworkRecord(hList, i) {
 			</div>
 		</div>
 	</div>
-	
 </div>
+<style>
+button.btn-white {
+	border: 0.4px solid #39d2fd;
+	color: #39d2fd;
+	background-color: #ffffff;
+	border-radius: 3em;
+}
+
+button.btn-white:active, button.btn-white.active, .open>.dropdown-toggle.btn-white {
+	color: #39d2fd;
+	background-color: #ffffff;
+	border: 0.4px solid #39d2fd;
+	box-shadow: 0 4px 8px 0 rgba(57, 210, 253, 0.2), 0 6px 20px 0 rgba(57, 210, 253, 0.19);
+	outline:none;
+}
+
+button.btn-white:hover {	border: 0.4px solid #39d2fd;	color: #39d2fd;	background-color: #fff; }
+button.btn-white:focus {	border: 0.4px solid #39d2fd;	color: #39d2fd;	background-color: #fff;	outline:none;	}
+</style>

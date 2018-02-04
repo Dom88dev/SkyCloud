@@ -34,7 +34,7 @@
 <style>
 th label {
 	margin-top: 5px;
-	font-size: 10pt;
+	font-size: 1em;
 	font-style: 맑은 고딕;
 	color: #39d2fd;
 }
