@@ -10,7 +10,7 @@ public class Notice {
 	private long b_datetime;
 	private int view_cnt;
 	private int replies_cnt;
-	private List<BoardFile> files;
+	private BoardFile files;
 	
 	
 	public void setNotice(int b_id, int std_id, String title, String content, long b_datetime, int view_cnt, int replies_cnt) {
@@ -65,11 +65,11 @@ public class Notice {
 	public void setReplies_cnt(int replies_cnt) {
 		this.replies_cnt = replies_cnt;
 	}
-	public List<BoardFile> getFiles() {
+	public BoardFile getFiles() {
 		return files;
 	}
 
-	public void setFiles(List<BoardFile> files) {
+	public void setFiles(BoardFile files) {
 		this.files = files;
 	}
 }

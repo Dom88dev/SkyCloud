@@ -51,6 +51,7 @@ public class AjaxController extends HttpServlet {
 		response.setHeader("Cache-Control", "no-cache");
 		PrintWriter out = response.getWriter();
 		String command = request.getParameter("command");
+		System.out.println(command);
 		String email = request.getParameter("email");
 		int stdId;
 		
@@ -261,7 +262,7 @@ public class AjaxController extends HttpServlet {
 			response.setContentType("text/html");
 			request.setAttribute("stdId", request.getParameter("stdId"));
 			request.setAttribute("boardKind", request.getParameter("board"));
-			RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/templates/post/postBoard.jsp");
+			RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/templates/board/postBoard.jsp");
 			view.forward(request, response);
 			break;
 		case "POSTNOTICE"://공지사항 등록
@@ -326,6 +327,30 @@ public class AjaxController extends HttpServlet {
 			if(postResult>0) {
 				request.getRequestDispatcher("/main?command=GOMNGSTUDY&postResult="+postResult).forward(request, response);
 			}
+			break;
+		case "UPDATEBOARD":
+			response.setContentType("text/html");
+			boardDao = new BoardDao();
+			String kind = request.getParameter("board");
+			if(kind.equals("notice")) {
+				request.setAttribute("notice", boardDao.getNotice(Integer.parseInt(request.getParameter("b_id"))));
+			} else {
+				request.setAttribute("homework", boardDao.getHomework(Integer.parseInt(request.getParameter("b_id"))));
+			}
+			request.setAttribute("boardKind", request.getParameter("board"));
+			request.getRequestDispatcher("/WEB-INF/templates/board/updateBoard.jsp").forward(request, response);
+			break;
+		case "READNOTICE":
+			boardDao = new BoardDao();
+			notice = boardDao.getNotice(Integer.parseInt(request.getParameter("b_id")));
+			request.setAttribute("notice", notice);
+			request.getRequestDispatcher("/WEB-INF/templates/board/readBoard.jsp").forward(request, response);
+			break;
+		case "READHOMEWORK":
+			boardDao = new BoardDao();
+			homework = boardDao.getHomework(Integer.parseInt(request.getParameter("b_id")));
+			request.setAttribute("homework", homework);
+			request.getRequestDispatcher("/WEB-INF/templates/board/readBoard.jsp").forward(request, response);
 			break;
 		case "LOADLEADERCALENDAR":
 			response.setContentType("text/plain");

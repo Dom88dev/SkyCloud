@@ -25,6 +25,87 @@ public class BoardDao {
 		}
 	}
 	
+	public BoardFile getBoardFile(int b_id) {
+		BoardFile bf = new BoardFile();
+		String sql = "select * from board_file where b_id=?";
+		try {
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, b_id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				bf.setB_id(b_id);
+				bf.setB_file1(rs.getString("b_file1"));
+				bf.setB_file1_name(rs.getString("b_file1_name"));
+				bf.setB_file2(rs.getString("b_file2"));
+				bf.setB_file2_name(rs.getString("b_file2_name"));
+				bf.setB_file3(rs.getString("b_file3"));
+				bf.setB_file3_name(rs.getString("b_file3_name"));
+			}
+		} catch(Exception e) {
+			System.out.println("getBoardFile() 에러 : "+e);
+		} finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+		return bf;
+	}
+	
+	//공지사항 정보 가져오기
+	public Notice getNotice(int b_id) {
+		Notice n = new Notice();
+		String sql = "select * from board where b_id=?";
+		try {
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, b_id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				n.setB_id(b_id);
+				n.setTitle(rs.getString("title"));
+				n.setContent(rs.getString("content"));
+				n.setStd_id(rs.getInt("std_id"));
+				n.setB_datetime(rs.getLong("b_datetime"));
+				n.setReplies_cnt(rs.getInt("replies_cnt"));
+				n.setView_cnt(rs.getInt("view_cnt"));
+				n.setFiles(getBoardFile(b_id));
+			}
+		} catch(Exception e) {
+			System.out.println("getNotice() 에러 : "+e);
+		} finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+		return n;
+	}
+	
+	//과제 정보 가져오기
+	public Homework getHomework(int b_id) {
+		Homework h = new Homework();
+		String sql = "select * from board where b_id=?";
+		try {
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, b_id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				h.setB_id(b_id);
+				h.setTitle(rs.getString("title"));
+				h.setContent(rs.getString("content"));
+				h.setStd_id(rs.getInt("std_id"));
+				h.setB_datetime(rs.getLong("b_datetime"));
+				h.setReplies_cnt(rs.getInt("replies_cnt"));
+				h.setView_cnt(rs.getInt("view_cnt"));
+				h.setDuedate(rs.getLong("duedate"));
+				h.setFiles(getBoardFile(b_id));
+			}
+		} catch(Exception e) {
+			System.out.println("getHomework() 에러 : "+e);
+		} finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+		return h;
+	}
+	
+	
 	public List<Notice> getNoticeList(int std_id) {
 		ArrayList<Notice> noticeList = new ArrayList<>();
 		String sql = "select * from board where std_id = ? and duedate is null order by b_datetime desc";

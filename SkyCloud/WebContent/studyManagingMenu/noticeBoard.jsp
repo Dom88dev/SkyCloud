@@ -135,7 +135,10 @@ function createNoticeRecord(nList, i) {
 	$(rpNumDiv).addClass("col-md-1");
 	var viewNumDiv = document.createElement("div");
 	$(viewNumDiv).addClass("col-md-1");
-	$(titleDiv).text(nList[i].title);
+	var title_a = document.createElement("a");
+	$(title_a).text(nList[i].title);
+	$(title_a).attr("href", "javascript:fnReadNotice('"+nList[i].b_id+"')");
+	$(titleDiv).append(title_a);
 	var d = new Date(nList[i].b_datetime);
 	$(dateDiv).text(d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate());
 	$(rpNumDiv).text(nList[i].replies_cnt);
@@ -148,6 +151,14 @@ function createNoticeRecord(nList, i) {
 	var hr = document.createElement("hr");
 	$(hr).addClass("hr col-md-12");
 	$(tBody).append(hr);
+}
+
+//공지사항 보기
+function fnReadNotice(b_id) {
+	$.post("/StudyCloud/ajax", {"stdId":'${myStdList[index].std_id}', "command":"READNOTICE", "b_id":b_id}, 
+			function(code) {
+				$("#${includeStdMenu}").html(code);
+		});
 }
 
 //공지사항 검색

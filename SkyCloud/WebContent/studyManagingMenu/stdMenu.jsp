@@ -68,4 +68,36 @@ function fnChangeStdMenuInclude(data) {
 	$("a[href='#${includeStdMenu}']").parent().addClass("active");
 	$("#"+"${includeStdMenu}").addClass("in active");
 })();
+
+function fnRemoveSelectStdMenu() {
+	$("a[href='#stdHome']").parent().removeClass("active");
+	$("#stdHome").removeClass("in active");
+}
+
+function fnNotifyChangeStdMenu(b_id) {
+	$("a[href='#${includeStdMenu}']").parent().addClass("active");
+	$("#"+"${includeStdMenu}").addClass("in active");
+	if(currentMenu=='stdNotice') {
+		fnReadNotice(b_id);
+	} else {
+		fnReadHomework(b_id);
+	}
+}
+
+//공지사항 보기
+function fnReadNotice(b_id) {
+	$.post("/StudyCloud/ajax", {"stdId":'${myStdList[index].std_id}', "command":"READNOTICE", "b_id":b_id}, 
+			function(code) {
+				$("#${includeStdMenu}").html(code);
+		});
+}
+
+//과제 보기
+function fnReadHomework(b_id) {
+	$.post("/StudyCloud/ajax", {"stdId":'${myStdList[index].std_id}', "command":"READHOMEWORK", "b_id":b_id}, 
+			function(code) {
+				$("#${includeStdMenu}").html(code);
+		});
+}
+
 </script>

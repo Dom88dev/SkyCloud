@@ -150,3 +150,22 @@ button.btn-white:active, button.btn-white.active, .open>.dropdown-toggle.btn-whi
 
 button.btn-white:hover {	border: 0.4px solid #39d2fd;	color: #39d2fd;	background-color: #fff; }
 button.btn-white:focus {	border: 0.4px solid #39d2fd;	color: #39d2fd;	background-color: #fff;	outline:none;	}
+
+
+button.btn-red {
+	border: 0.4px solid #ff4d4d;
+	color: #ff4d4d;
+	background-color: #ffffff;
+}
+
+button.btn-red:active, button.btn-red.active, .open>.dropdown-toggle.btn-red 
+{
+	color: #ff4d4d;
+	background-color: #ffffff;
+	border: 0.4px solid #ff4d4d;
+	box-shadow: 0 4px 8px 0 rgba(255, 77, 77, 0.2), 0 6px 20px 0 rgba(255, 77, 77, 0.19);
+	outline:none;
+}
+
+button.btn-red:hover {	border: 0.4px solid #ff4d4d;	color: #ff4d4d;	background-color: #fff; }
+button.btn-red:focus {	border: 0.4px solid #ff4d4d;	color: #ff4d4d;	background-color: #fff;	outline:none;	}

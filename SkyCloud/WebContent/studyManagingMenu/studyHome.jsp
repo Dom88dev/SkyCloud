@@ -27,6 +27,7 @@
 								var div = document.createElement("div");
 								var a = document.createElement("a");
 								$(a).text(nList[i].title);
+								$(a).attr("href", "javascript:fnGoToBoard('stdNotice', '"+nList[i].b_id+"');")
 								div.append(a);
 								$("#stdHome_notice div.panel-body").append(div);
 							}
@@ -35,6 +36,7 @@
 								var div = document.createElement("div");
 								var a = document.createElement("a");
 								$(a).text(nList[i].title);
+								$(a).attr("href", "javascript:fnGoToBoard('stdNotice', '"+nList[i].b_id+"');")
 								div.append(a);
 								$("#stdHome_notice div.panel-body").append(div);
 							}
@@ -48,6 +50,7 @@
 								var div = document.createElement("div");
 								var a = document.createElement("a");
 								$(a).text(hList[i].title);
+								$(a).attr("href", "javascript:fnGoToBoard('stdHomework', '"+hList[i].b_id+"');");
 								div.append(a);
 								$("#stdHome_homework div.panel-body").append(div);
 							}
@@ -56,6 +59,7 @@
 								var div = document.createElement("div");
 								var a = document.createElement("a");
 								$(a).text(hList[i].title);
+								$(a).attr("href", "javascript:fnGoToBoard('stdHomework', '"+hList[i].b_id+"');");
 								div.append(a);
 								$("#stdHome_homework div.panel-body").append(div);
 							}
@@ -70,6 +74,15 @@
 	function fnMapPopup(addr) {
 		$('#mapframe').attr("src","/StudyCloud/studyHomeMap.jsp?addr='"+addr+"'");
 		$('#mapModal').modal();
+	}
+	
+	function fnGoToBoard(menu, b_id) {
+		currentMenu = menu;
+		$.post("/StudyCloud/ajax", {"command":"MNG_CHANGESTUDY", "index":currentIndex, "includeStdMenu":menu}, 
+				function(data) {
+					fnNotifyChangeStdMenu(b_id);
+					fnRemoveSelectStdMenu();
+			});
 	}
 	
 </script>
@@ -164,7 +177,7 @@ div.panel-body div a {
 				<form action="/StudyCloud/main" method="post">
 				<input type="hidden" name="command" value="STUDYUPDATEINFO">
 				<input type="hidden" name="stdId" value="${myStdList[index].std_id}">
-				<button class="btn btn-white" type="submit">스터디 수정/삭제<i class="fa fa-cog"></i></button>
+				<button class="btn btn-white" type="submit">스터디 수정<i class="fa fa-cog"></i></button>
 				</form>
 			</c:if>
 		</div>
