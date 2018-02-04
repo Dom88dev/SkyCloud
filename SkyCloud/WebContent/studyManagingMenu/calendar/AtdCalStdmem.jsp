@@ -39,8 +39,26 @@
 				center : 'prev title next',
 				right : 'myAttendButton'
 			},
+			events:[  	
+				$.ajax({
+					url : "/StudyCloud/ajax",
+					type : "GET",
+					asyns : "false",
+					data : {
+						command : "LOADSTATUSIMG",
+						email : "${email}"
+					},
+					dataType : "json",
+					success : function(data) {
+						
+					}
+				})
+			],
 			buttonText : {
 				today : "오늘",
+			},
+			eventRender : function(event, element, calEvent){
+				$('div.fc-bg').find('td.fc-today').prepend("<img src='/StudyCloud/images/icons/atd.png' width='100' height='80' align='center'>");
 			},
 			schedulerLicenseKey : 'GPL-My-Project-Is-Open-Source'
 		});
@@ -48,31 +66,48 @@
 			$.ajax({
 				url : "/StudyCloud/ajax",
 				type : "GET",
+				asyns : "false",
 				data : {
 					command : "CHECKATT",
 					stdId:"${myStdList[index].std_id}",
-					email:"${stdList.email}"
+					email : "${email}"
 				},
 				dataType : "json",
 				success : function(data) {
+					alert(data.status);
 					alert('출석 완료!');
-					if (data) {
-						$(data).each(function(i, obj) {
-							if (${data.status=='att'}) {
+						/*$.each(data, function(i, odj) {
+							if (odj=='att') {
 								$('div.fc-bg').find('td.fc-today').prepend("<img src='/StudyCloud/images/icons/atd.png' width='100' height='80' align='center'>");
 								$('div.wrap').find('button').css('display', 'none');
-							} else if (${data.status=='late'}) {
+							} else if (obj=='late') {
 								$('div.fc-bg').find('td.fc-today').prepend("<img src='/StudyCloud/images/icons/atd.png' width='100' height='80' align='center'>");
 								$('div.wrap').find('button').css('display', 'none');
-							} else if (${data.status=='abs'}) {
+							} else if (obj=='abs'||obj=='obs') {
 								$('div.fc-bg').find('td.fc-today').prepend("<img src='/StudyCloud/images/icons/atd.png' width='100' height='80' align='center'>");
 								$('div.wrap').find('button').css('display', 'none');
 							} else{
 								$('div.fc-bg').find('td.fc-today').prepend("<img src='/StudyCloud/images/icons/atd.png' width='100' height='80' align='center'>");
 								$('div.wrap').find('button').css('display', 'none');
 							}
-						});
-					}
+						});*/
+						if (data) {
+							$(data).each(function(i, obj) {
+								if (data.status == 'att') {
+									$('div.fc-bg').find('td.fc-today').prepend("<img src='/StudyCloud/images/icons/atd.png' width='100' height='80' align='center'>");
+									$('div#wrap').find('button#mybutton').css('display', 'none');
+								} else if (data.status =='late') {
+									$('div.fc-bg').find('td.fc-today').prepend("<img src='/StudyCloud/images/icons/atd.png' width='100' height='80' align='center'>");
+									$('div#wrap').find('button#mybutton').css('display', 'none');
+								} else if (data.status == 'abs') {
+									$('div.fc-bg').find('td.fc-today').prepend("<img src='/StudyCloud/images/icons/atd.png' width='100' height='80' align='center'>");
+									$('div#wrap').find('button#mybutton').css('display', 'none');
+								} else if (data.status == 'obs') {
+									$('div.fc-bg').find('td.fc-today').prepend("<img src='/StudyCloud/images/icons/atd.png' width='100' height='80' align='center'>");
+									$('div#wrap').find('button#mybutton').css('display', 'none');
+								}
+							});
+					}	
 				}
 			});
 		});

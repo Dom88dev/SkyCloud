@@ -3,6 +3,7 @@ package bean;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -71,8 +72,7 @@ public class AttendanceDao {
 			pstmt.setInt(1, std_id);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				StudyTimePlace st = new StudyTimePlace();
-				st.setStd_time(rs.getString("std_time"));
+				time = rs.getString("std_time");
 			}
 		} catch(Exception e) {
 			System.out.println("getTimePlaceList() 에러 : "+e);
@@ -82,43 +82,54 @@ public class AttendanceDao {
 		return time;
 	}
 	//2. 출석버튼 눌렀을 때 상태 변경
-	public String InsertAttStatus(int std_id, String email) throws ParseException {
-		int result = 0;
+	public String InsertAttStatus(int std_id, String email){
+		//int result = 0;
 		SimpleDateFormat sdf = new SimpleDateFormat("HHmm");
-		SimpleDateFormat rsdf = new SimpleDateFormat("yyyy-MM-dd");
-		Calendar calendar = Calendar.getInstance();
-		String currentTime = sdf.format(calendar.getTime());
-		String reDay = rsdf.format(calendar.getTime());
-		Date currentDay = rsdf.parse(reDay);
-		
-		java.sql.Date sqlDate = new java.sql.Date(currentDay.getTime());
+		//SimpleDateFormat rsdf = new SimpleDateFormat("yyyy-MM-dd");
+		//Calendar calendar = Calendar.getInstance();
+		//String currentTime = sdf.format(calendar.getTime());
+		//String reDay = rsdf.format(calendar.getTime());
+		//Date currentDay = rsdf.parse(reDay);
+		Date date = new Date();
+		int d = date.getDate();
+		int m = date.getMonth();
+		int y = date.getYear();
+		String str = sdf.format(date);
+		java.sql.Date sqlDate = new java.sql.Date(y, m, d);
 		System.out.println(sqlDate);
+		System.out.println("현재날짜 hhmm : "+str);
 		String status=null;
+		String stdTime = getStdTime(std_id);
+		System.out.println("스터디 시작시간 hhmm : "+stdTime);
 		try {
 			conn = pool.getConnection();
 			String sql = "insert into attendance values(seq_atd.nextVal,?,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setDate(1, sqlDate);
-			if(getStdTime(std_id).compareTo(currentTime)<0) {
-				System.out.println(getStdTime(std_id));
+			if(stdTime.compareTo(str)<0) {
 				pstmt.setString(2, "late");
 				status="late";
-			}else if(getStdTime(std_id).compareTo(currentTime)>0) {
+
+			}else if(stdTime.compareTo(str)>0) {
 				pstmt.setString(2, "att");
 				status="att";
+
 			}else {
 				pstmt.setString(2, "abs");
 				status="abs";
+
 			}
 			pstmt.setString(3, email);
 			pstmt.setInt(4, std_id);
-			result = pstmt.executeUpdate();
-			if(result<=0) status="fail";
+			pstmt.executeUpdate();
+			System.out.println(status);
+			//if(result<=0) status="fail";
 		} catch(Exception e) {
 			System.out.println("InsertAttStatus() 에러 : "+e);
 		} finally {
 			pool.freeConnection(conn, pstmt);
 		}
+		System.out.println(email+"의 출결상황 : "+status);
 		return status;
 	}
 	//3. 출결현황 출력하기
@@ -165,5 +176,39 @@ public class AttendanceDao {
 		return result;
 	}
 	
+	public String getMemStatus(String email){
+		String status = null;
 
+		String sql = "select atd_status from attendance where email=?";
+		try {
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				status = rs.getString("atd_status");
+			}			
+		} catch(Exception e) {
+			System.out.println("getMemStatus() 에러 : "+e);
+		} finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+		return status;
+	}
+	public Date getMemAtdDate(String email){
+		Date date = null;
+		String sql = "select atd_date from attendance where email=?";
+		try {
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				date = new Date(rs.getDate("atd_date").getTime());
+			}			
+		} catch(Exception e) {
+			System.out.println("getMemAtdDate() 에러 : "+e);
+		} finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+		return date;		
+	}
 }

@@ -206,8 +206,54 @@ public class MainController extends HttpServlet {
 
 
 			break;
+		
+		case "STUDYUPDATEINFO": // 스터디 수정 페이지 이동 및 값 전달 처리
+			int updateStdId = Integer.parseInt(request.getParameter("stdId"));
+			stdDao = new StudyDao();
+			std = stdDao.getStudyInfo(updateStdId);
+			request.setAttribute("std", std);
+			bodyInclude = "/stdUpdateRegister.jsp";
+			break;
 			
+		case "STUDYUPDATE":
+			stdDao = new StudyDao();
+			Map<String, String[]> params2 = request.getParameterMap();
+			Enumeration<String> paramEnums2 = request.getParameterNames();
+			ArrayList<String> paramNames2 = new ArrayList<>();//파라미터 이름들을 받을 어레이리슽트
+			ArrayList<String[]> stdDays2 = new ArrayList<>();//요일값들을 나눠 담아놓을 어레이 리스트
+			while(paramEnums2.hasMoreElements()) {//파라미터 이름들을 어레이 리스트에 답아준다.
+				String str = paramEnums2.nextElement();
+				paramNames2.add(str);
+			}
+			for(String n : paramNames2) {//요일에 해당하는 String[]을 어레이 리스트에 담아준다.
+				if(n.contains("std_day")) stdDays2.add(params2.get(n));
+			}
 			
+			std = new Study();
+			std.setStudy(params2.get("std_name")[0], Integer.parseInt(params2.get("std_max")[0]), Util.transDate(params2.get("std_start")[0]), 
+					Util.transDate(params2.get("std_end")[0]), params2.get("std_info")[0], params2.get("std_plan")[0], params2.get("std_etc")[0], 
+					params2.get("std_gender")[0], params2.get("std_category")[0], email);
+			//Study table에 스터디를 등록
+			int stdId2 = stdDao.updateStudy(std);
+			
+			String[] stdTimes3=params2.get("std_time_h"), stdTimes4=params2.get("std_time_m"), stdHours1=params2.get("std_hour"), 
+					stdAddrs1=params2.get("std_addr");
+			
+			result = 0;
+			//Study_timeplace table에 위에서 넣은 Study의 장소와 시간을 갯수만틈 삽입
+			for(int i=0; i<stdTimes3.length;i++){
+				for(int j=0; j<stdDays2.get(i).length; j++) {
+					stp = new StudyTimePlace();
+					stp.setStudyTimePlace(stdId2, 
+							(stdTimes3[i].length()==2?stdTimes3[i]:"0"+stdTimes3[i])+(stdTimes4[i].length()==2?stdTimes4[i]:"0"+stdTimes4[i]), 
+							Integer.parseInt(stdHours1[i]), stdAddrs1[i], stdDays2.get(i)[j]);
+					result += stdDao.updateStudyTimePlace(stp);
+				}	
+			}
+			
+			request.setAttribute("updateStudyResult", result);
+			bodyInclude = "/stdUpdateRegister.jsp";
+			break;
 		}
 		request.setAttribute("bodyInclude", bodyInclude);
 		RequestDispatcher view = request.getRequestDispatcher(url);
