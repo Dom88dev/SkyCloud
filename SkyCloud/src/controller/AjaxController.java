@@ -19,13 +19,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import bean.ApplyDao;
-
 import bean.AttendanceDao;
-
 import bean.BoardDao;
 import bean.MemberDao;
 import bean.StudyDao;
 import model.Attendance;
+import model.BoardFile;
 import model.Homework;
 import model.Member;
 import model.Notice;
@@ -61,6 +60,7 @@ public class AjaxController extends HttpServlet {
 		ArrayList<Notice> nList;
 		Homework homework;
 		ArrayList<Homework> hList;
+		BoardFile bf;
 		JsonObject jobj;
 		Attendance vo;
 		StudyDao stdDao = new StudyDao();
@@ -249,12 +249,22 @@ public class AjaxController extends HttpServlet {
 			jsonData = new Gson().toJson(jobj);
 			out.print(jsonData);
 			break;
-		case "POSTBOARD":
+		case "POSTBOARD"://게시판 등록 화면으로 이동
 			response.setContentType("text/html");
 			request.setAttribute("stdId", request.getParameter("stdId"));
 			request.setAttribute("boardKind", request.getParameter("board"));
 			RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/templates/post/postBoard.jsp");
 			view.forward(request, response);
+			break;
+		case "POSTNOTICE"://공지사항 등록
+			notice = new Notice();
+			bf = new BoardFile();
+			
+			break;
+		case "POSTHOMEWORK"://과제 등록
+			homework = new Homework();
+			bf = new BoardFile();
+			
 			break;
 		case "LOADLEADERCALENDAR":
 			response.setContentType("text/plain");

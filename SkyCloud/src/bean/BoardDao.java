@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.BoardFile;
 import model.Homework;
 import model.Notice;
 
@@ -78,5 +79,97 @@ public class BoardDao {
 			pool.freeConnection(conn, pstmt, rs);
 		}
 		return hoemworkList;
+	}
+	
+	//공지사항 등록
+	public int insertNotice(Notice n, BoardFile bf) {
+		int result = 0;
+		String sql = "insert into BOARD values(seq_b.nextVal, ?, ?, ?, ?, null, 0, 0)";
+		try {
+			conn = pool.getConnection();
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, n.getStd_id());
+			pstmt.setString(2, n.getTitle());
+			pstmt.setString(3, n.getContent());
+			pstmt.setLong(4, n.getB_datetime());
+			result = pstmt.executeUpdate();
+			if(result >0) {
+				sql = "select b_id from BOARD where std_id=? and title=? and content=? and b_datetime=? and duedate=null and view_cnt=0 and replies_cnt=0 order by b_id desc";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, n.getStd_id());
+				pstmt.setString(2, n.getTitle());
+				pstmt.setString(3, n.getContent());
+				pstmt.setLong(4, n.getB_datetime());
+				rs = pstmt.executeQuery();
+				if(rs.next()) n.setB_id(rs.getInt("b_id"));
+			}
+			result = insertBoardFile(n.getB_id(), bf);			
+		} catch(Exception err) {
+			System.out.println("insertNotice() 에러 : "+err);
+			err.printStackTrace();
+		} finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+		return result;
+	}
+	
+	//과제등록
+	public int insertHomework(Homework h, BoardFile bf) {
+		int result = 0;
+		String sql = "insert into BOARD values(seq_b.nextVal, ?, ?, ?, ?, ?, 0, 0)";
+		try {
+			conn = pool.getConnection();
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, h.getStd_id());
+			pstmt.setString(2, h.getTitle());
+			pstmt.setString(3, h.getContent());
+			pstmt.setLong(4, h.getB_datetime());
+			pstmt.setLong(5, h.getDuedate());
+			result = pstmt.executeUpdate();
+			if(result >0) {
+				sql = "select b_id from BOARD where std_id=? and title=? and content=? and b_datetime=? and duedate=? and view_cnt=0 and replies_cnt=0 order by b_id desc";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, h.getStd_id());
+				pstmt.setString(2, h.getTitle());
+				pstmt.setString(3, h.getContent());
+				pstmt.setLong(4, h.getB_datetime());
+				pstmt.setLong(5, h.getDuedate());
+				rs = pstmt.executeQuery();
+				if(rs.next()) h.setB_id(rs.getInt("b_id"));
+			}
+			result = insertBoardFile(h.getB_id(), bf);
+		} catch(Exception err) {
+			System.out.println("insertHomework() 에러 : "+err);
+			err.printStackTrace();
+		} finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+		return result;
+	}
+	
+	//게시판 첨부 파일 등록
+	public int insertBoardFile(int b_id, BoardFile bf) {
+		int result = 0;
+		String sql = "insert into BOARD_FILE values("+b_id+", ?, ?, ?, ?, ?, ?)";
+		try {
+			conn = pool.getConnection();
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, bf.getB_file1_name());
+			pstmt.setString(2, bf.getB_file1());
+			pstmt.setString(3, bf.getB_file2_name());
+			pstmt.setString(4, bf.getB_file2());
+			pstmt.setString(5, bf.getB_file3_name());
+			pstmt.setString(6, bf.getB_file3());
+			result = pstmt.executeUpdate();
+		} catch(Exception err) {
+			System.out.println("insertBoardFile() 에러 : "+err);
+			err.printStackTrace();
+		} finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+		return result;
 	}
 }
