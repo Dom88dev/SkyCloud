@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -99,20 +100,17 @@ public class AjaxController extends HttpServlet {
 			attendanceDao = new AttendanceDao();
 			String status=null;
 			String jstatus=null;
-			stdId = Integer.parseInt(request.getParameter("stdId"));
-			try {
-				if(request.getSession().getAttribute("email") != null) email = (String) request.getSession().getAttribute("email");
-				status = attendanceDao.InsertAttStatus(stdId, email);
-				Gson gson = new Gson();
-				JsonObject obj = new JsonObject();
-				
-				obj.addProperty("status", status);
-				
-				jstatus = gson.toJson(obj);
-				
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
+			int sid = Integer.parseInt(request.getParameter("stdId"));
+			if(request.getSession().getAttribute("email") != null) email = (String) request.getSession().getAttribute("email");
+			status = attendanceDao.InsertAttStatus(sid, email);
+			System.out.println("ajax 받은 출결"+status);
+			Gson gson = new Gson();
+			JsonObject obj = new JsonObject();
+			
+			obj.addProperty("status", status);
+			
+			jstatus = gson.toJson(obj);
+			System.out.println("json 받은 출결"+jstatus);
 			out.println(jstatus);
 			break;
 
@@ -137,25 +135,21 @@ public class AjaxController extends HttpServlet {
 			ArrayList<Attendance> list = (ArrayList<Attendance>) attendanceDao.getAttendenceList(stdId);
 			if(list.size()>0) {
 				for(Attendance a : list) {
-					try {
-						if(request.getSession().getAttribute("email") != null) email = (String) request.getSession().getAttribute("email");
-						status = attendanceDao.InsertAttStatus(stdId, email);
-						a.setAtd_status(status);
-						if(a.getAtd_status().equals("att")) {
-							attCnt++;
-						}else if(a.getAtd_status().equals("late")) {
-							lateCnt++;
-						}else if(a.getAtd_status().equals("abs")) {
-							absCnt++;
-						}else if(a.getAtd_status().equals("obs")) {
-							obsCnt++;
-						}
-					} catch (ParseException e) {
-						e.printStackTrace();
+					if(request.getSession().getAttribute("email") != null) email = (String) request.getSession().getAttribute("email");
+					status = attendanceDao.InsertAttStatus(stdId, email);
+					a.setAtd_status(status);
+					if(a.getAtd_status().equals("att")) {
+						attCnt++;
+					}else if(a.getAtd_status().equals("late")) {
+						lateCnt++;
+					}else if(a.getAtd_status().equals("abs")) {
+						absCnt++;
+					}else if(a.getAtd_status().equals("obs")) {
+						obsCnt++;
 					}
 				}
 			}
-			Gson gson = new Gson();
+			gson = new Gson();
 			jobj = new JsonObject();
 			
 			jobj.addProperty("attcnt", attCnt);
@@ -264,6 +258,26 @@ public class AjaxController extends HttpServlet {
 		case "LOADMEMCALENDAR":
 			response.setContentType("text/plain");
 			out.print("/StudyCloud/studyManagingMenu/calendar/AtdCalStdmem.jsp");
+			break;
+			
+		case "LOADSTATUSIMG":	//멤버 캘린더 출석이미지
+			response.setContentType("text/plain");
+			attendanceDao = new AttendanceDao();
+			if(request.getSession().getAttribute("email") != null) email = (String) request.getSession().getAttribute("email");
+			String atdStatus = attendanceDao.getMemStatus(email);
+			Date atdDate = attendanceDao.getMemAtdDate(email);
+			jstatus=null;
+			
+			request.getSession().setAttribute("atdStatus", atdStatus);
+			request.getSession().setAttribute("atdDate", atdDate);
+			gson = new Gson();
+			obj = new JsonObject();
+			
+			obj.addProperty("atdStatus", atdStatus);
+			//obj.addProperty("atdDate", Integer.parseInt(atdDate));
+			
+			jstatus = gson.toJson(obj);
+			out.println(jstatus);
 			break;
 		}
 		out.close();

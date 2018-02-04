@@ -121,14 +121,14 @@
 		});
 		// Whenever the user clicks on the "save" button om the dialog
 		$('#save-event').on('click', function() {
-			var title = $('select option:selected').val();
+			var title = $('.rselect option:selected').val();
 			$('#calendar').fullCalendar('removeEvents', event.title);
 			$.ajax({
 				type : "GET",
 				url : "/ajax",
 				data : {
 					command : "UPDATE_STATUS",
-					status : $('select option:selected').val()
+					status : $('.rselect option:selected').val()
 				},
 				success : function(data) {
 					alert('출결이 정상적으로 수정되었습니다.');

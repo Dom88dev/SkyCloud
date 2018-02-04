@@ -69,11 +69,11 @@
 
 								if (data.attcnt != null) {
 									titleStr = "출석 [" + data.attcnt + "]건";
-								} else if (jData.latecnt != null) {
+								} else if (data.latecnt != null) {
 									titleStr = "지각 [" + data.latecnt + "]건";
-								} else if (jData.abscnt != null) {
+								} else if (data.abscnt != null) {
 									titleStr = "결석 [" + data.abscnt + "]건";
-								} else if (jData.obscnt != null) {
+								} else if (data.obscnt != null) {
 									titleStr = "공결 [" + data.obscnt + "]건";
 								}
 
@@ -228,7 +228,6 @@ body {
 						<div class="row">
 							<div class="col-md-12">
 								<form action="/StudyCloud/AtdCalStdleader" method="post">
-								<input type="hidden" value="${mystdList[index].std_id}" name="stdId">
 									<table class="table">
 										<thead>
 											<tr>
