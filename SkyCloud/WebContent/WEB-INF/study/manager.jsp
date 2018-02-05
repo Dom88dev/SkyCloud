@@ -107,6 +107,15 @@
 		}
 		$("#postResultModal").modal();
 	}
+	
+	function fnDeleteResultModalPopup(result) {
+		if(Number(result)==0) {
+			$("#postResultModal div.modal-body h4").text("게시물 삭제중 문제가 발생했습니다.");
+		} else {
+			$("#postResultModal div.modal-body h4").text("게시글이 삭제되었습니다.");
+		}
+		$("#postResultModal").modal();
+	}
 </script>
 </head>
 <body>
@@ -153,6 +162,9 @@
 		</c:if>
 		<c:if test="${! (empty updateResult)}">
 			<script>fnUpdateResultModalPopup('${updateResult}');</script>
+		</c:if>
+		<c:if test="${! (empty deleteResult)}">
+			<script>fnDeleteResultModalPopup('${updateResult}');</script>
 		</c:if>
 		
 	</div>

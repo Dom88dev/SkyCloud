@@ -46,7 +46,7 @@ button.btn-red:focus {	border: 0.4px solid #ff4d4d;	color: #ff4d4d;	background-c
 	<div class="col-md-12" align="right">
 		<c:if test="${email == myStdList[index].email }">
 			<button class="btn-white" onclick="fnGoToModify('${board.b_id}','${kind}')"><i class="fa fa-pencil-square-o">수정</i></button>
-			<button class="btn-red" onclick="fnDeleteBoard('${board.b_id}', '${kind}')"><i class="	fa fa-trash-o">삭제</i></button>
+			<button class="btn-red" onclick="fnDeleteBoard('${board.b_id}')"><i class="	fa fa-trash-o">삭제</i></button>
 		</c:if>
 	</div>
 	<h2 class="boardLabel">${board.title}</h2>
@@ -70,6 +70,21 @@ button.btn-red:focus {	border: 0.4px solid #ff4d4d;	color: #ff4d4d;	background-c
 		${board.content}
 	</div>
 </div>
+
+<!-- 삭제 확인 modal -->
+<div class="modal fade" id="deleteBoardConfirmModal" data-backdrop="static">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body">
+						정말 삭제하시겠습니까?
+					</div>
+					<div class="modal-footer">
+						<button id="deleteCommit" class="btn btn-danger">네</button><button class="btn btn-red" data-dismiss="modal">아니오</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
 <script>
 (function() {
 	if("${ !(empty board.files.b_file1)}"){
@@ -82,6 +97,17 @@ button.btn-red:focus {	border: 0.4px solid #ff4d4d;	color: #ff4d4d;	background-c
 		$("#file3").attr("href", "/StudyCloud"+"${board.files.b_file3}");
 	}
 })();
+
+function fnDeleteBoard(b_id) {
+	$("#deleteCommit").click(function() {
+		$("#deleteBoardConfirmModal").modal('hide');
+		$.post("/StudyCloud/ajax", {"b_id":b_id, "command":"DELETEBOARD"}, 
+				function(code) {
+					$("#${includeStdMenu}").html(code);
+			});
+	});
+	$("#deleteBoardConfirmModal").modal();
+}
 
 function fnGoToModify(b_id, kind) {
 	$.post("/StudyCloud/ajax", {"b_id":b_id, "command":"UPDATEBOARD", "board":kind}, 

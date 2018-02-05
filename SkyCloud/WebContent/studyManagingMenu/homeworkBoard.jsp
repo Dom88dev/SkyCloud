@@ -175,8 +175,8 @@ function fnSearchHomework() {
 }
 
 //과제 작성
-function fnPostHomework(){
-	$.post("/StudyCloud/ajax", {"stdId":'${myStdList[index].std_id}', "command":"POSTBOARD", "board":"homework"}, 
+function fnWriteHomework(){
+	$.post("/StudyCloud/ajax", {"command":"WRITEBOARD", "stdId":'${myStdList[index].std_id}', "board":"homework"}, 
 		function(code) {
 			$("#${includeStdMenu}").html(code);
 	});
@@ -205,7 +205,7 @@ function fnPostHomework(){
 		</div>
 		<c:if test="${email == myStdList[index].email}">
 			<div align="right" class="col-md-12" style="margin-top: 0.8em;">
-				<button id="btnPostHomework" class='btn btn-info' onclick='fnPostHomework()'><i class="fa fa-pencil-square-o">과제 작성</i></button>
+				<button id="btnPostHomework" class='btn btn-info' onclick='fnWriteHomework()'><i class="fa fa-pencil-square-o">과제 작성</i></button>
 			</div>
 		</c:if>
 		<div class="tfoot">

@@ -180,6 +180,7 @@ public class MainController extends HttpServlet {
 			session.setAttribute("includeApplyMenu", "applyList.jsp");
 			request.setAttribute("postResult", request.getParameter("postResult")==null?null:request.getParameter("postResult"));
 			request.setAttribute("updateResult", request.getParameter("updateResult")==null?null:request.getParameter("updateResult"));
+			request.setAttribute("deleteResult", request.getParameter("deleteResult")==null?null:request.getParameter("deleteResult"));
 			break;
 			
 		case "UPDATEINFO": //회원 수정 처리

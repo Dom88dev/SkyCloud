@@ -40,7 +40,7 @@ label.upload_file_name {
 		</c:choose>
 	</h2>
 	<div class="col-md-12">
-		<form action="/StudyCloud/ajax" method="post" enctype="multipart/form-data">
+		<form action="/StudyCloud/multi" method="post" enctype="multipart/form-data">
 			<c:choose>
 				<c:when test="${boardKind == 'notice'}">
 					<input type="hidden" name="command" value="POSTNOTICE">

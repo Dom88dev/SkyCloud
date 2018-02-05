@@ -371,4 +371,37 @@ public class BoardDao {
 		}
 		return result;
 	}
+	
+	public int deleteBoard(int b_id) {
+		int result = 0;
+		String sql = "delete Board where b_id=?";
+		try {
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, b_id);
+			result = pstmt.executeUpdate();
+		} catch(Exception e) {
+			System.out.println("deleteBoard() 에러 : "+e);
+		} finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+		return result;
+	}
+	
+	
+	public int deleteBoardFile(int b_id) {
+		int result = 0;
+		String sql = "delete BoardFile where b_id=?";
+		try {
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, b_id);
+			result = pstmt.executeUpdate();
+		} catch(Exception e) {
+			System.out.println("deleteBoard() 에러 : "+e);
+		} finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+		return result;
+	}
 }

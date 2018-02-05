@@ -168,7 +168,7 @@ function fnSearchNotice(){
 
 //공지사항 작성화면으로 넘기는 function
 function fnPostNotice() {
-	$.post("/StudyCloud/ajax", {"stdId":'${myStdList[index].std_id}', "command":"POSTBOARD", "board":"notice"}, 
+	$.post("/StudyCloud/ajax", {"stdId":'${myStdList[index].std_id}', "command":"WRITEBOARD", "board":"notice"}, 
 		function(code) {
 			$("#${includeStdMenu}").html(code);
 	});

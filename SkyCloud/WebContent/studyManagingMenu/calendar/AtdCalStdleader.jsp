@@ -109,16 +109,7 @@
 					},
 					async: false,
 					success : function(data) {
-						if(data!=null){
-							var tag = "<tr>";
-							for(var i=0;i<data.atd_status.length;i++){
-								tag += "<td>"+ data[i].email+ "</td>";
-								tag +="<td><select class='rselect' name='status_select'><option value='"+data[i].atd_status+"'>"+ atdstatus + "</option></select></td>";
-								tag +="</tr>";
-							}
-							tag += "<tr>";
-							document.getElementById("att-table").innerHTML = tag;
-						}
+						showAttStatus(data);
 					}
 				});
 				
@@ -165,23 +156,25 @@
 	});
 	function showAttStatus(data) {
 		var tab = document.querySelector('#att-table');
-		alert(tab);
-		var atdstatus;
-		for (var i = 0; i < data.length; i++) {
-			if (data[i].atd_status=='att') {
-				alert(data[i].atd_status);
-				atdstatus = "출석";
-			} else if (data[i].atd_status=='late') {
-				atdstatus = "지각";
-			} else if (data[i].atd_status=='abs') {
-				atdstatus = "결석";
-			} else {
-				alert(data[i].atd_status);
-				atdstatus = "공결";
-			}
-			html += '<tr><td>'+ data[i].email+ '</td><td><select class="rselect" name="status_select"><option value="'+data[i].atd_status+'">'+ atdstatus + '</option>' + '</select></td></tr>';
-			tab.innerHTML = html;
-		}
+	      alert(tab);
+	      html = '<table>';
+	      for (var i = 0; i < data.length; i++) {
+	         if (data[i].atd_status=='att') {
+	            alert(data[i].atd_status);
+	            atdstatus = "출석";
+	         } else if (data[i].atd_status=='late') {
+	            atdstatus = "지각";
+	         } else if (data[i].atd_status=='abs') {
+	            atdstatus = "결석";
+	         } else {
+	            alert(data[i].atd_status);
+	            atdstatus = "공결";
+	         }
+	         html += '<tr><td>'+ data[i].email+ '</td><td><select class="rselect" name="status_select"><option value="'+data[i].atd_status+'">'+ atdstatus + '</option>' + '</select></td></tr>';
+	      }
+	      html += '</table>';
+	      tab.innerHTML = html;
+	      console.log(html);
 	}
 </script>
 <style>
@@ -240,20 +233,18 @@ body {
 					<div class="modal-body">
 						<div class="row">
 							<div class="col-md-12">
-								<form action="/StudyCloud/AtdCalStdleader" method="post">
-									<table class="table">
-										<thead>
-											<tr>
-												<th class="text-center">이름</th>
-												<th class="text-center">출결 현황</th>
-											</tr>
-										</thead>
-										<tbody id="att-table">
-
-										</tbody>
-									</table>
-								</form>
-							</div>
+		                        <form action="/StudyCloud/AtdCalStdleader" method="post">
+		                           <table class="table">
+		                              <tr>
+		                                 <th class="text-center">이름</th>
+		                                 <th class="text-center">출결 현황</th>
+		                              </tr>
+		                           </table>
+		                        </form>
+		                     </div>
+		                     <div id="att-table" class="col-md-12">
+		                           
+		                     </div>
 						</div>
 
 					</div>
