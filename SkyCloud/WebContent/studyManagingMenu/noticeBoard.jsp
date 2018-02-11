@@ -11,7 +11,7 @@ var beginNumPerNPage = recordsPerPage * currentNPage;
 var beginNumPerNBlock = pagesPerBlock * currentNBlock;
 var noticeData = "";
 (function() {
-	$.post("/StudyCloud/ajax", {command:"LOADNOTICE", stdId:"${myStdList[index].std_id}"}, 
+	$.post("/StudyCloud/json", {command:"LOADNOTICE", stdId:"${myStdList[index].std_id}"}, 
 		function(data) {
 			noticeData = data;
 			fnLoadNotice(data);
@@ -155,7 +155,7 @@ function createNoticeRecord(nList, i) {
 
 //공지사항 보기
 function fnReadNotice(b_id) {
-	$.post("/StudyCloud/ajax", {"stdId":'${myStdList[index].std_id}', "command":"READNOTICE", "b_id":b_id}, 
+	$.post("/StudyCloud/fwd", {"stdId":'${myStdList[index].std_id}', "command":"READNOTICE", "b_id":b_id}, 
 			function(code) {
 				$("#${includeStdMenu}").html(code);
 		});
@@ -168,7 +168,7 @@ function fnSearchNotice(){
 
 //공지사항 작성화면으로 넘기는 function
 function fnPostNotice() {
-	$.post("/StudyCloud/ajax", {"stdId":'${myStdList[index].std_id}', "command":"WRITEBOARD", "board":"notice"}, 
+	$.post("/StudyCloud/fwd", {"stdId":'${myStdList[index].std_id}', "command":"WRITEBOARD", "board":"notice"}, 
 		function(code) {
 			$("#${includeStdMenu}").html(code);
 	});

@@ -101,7 +101,7 @@ button.btn-red:focus {	border: 0.4px solid #ff4d4d;	color: #ff4d4d;	background-c
 function fnDeleteBoard(b_id) {
 	$("#deleteCommit").click(function() {
 		$("#deleteBoardConfirmModal").modal('hide');
-		$.post("/StudyCloud/ajax", {"b_id":b_id, "command":"DELETEBOARD"}, 
+		$.post("/StudyCloud/fwd", {"b_id":b_id, "command":"DELETEBOARD"}, 
 				function(code) {
 					$("#${includeStdMenu}").html(code);
 			});
@@ -110,7 +110,7 @@ function fnDeleteBoard(b_id) {
 }
 
 function fnGoToModify(b_id, kind) {
-	$.post("/StudyCloud/ajax", {"b_id":b_id, "command":"UPDATEBOARD", "board":kind}, 
+	$.post("/StudyCloud/fwd", {"b_id":b_id, "command":"UPDATEBOARD", "board":kind}, 
 			function(code) {
 				$("#${includeStdMenu}").html(code);
 		});

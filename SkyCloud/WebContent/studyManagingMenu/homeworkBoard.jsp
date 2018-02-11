@@ -10,7 +10,7 @@ var beginNumPerHBlock = pagesPerBlock * currentHBlock;
 var homeworkData = "";
 
 (function() {
-	$.post("/StudyCloud/ajax", {command:"LOADHOMEWORK", stdId:"${myStdList[index].std_id}"}, 
+	$.post("/StudyCloud/fwd", {command:"LOADHOMEWORK", stdId:"${myStdList[index].std_id}"}, 
 		function(data) {
 			homeworkData = data;
 			fnLoadHomework(data);
@@ -163,7 +163,7 @@ function createHomeworkRecord(hList, i) {
 
 //과제 보기
 function fnReadHomework(b_id) {
-	$.post("/StudyCloud/ajax", {"stdId":'${myStdList[index].std_id}', "command":"READHOMEWORK", "b_id":b_id}, 
+	$.post("/StudyCloud/json", {"stdId":'${myStdList[index].std_id}', "command":"READHOMEWORK", "b_id":b_id}, 
 			function(code) {
 				$("#${includeStdMenu}").html(code);
 		});
@@ -176,7 +176,7 @@ function fnSearchHomework() {
 
 //과제 작성
 function fnWriteHomework(){
-	$.post("/StudyCloud/ajax", {"command":"WRITEBOARD", "stdId":'${myStdList[index].std_id}', "board":"homework"}, 
+	$.post("/StudyCloud/fwd", {"command":"WRITEBOARD", "stdId":'${myStdList[index].std_id}', "board":"homework"}, 
 		function(code) {
 			$("#${includeStdMenu}").html(code);
 	});

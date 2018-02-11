@@ -35,7 +35,7 @@
 		<div class="row" align="center">
 			<div class="col-md-2"></div>
 			<div class="col-md-8">
-				<form action="/StudyCloud/main" method="post" class="form-horizontal" id="loginData">
+				<form action="/StudyCloud/fwd" method="post" class="form-horizontal" id="loginData">
 					<input type="hidden" name="command" value="LOGIN">
 					<div style="padding:10px">
 						<img alt="logo" src="/StudyCloud/images/icons/navbar_logo.png">

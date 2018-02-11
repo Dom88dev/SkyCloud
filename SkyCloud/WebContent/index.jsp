@@ -19,7 +19,7 @@
 	<c:if test="${empty bodyInclude }">
 
 		<c:if test="${empty Loaded }">
-			<c:redirect url="/main">
+			<c:redirect url="/fwd">
 				<c:param name="command" value="LOADSTUDYLIST"></c:param>
 			</c:redirect>
 		</c:if>

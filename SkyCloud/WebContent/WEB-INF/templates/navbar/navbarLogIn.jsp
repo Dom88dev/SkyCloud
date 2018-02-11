@@ -33,7 +33,7 @@
 					<img alt="Brand" src="/StudyCloud/images/icons/navbar_logo.png" height="100%">
 				</a>
 			</div>
-			<form class="navbar-form navbar-left" action="/StudyCloud/main" method="post">
+			<form class="navbar-form navbar-left" action="/StudyCloud/fwd" method="post">
 				<input type="hidden" name="command" value="SEARCHSTUDY"/>
 				<div class="form-group form-control">
 					<input type="search" class="nav-search-input" placeholder="검색할 스터디를 입력하세요" name="searchTxt"/>
@@ -46,8 +46,8 @@
 			<div class="navbar-inner">
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav navbar-right">
-						<li class="text-info"><a href="/StudyCloud/main?command=GOSTDREGISTER">스터디 등록</a></li>
-						<li class="text-info"><a href="/StudyCloud/main?command=GOMNGSTUDY">나의 스터디</a></li>
+						<li class="text-info"><a href="/StudyCloud/fwd?command=GOSTDREGISTER">스터디 등록</a></li>
+						<li class="text-info"><a href="/StudyCloud/fwd?command=GOMNGSTUDY">나의 스터디</a></li>
 						<li class="text-info"><a href="javascript:fnLogOut();">로그아웃</a></li>
 					</ul>
 				</div>

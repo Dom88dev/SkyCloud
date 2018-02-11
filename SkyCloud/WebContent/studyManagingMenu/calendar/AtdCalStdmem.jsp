@@ -41,7 +41,7 @@
 			},
 			events: function(start, imageurl, callback){ 	
 				$.ajax({
-					url : "/StudyCloud/ajax",
+					url : "/StudyCloud/json",
 					type : "GET",
 					asyns : "false",
 					data : {
@@ -73,7 +73,7 @@
 		});
 		$('#mybutton').click(function() {
 			$.ajax({
-				url : "/StudyCloud/ajax",
+				url : "/StudyCloud/json",
 				type : "GET",
 				asyns : "false",
 				data : {

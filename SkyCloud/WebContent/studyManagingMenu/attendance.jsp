@@ -3,7 +3,7 @@
 <script>
 	function fnLoadLeaderCal() {
 		$.ajax({
-			url : "/StudyCloud/ajax",
+			url : "/StudyCloud/json",
 			type : "GET",
 			data : {command: "LOADLEADERCALENDAR"},
 			success : function(data){
@@ -16,7 +16,7 @@
 	
 	function fnLoadMemberCal() {
 		$.ajax({
-			url : "/StudyCloud/ajax",
+			url : "/StudyCloud/json",
 			type : "GET",
 			data : {command: "LOADMEMCALENDAR"},
 			success : function(data){

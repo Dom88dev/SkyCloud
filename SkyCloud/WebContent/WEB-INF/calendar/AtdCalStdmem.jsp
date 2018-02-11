@@ -64,7 +64,7 @@
 			var param;
 			$.ajax({
 				type : "post",
-				url : "/ajax",
+				url : "/json",
 				data : {
 					command : "CHECKATT"
 				},

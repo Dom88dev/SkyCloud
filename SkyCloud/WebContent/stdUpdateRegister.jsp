@@ -142,7 +142,7 @@ input:focus, select:focus {
 	<div class="container-fluid" style="width:70%;">
 		<div class="row">
 			<div class="col-md-12">
-				<form class="form-horizontal" role="form" method="post" action="/StudyCloud/main">
+				<form class="form-horizontal" role="form" method="post" action="/StudyCloud/fwd">
 					<input type="hidden" name="command" value="STUDYUPDATE">
 					<table>
 						<tr>
@@ -449,7 +449,7 @@ input:focus, select:focus {
 				
 				$.ajax({
 					type:"POST",
-					url:"/StudyCloud/ajax?command=STD_VALID_REGISTER_STDNAME",
+					url:"/StudyCloud/json?command=STD_VALID_REGISTER_STDNAME",
 					data:{email : "${email}"},
 					success:function(result){
 						alert("result : " + result);

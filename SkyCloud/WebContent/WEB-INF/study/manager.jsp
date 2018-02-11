@@ -73,7 +73,7 @@
 	var currentMenu = "${includeStdMenu}";
 	function fnSetIndex(index) {
 		currentIndex = index;
-		$.post("/StudyCloud/ajax", {"command":"MNG_CHANGESTUDY", "index":index, "includeStdMenu":currentMenu}, 
+		$.post("/StudyCloud/json", {"command":"MNG_CHANGESTUDY", "index":index, "includeStdMenu":currentMenu}, 
 				function(data) {
 					fnChangeStdMenuInclude(data);
 			});
@@ -81,7 +81,7 @@
 	
 	function fnSetCurrentStdMenu(menu) {
 		currentMenu = menu;
-		$.post("/StudyCloud/ajax", {"command":"MNG_CHANGESTUDY", "index":currentIndex, "includeStdMenu":menu}, 
+		$.post("/StudyCloud/json", {"command":"MNG_CHANGESTUDY", "index":currentIndex, "includeStdMenu":menu}, 
 				function(data) {
 					fnChangeStdMenuInclude(data);
 			});

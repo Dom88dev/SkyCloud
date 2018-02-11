@@ -1,4 +1,4 @@
-package bean;
+package persistance;
 
 import java.sql.*;
 import java.util.Properties;

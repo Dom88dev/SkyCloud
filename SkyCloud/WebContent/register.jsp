@@ -74,7 +74,7 @@ td, tr {
 		<div class="row">
 		
 		<!-- 회원가입 폼 -->
-			<form id="registerForm" action="/StudyCloud/main" class="form-horizontal">
+			<form id="registerForm" action="/StudyCloud/fwd" class="form-horizontal">
 				<input type="hidden" name="command" value="REGIMEMBER">
 				<div class="container">
 					<div class="container">

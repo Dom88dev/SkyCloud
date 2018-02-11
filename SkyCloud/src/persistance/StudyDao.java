@@ -1,4 +1,4 @@
-package bean;
+package persistance;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,6 +10,7 @@ import java.util.Map;
 
 import model.Study;
 import model.StudyTimePlace;
+import util.Util;
 
 public class StudyDao {
 	private Connection conn;

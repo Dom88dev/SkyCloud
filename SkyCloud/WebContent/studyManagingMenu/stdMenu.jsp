@@ -86,7 +86,7 @@ function fnNotifyChangeStdMenu(b_id) {
 
 //공지사항 보기
 function fnReadNotice(b_id) {
-	$.post("/StudyCloud/ajax", {"stdId":'${myStdList[index].std_id}', "command":"READNOTICE", "b_id":b_id}, 
+	$.post("/StudyCloud/json", {"stdId":'${myStdList[index].std_id}', "command":"READNOTICE", "b_id":b_id}, 
 			function(code) {
 				$("#${includeStdMenu}").html(code);
 		});
@@ -94,7 +94,7 @@ function fnReadNotice(b_id) {
 
 //과제 보기
 function fnReadHomework(b_id) {
-	$.post("/StudyCloud/ajax", {"stdId":'${myStdList[index].std_id}', "command":"READHOMEWORK", "b_id":b_id}, 
+	$.post("/StudyCloud/json", {"stdId":'${myStdList[index].std_id}', "command":"READHOMEWORK", "b_id":b_id}, 
 			function(code) {
 				$("#${includeStdMenu}").html(code);
 		});

@@ -68,7 +68,7 @@
 	        </div>
 	        <div class="panel-footer">
 	          <p>${stdList[param.index].std_info}</p>
-	          <form action="/StudyCloud/main" method="post">
+	          <form action="/StudyCloud/fwd" method="post">
 	          	<input type="hidden" value="GETSTUDYINFO" name="command">
 				<input type="hidden" value="${stdList[param.index].std_id}" name="stdId">
 				<input type="hidden" value="${stdList[param.index].email }" name="email">

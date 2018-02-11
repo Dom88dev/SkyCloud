@@ -37,7 +37,7 @@
 					<h5 class="text-info">정말 로그아웃 하시겠습니까?</h5>
 				</div>
 				<div>
-					<form action="/StudyCloud/main" method="post" class="form-horizontal">
+					<form action="/StudyCloud/fwd" method="post" class="form-horizontal">
 						<input type="hidden" name="command" value="LOGOUT">
 						<button id="yes" type="submit" class="btn btn-info">네</button>
 						<button id="no" type="button" class="btn" onclick="fnCancelLogout()">아니오</button>

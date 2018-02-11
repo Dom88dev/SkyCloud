@@ -1,4 +1,4 @@
-package bean;
+package persistance;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,6 +15,7 @@ import model.Attendance;
 import model.Member;
 import model.Study;
 import model.StudyTimePlace;
+import util.Util;
 
 public class AttendanceDao {
 	private Connection conn;

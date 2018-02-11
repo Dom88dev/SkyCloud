@@ -52,7 +52,7 @@
 			},
 			events : function(start, end, timezone, callback) {
 				$.ajax({
-					url : "/StudyCloud/ajax",
+					url : "/StudyCloud/json",
 					type : "GET",
 					data : {
 						command : "CNTSTATUS",
@@ -100,7 +100,7 @@
 			eventClick : function(event, element) {
 				$.ajax({
 					type : "post",
-					url : "/ajax",
+					url : "/json",
 					data : {
 						command : "GET_ATTSTATUS",
 						email : data.email
@@ -125,7 +125,7 @@
 			$('#calendar').fullCalendar('removeEvents', event.title);
 			$.ajax({
 				type : "GET",
-				url : "/ajax",
+				url : "/json",
 				data : {
 					command : "UPDATE_STATUS",
 					status : $('.rselect option:selected').val()

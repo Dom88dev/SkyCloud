@@ -52,7 +52,7 @@
 			},
 			events : function(start, end, timezone, callback) {
 				$.ajax({
-					url : "/StudyCloud/ajax",
+					url : "/StudyCloud/json",
 					type : "GET",
 					data : {
 						command : "CNTSTATUS",
@@ -100,7 +100,7 @@
 			eventClick : function(event, element) {
 				var s = null;
 				$.ajax({
-					url : "/StudyCloud/ajax",
+					url : "/StudyCloud/json",
 					type : "GET",
 					data : {
 						command : "GET_ATTSTATUS",
@@ -128,7 +128,7 @@
 			var title = $('.rselect option:selected').val();
 			//$('#calendar').fullCalendar('removeEvents', event.title);
 			$.ajax({
-				url : "/StudyCloud/ajax",
+				url : "/StudyCloud/json",
 				type : "GET",
 				data : {
 					command : "UPDATE_STATUS",

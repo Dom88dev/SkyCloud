@@ -7,7 +7,7 @@
 
 <script>
 	(function() {
-		$.post("/StudyCloud/ajax", {command:"LOADSTUDYINFO", leaderEmail: "${myStdList[index].email}", stdId:"${myStdList[index].std_id}"}, 
+		$.post("/StudyCloud/json", {command:"LOADSTUDYINFO", leaderEmail: "${myStdList[index].email}", stdId:"${myStdList[index].std_id}"}, 
 			function(data) {
 				var jsonData = $.parseJSON(data);
 				if(jsonData){
@@ -78,7 +78,7 @@
 	
 	function fnGoToBoard(menu, b_id) {
 		currentMenu = menu;
-		$.post("/StudyCloud/ajax", {"command":"MNG_CHANGESTUDY", "index":currentIndex, "includeStdMenu":menu}, 
+		$.post("/StudyCloud/json", {"command":"MNG_CHANGESTUDY", "index":currentIndex, "includeStdMenu":menu}, 
 				function(data) {
 					fnNotifyChangeStdMenu(b_id);
 					fnRemoveSelectStdMenu();
@@ -174,7 +174,7 @@ div.panel-body div a {
 		<div align="justify" style="margin-bottom: 4%;">
 			<button class="btn btn-info">출석 체크</button>
 			<c:if test="${email == myStdList[index].email }">
-				<form action="/StudyCloud/main" method="post">
+				<form action="/StudyCloud/fwd" method="post">
 				<input type="hidden" name="command" value="STUDYUPDATEINFO">
 				<input type="hidden" name="stdId" value="${myStdList[index].std_id}">
 				<button class="btn btn-white" type="submit">스터디 수정<i class="fa fa-cog"></i></button>

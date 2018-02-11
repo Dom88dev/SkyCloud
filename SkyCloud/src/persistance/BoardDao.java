@@ -1,4 +1,4 @@
-package bean;
+package persistance;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -374,7 +374,7 @@ public class BoardDao {
 	
 	public int deleteBoard(int b_id) {
 		int result = 0;
-		String sql = "delete Board where b_id=?";
+		String sql = "delete BOARD where b_id=?";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -391,14 +391,14 @@ public class BoardDao {
 	
 	public int deleteBoardFile(int b_id) {
 		int result = 0;
-		String sql = "delete BoardFile where b_id=?";
+		String sql = "delete Board_File where b_id=?";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, b_id);
 			result = pstmt.executeUpdate();
 		} catch(Exception e) {
-			System.out.println("deleteBoard() 에러 : "+e);
+			System.out.println("deleteBoardFile() 에러 : "+e);
 		} finally {
 			pool.freeConnection(conn, pstmt, rs);
 		}
