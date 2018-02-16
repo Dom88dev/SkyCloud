@@ -39,9 +39,9 @@ import persistance.MemberDao;
 import persistance.StudyDao;
 
 /**
- * Servlet implementation class AjaxController
+ * Servlet implementation class JsonController
  */
-@WebServlet("/AjaxController")
+@WebServlet("/JsonController")
 public class JsonController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

@@ -27,7 +27,7 @@ public class BoardDao {
 	
 	public BoardFile getBoardFile(int b_id) {
 		BoardFile bf = new BoardFile();
-		String sql = "select * from board_file where b_id=?";
+		String sql = "select * from BOARD_FILE where b_id=?";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -53,7 +53,7 @@ public class BoardDao {
 	//공지사항 정보 가져오기
 	public Notice getNotice(int b_id) {
 		Notice n = new Notice();
-		String sql = "select * from board where b_id=?";
+		String sql = "select * from BOARD where b_id=?";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -80,7 +80,7 @@ public class BoardDao {
 	//과제 정보 가져오기
 	public Homework getHomework(int b_id) {
 		Homework h = new Homework();
-		String sql = "select * from board where b_id=?";
+		String sql = "select * from BOARD where b_id=?";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -108,7 +108,7 @@ public class BoardDao {
 	
 	public List<Notice> getNoticeList(int std_id) {
 		ArrayList<Notice> noticeList = new ArrayList<>();
-		String sql = "select * from board where std_id = ? and duedate is null order by b_datetime desc";
+		String sql = "select * from BOARD where std_id = ? and duedate is null order by b_datetime desc";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -136,7 +136,7 @@ public class BoardDao {
 	
 	public List<Homework> getHomeworkList(int std_id) {
 		ArrayList<Homework> hoemworkList = new ArrayList<>();
-		String sql = "select * from board where std_id = ? and duedate is not null order by b_datetime desc";
+		String sql = "select * from BOARD where std_id = ? and duedate is not null order by b_datetime desc";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);

@@ -28,7 +28,7 @@ public class StudyDao {
 	
 	public List<StudyTimePlace> getTimePlaceList(int std_id) {
 		ArrayList<StudyTimePlace> list = new ArrayList<>();
-		String sql = "select * from study_timeplace where std_id=? order by std_addr, std_time, std_hour desc";
+		String sql = "select * from STUDY_TIMEPLACE where std_id=? order by std_addr, std_time, std_hour desc";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -54,7 +54,7 @@ public class StudyDao {
 	//모든 스터디 리스트를 구하는 메서드
 	public List<Study> getAllStduyList(String order) {
 		ArrayList<Study> list = new ArrayList<>();
-		String sql = "select * from study order by "+order+" desc";
+		String sql = "select * from STUDY order by "+order+" desc";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -84,7 +84,7 @@ public class StudyDao {
 	public List<Study> getStduyList() {
 		ArrayList<Study> list = (ArrayList<Study>)getAllStduyList("std_id");
 		ArrayList<Study> stdList = new ArrayList<>();
-		String sql = "select count(email), apply_status from applies group by std_id, apply_status having std_id = ?";
+		String sql = "select count(email), apply_status from APPLIES group by std_id, apply_status having std_id = ?";
 		try {
 			conn = pool.getConnection();
 			for(Study s : list) {
@@ -335,7 +335,7 @@ public class StudyDao {
 	//스터디장 이메일 가져오기
 	public String getLeaderEmail(int std_id) {
 		String result = null;
-		String sql="select email from study where std_id=?";
+		String sql="select email from STUDY where std_id=?";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);

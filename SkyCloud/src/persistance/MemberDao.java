@@ -46,7 +46,7 @@ public class MemberDao {
 	
 	public Member getMemberByEmail(String email) {
 		Member m = new Member();
-		String sql = "select * from member where email = ?";
+		String sql = "select * from MEMBER where email = ?";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -68,7 +68,7 @@ public class MemberDao {
 	}
 	public int getValidEmail(String email) {
 		int result = 0;
-		String sql="select email from member where email = ?";
+		String sql="select email from MEMBER where email = ?";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -85,7 +85,7 @@ public class MemberDao {
 	
 	public int getValidName(String name) {
 		int result = 0;
-		String sql="select name from member where name = ?";
+		String sql="select name from MEMBER where name = ?";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -102,7 +102,7 @@ public class MemberDao {
 	
 	public int getValidTel(String tel) {
 		int result = 0;
-		String sql="select tel from member where tel = ?";
+		String sql="select tel from MEMBER where tel = ?";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);

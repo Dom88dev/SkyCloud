@@ -33,7 +33,7 @@ public class AttendanceDao {
 	//해당 스터디를 수강하는 사람들의 정보(이메일)를 가져온다.
 	public List<Attendance> getAttendenceList(int std_id){
 		ArrayList<Attendance> list = new ArrayList<>();
-		String sql="select * from attendance where std_id=? and atd_date =?";
+		String sql="select * from ATTENDANCE where std_id=? and atd_date =?";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -66,7 +66,7 @@ public class AttendanceDao {
 	//1.스터디 시작시간 가져오기
 	public String getStdTime(int std_id) {
 		String time=null;
-		String sql="select std_time from study_timeplace where std_id=?";
+		String sql="select std_time from STUDY_TIMEPLACE where std_id=?";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -135,7 +135,7 @@ public class AttendanceDao {
 	}
 	//3. 출결현황 출력하기
 	public String getAttStatus(Attendance a){
-		String sql = String.format("select email, atd_status from attendance where std_id='%s'", a.getStd_id());
+		String sql = String.format("select email, atd_status from ATTENDANCE where std_id='%s'", a.getStd_id());
 		String msg = null;
 		try {
 			conn = pool.getConnection();
@@ -179,7 +179,7 @@ public class AttendanceDao {
 	public String getMemStatus(String email){
 		String status = null;
 
-		String sql = "select atd_status from attendance where email=?";
+		String sql = "select atd_status from ATTENDANCE where email=?";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -197,7 +197,7 @@ public class AttendanceDao {
 	}
 	public Date getMemAtdDate(String email){
 		Date date = null;
-		String sql = "select atd_date from attendance where email=?";
+		String sql = "select atd_date from ATTENDANCE where email=?";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);

@@ -26,9 +26,9 @@ import persistance.StudyDao;
 import util.Util;
 
 /**
- * Servlet implementation class IntroController
+ * Servlet implementation class ForwardController
  */
-@WebServlet("/IntroController")
+@WebServlet("/ForwardController")
 public class ForwardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
