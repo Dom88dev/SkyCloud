@@ -54,7 +54,7 @@ public class RegisterNoticeAction implements MultipartAction {
 			postResult = boardDao.getB_IdFromNotice(notice);
 		}
 		postResult = boardDao.insertBoardFile(postResult, bf);
-		return "/main?command=GOMNGSTUDY&postResult="+postResult;
+		return "/fwd?command=GOMNGSTUDY&postResult="+postResult;
 	}
 
 }

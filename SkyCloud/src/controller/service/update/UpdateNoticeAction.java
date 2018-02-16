@@ -61,7 +61,7 @@ public class UpdateNoticeAction implements MultipartAction {
 		int updateResult = boardDao.updateNotice(notice);
 		if(updateResult>0) updateResult = boardDao.updateBoardFile(bf, b1, b2, b3);
 		System.out.println("보드파일 수정 결과 : "+updateResult);
-		return "/main?command=GOMNGSTUDY&updateResult="+updateResult;
+		return "/fwd?command=GOMNGSTUDY&updateResult="+updateResult;
 	}
 
 }

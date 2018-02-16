@@ -16,10 +16,10 @@ public class DeleteBoardAction implements Action {
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		BoardDao boardDao = new BoardDao();
 		int deleteResult = boardDao.deleteBoardFile(Integer.parseInt(req.getParameter("b_id")));
-		if(deleteResult>0) {
-			deleteResult = boardDao.deleteBoard(Integer.parseInt(req.getParameter("b_id")));
-		}
-		return "/main?command=GOMNGSTUDY&deleteResult="+deleteResult;
+		System.out.println("보드file 삭제 결과 : "+deleteResult);
+		deleteResult = boardDao.deleteBoard(Integer.parseInt(req.getParameter("b_id")));
+		System.out.println("보드 삭제 결과 : "+deleteResult);
+		return "/fwd?command=GOMNGSTUDY&deleteResult="+deleteResult;
 	}
 
 }

@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <link rel="stylesheet" type="text/css" href="/StudyCloud/lib/css/boardCss.css">
 <script>
+var recordsPerPage = 10;
+var pagesPerBlock = 5;
 var currentHPage = 0;
 var currentHBlock = 0;
 var beginNumPerHPage = recordsPerPage * currentHPage;
@@ -10,7 +12,7 @@ var beginNumPerHBlock = pagesPerBlock * currentHBlock;
 var homeworkData = "";
 
 (function() {
-	$.post("/StudyCloud/fwd", {command:"LOADHOMEWORK", stdId:"${myStdList[index].std_id}"}, 
+	$.post("/StudyCloud/json", {command:"LOADHOMEWORK", stdId:"${myStdList[index].std_id}"}, 
 		function(data) {
 			homeworkData = data;
 			fnLoadHomework(data);
@@ -22,6 +24,7 @@ function fnLoadHomework(data) {
 	if(jsonData){
 		var hList = jsonData.homeworkList;
 		var tBody = $("div#hTbody");
+		var postBtn = $("button#btnPostHomework");
 		var previousP = $("li#hPrevious");
 		var nextP = $("li#hNext");
 		var pageList = $("ul#hPagination");
@@ -29,6 +32,12 @@ function fnLoadHomework(data) {
 		var totalBlock = Math.ceil(totalPage/pagesPerBlock);
 		tBody.empty();
 		pageList.empty();
+		
+		if("${email == myStdList[index].email}") {
+			postBtn.css("visibility", "visible");
+		} else {
+			postBtn.css("visibility", "hidden");
+		}
 		if(hList.length > 0) {
 			//레코드 처리
 			if(hList.length>recordsPerPage) {
@@ -163,7 +172,7 @@ function createHomeworkRecord(hList, i) {
 
 //과제 보기
 function fnReadHomework(b_id) {
-	$.post("/StudyCloud/json", {"stdId":'${myStdList[index].std_id}', "command":"READHOMEWORK", "b_id":b_id}, 
+	$.post("/StudyCloud/fwd", {"stdId":'${myStdList[index].std_id}', "command":"READHOMEWORK", "b_id":b_id}, 
 			function(code) {
 				$("#${includeStdMenu}").html(code);
 		});

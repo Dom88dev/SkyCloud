@@ -151,7 +151,7 @@ public class StudyDao {
 		
 		try {
 			conn = pool.getConnection();
-			String sql = "insert into STUDY values(seq_std.nextVal, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into STUDY(std_name, std_max, std_start, std_end, std_info, std_plan, std_etc, std_gender, std_category, email) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, s.getStd_name());

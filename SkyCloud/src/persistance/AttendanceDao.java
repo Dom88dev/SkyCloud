@@ -104,7 +104,7 @@ public class AttendanceDao {
 		System.out.println("스터디 시작시간 hhmm : "+stdTime);
 		try {
 			conn = pool.getConnection();
-			String sql = "insert into attendance values(seq_atd.nextVal,?,?,?,?)";
+			String sql = "insert into attendance(atd_date, atd_status, email, std_id) values(?,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setDate(1, sqlDate);
 			if(stdTime.compareTo(str)<0) {

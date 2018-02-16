@@ -59,7 +59,7 @@ public class RegisterHomeworkAction implements MultipartAction {
 		}
 		
 		postResult = boardDao.insertBoardFile(postResult, bf);
-		return "/main?command=GOMNGSTUDY&postResult="+postResult;
+		return "/fwd?command=GOMNGSTUDY&postResult="+postResult;
 	}
 
 }

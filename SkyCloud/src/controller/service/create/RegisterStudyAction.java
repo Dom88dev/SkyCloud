@@ -49,13 +49,15 @@ public class RegisterStudyAction implements Action {
 		int result = 0;
 		//Study_timeplace table에 위에서 넣은 Study의 장소와 시간을 갯수만틈 삽입
 		for(int i=0; i<stdTimes1.length;i++){
-			for(int j=0; j<stdDays.get(i).length; j++) {
-				StudyTimePlace stp = new StudyTimePlace();
-				stp.setStudyTimePlace(stdId, 
-						(stdTimes1[i].length()==2?stdTimes1[i]:"0"+stdTimes1[i])+(stdTimes2[i].length()==2?stdTimes2[i]:"0"+stdTimes2[i]), 
-						Integer.parseInt(stdHours[i]), stdAddrs[i], stdDays.get(i)[j]);
-				result += stdDao.insertStudyTimePlace(stp);
-			}	
+			String days = null;
+			for(String day : stdDays.get(i)) {
+				days+=day;
+			}
+			StudyTimePlace stp = new StudyTimePlace();
+			stp.setStudyTimePlace(stdId, 
+					(stdTimes1[i].length()==2?stdTimes1[i]:"0"+stdTimes1[i])+(stdTimes2[i].length()==2?stdTimes2[i]:"0"+stdTimes2[i]), 
+					Integer.parseInt(stdHours[i]), stdAddrs[i], days);
+			result += stdDao.insertStudyTimePlace(stp);
 		}
 		ApplyDao applyDao = new ApplyDao();
 		//위에 만든 스터디의 스터디장을 applies table에 accept 상태로 삽입

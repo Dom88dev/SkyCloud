@@ -30,6 +30,7 @@ button.btn-red:active, button.btn-red.active, .open>.dropdown-toggle.btn-red
 
 button.btn-red:hover {	border: 0.4px solid #ff4d4d;	color: #ff4d4d;	background-color: #fff; }
 button.btn-red:focus {	border: 0.4px solid #ff4d4d;	color: #ff4d4d;	background-color: #fff;	outline:none;	}
+button.btn {border-radius: 3em;}
 
 </style>
 <div class="col-md-12" align="center">
@@ -46,7 +47,7 @@ button.btn-red:focus {	border: 0.4px solid #ff4d4d;	color: #ff4d4d;	background-c
 	<div class="col-md-12" align="right">
 		<c:if test="${email == myStdList[index].email }">
 			<button class="btn-white" onclick="fnGoToModify('${board.b_id}','${kind}')"><i class="fa fa-pencil-square-o">수정</i></button>
-			<button class="btn-red" onclick="fnDeleteBoard('${board.b_id}')"><i class="	fa fa-trash-o">삭제</i></button>
+			<button class="btn-red" onclick="fnDeleteBoard()"><i class="	fa fa-trash-o">삭제</i></button>
 		</c:if>
 	</div>
 	<h2 class="boardLabel">${board.title}</h2>
@@ -70,7 +71,10 @@ button.btn-red:focus {	border: 0.4px solid #ff4d4d;	color: #ff4d4d;	background-c
 		${board.content}
 	</div>
 </div>
-
+<form id="deleteBForm" method="post" action="/StudyCloud/fwd">
+<input type="hidden" name="command" value="DELETEBOARD">
+<input type="hidden" name="b_id" value="${board.b_id}">
+</form>
 <!-- 삭제 확인 modal -->
 <div class="modal fade" id="deleteBoardConfirmModal" data-backdrop="static">
 			<div class="modal-dialog">
@@ -98,13 +102,10 @@ button.btn-red:focus {	border: 0.4px solid #ff4d4d;	color: #ff4d4d;	background-c
 	}
 })();
 
-function fnDeleteBoard(b_id) {
+function fnDeleteBoard() {
 	$("#deleteCommit").click(function() {
 		$("#deleteBoardConfirmModal").modal('hide');
-		$.post("/StudyCloud/fwd", {"b_id":b_id, "command":"DELETEBOARD"}, 
-				function(code) {
-					$("#${includeStdMenu}").html(code);
-			});
+		$("#deleteBForm").submit();
 	});
 	$("#deleteBoardConfirmModal").modal();
 }
@@ -112,7 +113,7 @@ function fnDeleteBoard(b_id) {
 function fnGoToModify(b_id, kind) {
 	$.post("/StudyCloud/fwd", {"b_id":b_id, "command":"UPDATEBOARD", "board":kind}, 
 			function(code) {
-				$("#${includeStdMenu}").html(code);
+				$("body").html(code);
 		});
 }
 </script>

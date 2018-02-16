@@ -13,14 +13,14 @@ import java.util.Vector;
 public class DBConnectionMgr {
 	private Vector connections = new Vector(30);
 	// 오라클용(아이피:포트)(아이디/패스워드)
-	 private String _driver = "oracle.jdbc.driver.OracleDriver",
-			 _url = "jdbc:oracle:thin:@127.0.0.1:1521:xe",
+//	 private String _driver = "oracle.jdbc.driver.OracleDriver",
+//			 _url = "jdbc:oracle:thin:@127.0.0.1:1521:xe",
 
 	// mysql
-//	private String _driver = "com.mysql.jdbc.Driver",
-//			_url = "jdbc:mysql://localhost:3306/test?autoReconnection=true&useSSL=false", 
-			_user = "skycloud",
-			_password = "skycloud";
+	private String _driver = "com.mysql.jdbc.Driver",
+			_url = "jdbc:mysql://netsong7.synology.me:8080/studycloud", 
+			_user = "studycloud",
+			_password = "studycloud";
 	private boolean _traceOn = false;
 	private boolean initialized = false;
 	private int _openConnections = 100;

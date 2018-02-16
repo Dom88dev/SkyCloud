@@ -165,7 +165,7 @@ public class BoardDao {
 	//공지사항 등록 - b_id 반환 -> 바로 insertBoardFile을 실행할 수 있도록
 	public int insertNotice(Notice n) {
 		int result = 0;
-		String sql = "insert into BOARD values(seq_b.nextVal, ?, ?, ?, ?, null, 0, 0)";
+		String sql = "insert into BOARD(std_id, title, content, b_datetime, duedate, view_cnt, replies_cnt) values(?, ?, ?, ?, null, 0, 0)";
 		try {
 			conn = pool.getConnection();
 			
@@ -187,7 +187,7 @@ public class BoardDao {
 	//과제등록 - b_id 반환 -> 바로 insertBoardFile을 실행할 수 있도록
 	public int insertHomework(Homework h) {
 		int result = 0;
-		String sql = "insert into BOARD values(seq_b.nextVal, ?, ?, ?, ?, ?, 0, 0)";
+		String sql = "insert into BOARD(std_id, title, content, b_datetime, duedate, view_cnt, replies_cnt) values(?, ?, ?, ?, ?, 0, 0)";
 		try {
 			conn = pool.getConnection();
 			

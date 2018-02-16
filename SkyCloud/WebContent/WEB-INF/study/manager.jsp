@@ -164,7 +164,7 @@
 			<script>fnUpdateResultModalPopup('${updateResult}');</script>
 		</c:if>
 		<c:if test="${! (empty deleteResult)}">
-			<script>fnDeleteResultModalPopup('${updateResult}');</script>
+			<script>fnDeleteResultModalPopup('${deleteResult}');</script>
 		</c:if>
 		
 	</div>

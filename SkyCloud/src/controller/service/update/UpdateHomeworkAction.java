@@ -62,7 +62,7 @@ public class UpdateHomeworkAction implements MultipartAction {
 		BoardDao boardDao = new BoardDao();
 		int updateResult = boardDao.updateHomework(homework);
 		if(updateResult>0) updateResult = boardDao.updateBoardFile(bf, b1, b2, b3);
-		return "/main?command=GOMNGSTUDY&updateResult="+updateResult;
+		return "/fwd?command=GOMNGSTUDY&updateResult="+updateResult;
 	}
 
 }
