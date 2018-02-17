@@ -1,6 +1,7 @@
 package controller.service;
 
 import controller.service.create.InsertAttendaceAction;
+import controller.service.create.InsertStudyApplyAction;
 import controller.service.create.RegisterHomeworkAction;
 import controller.service.create.RegisterMemberAction;
 import controller.service.create.RegisterNoticeAction;
@@ -162,6 +163,9 @@ public class ActionFactory {
 			break;
 		case "UPDATEHOMEWORK":// 과제글 수정
 			action = new UpdateHomeworkAction();
+			break;
+		case "STUDYAPPLY":// 스터디 신청
+			action = new InsertStudyApplyAction();
 			break;
 		}
 		return action;
