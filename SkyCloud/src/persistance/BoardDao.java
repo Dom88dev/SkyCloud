@@ -257,7 +257,7 @@ public class BoardDao {
 	//게시판 첨부 파일 등록
 	public int insertBoardFile(int b_id, BoardFile bf) {
 		int result = 0;
-		String sql = "insert into BOARD_FILE values(?, ?, ?, ?, ?, ?, ?)";
+		String sql = "insert into BOARD_FILE(b_id, b_file1_name, b_file1, b_file2_name, b_file2, b_file3_name, b_file3) values(?, ?, ?, ?, ?, ?, ?)";
 		try {
 			conn = pool.getConnection();
 			

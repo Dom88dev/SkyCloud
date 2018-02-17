@@ -68,7 +68,12 @@ button.btn {border-radius: 3em;}
 		</div>
 	</div>
 	<div class="col-md-12 content-box" align="left">
-		${board.content}
+		<div>
+			${board.content}
+		</div>
+		<div>
+			<!-- dropdown Çü½ÄÀÇ ´ñ±Û div -->
+		</div>
 	</div>
 </div>
 <form id="deleteBForm" method="post" action="/StudyCloud/fwd">
