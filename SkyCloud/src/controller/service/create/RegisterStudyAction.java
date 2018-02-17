@@ -49,7 +49,7 @@ public class RegisterStudyAction implements Action {
 		int result = 0;
 		//Study_timeplace table에 위에서 넣은 Study의 장소와 시간을 갯수만틈 삽입
 		for(int i=0; i<stdTimes1.length;i++){
-			String days = null;
+			String days = "";
 			for(String day : stdDays.get(i)) {
 				days+=day;
 			}
