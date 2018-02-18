@@ -79,7 +79,7 @@ button.btn {border-radius: 3em;}
 			<form>
 				<input type="hidden" name="rp_pos" value="0">
 				<input type="hidden" name="rp_reciever">
-				<div id="rrp_indicator"><span></span>¿¡°Ô ´ë´ñ±Û<button type="button" class="close" onclick="fnResetRereply()">&times;</button></div>
+				<div id="rrp_indicator" align="right"><span></span>¿¡°Ô ´ë´ñ±Û<button type="button" class="close" onclick="fnResetRereply()">&times;</button></div>
 				<div class="input-group">
 					<input type="text" id="replyContent" class="form-control" name="rp_content">
 					<span class="input-group-addon" style="background: white; color: #39d2fd; border: none;" onclick="fnReply()">´ñ±Û ´Þ±â</span>
@@ -93,7 +93,7 @@ button.btn {border-radius: 3em;}
 				<div>
 					<c:set target="${regiDate}" property="time" value="${reply.rp_datetime}"/>
 					<span>${reply.writer}</span><fmt:formatDate value="${regiDate}" pattern="yyyy-MM-dd HH:mm"/>
-					<span onclick="fnSetRereply('${reply.rp_pos}', '${reply.rp_writer}')">´ñ±Û´Þ±â</span><br>
+					<span onclick="fnSetRereply('${reply.rp_pos}', '${reply.rp_writer}', '${reply.writer}')">´ñ±Û´Þ±â</span><br>
 					<span>${reply.reciever}</span><span>${reply.rp_content}</span>
 				</div>
 			</c:forEach>
@@ -130,6 +130,7 @@ button.btn {border-radius: 3em;}
 		$("#file3").attr("href", "/StudyCloud"+"${board.files.b_file3}");
 	}
 	$("#replyBox").hide();
+	$("#rrp_indicator").hide();
 })();
 
 function fnDeleteBoard() {
@@ -151,14 +152,17 @@ function fnReplyShowUp() {
 	$("#replyBox").toggle();
 }
 
-function fnSetRereply(pos, reciever) {
+function fnSetRereply(pos, reciever, rcv) {
 	$("input[name='rp_pos']").val(pos);
 	$("input[name='rp_reciever']").val(reciever);
+	$("#rrp_indicator span").text(rcv);
+	$("#rrp_indicator").show();
 	$("#replyContent").focus();
 }
 
 function fnResetRereply() {
 	$("input[name='rp_pos']").val("0");
+	$("#rrp_indicator").hide();
 }
 
 function fnReply() {
