@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"  %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <!DOCTYPE html>
 <html>
@@ -96,9 +96,9 @@ button.btn-effect{
   color:#fff;
   border:none;
   position:relative;
-  height:60px;
+  height:40px;
   right : 0px;
-  font-size:1.6em;
+  font-size:1.4em;
   padding:0 2em;
   cursor:pointer;
   transition:800ms ease all;
@@ -135,23 +135,6 @@ button.btn-effect:hover:before,button.btn-effect:hover:after{
 		$('#studyApplyModal').modal();
 	}
 	
-	//스터디 신청 결과 모달창 처리
-	function fnResultModal(result) {
-		if(result>0) {//성공
-			$("#stdApplyBtn").click(function() {
-				 window.location.href="/StudyCloud/index.jsp";
-			});
-		} else {//실패
-			$("#StudyApplyResultModal div.modal-body")[0].innerHTML = "스터드등록 중 문제가 발생했습니다. 잠시 후 다시 등록해 주십시오.";
-			$("#StudyApplyResultModal div.modal-footer button").removeClass("btn-info");
-			$("#StudyApplyResultModal div.modal-footer button").addClass("btn-danger");
-			$("#stdApplyBtn").click(function() {
-				$("#StudyApplyResultModal").modal("hide");
-			});
-		}
-		
-		$('#StudyApplyResultModal').modal();
-	}
 	
 </script>
 </head>
@@ -220,7 +203,7 @@ button.btn-effect:hover:before,button.btn-effect:hover:after{
 						<tr>
 							<td style="height:20%;vertical-align: middle"><label><b>스터디명&nbsp;:</b></label>   ${std.std_name }</td>
 						</tr>
-						<c:set value="${std.timePlaceList }" var="timePlaceList"></c:set>
+						<c:set value="${std.timePlaceList}" var="timePlaceList"/>
 							<c:forEach begin="0" end="${fn:length(timePlaceList)-1}" step="1" var="j"> 
 						<tr>
 							<td style="height:20%;vertical-align: middle" ><label><b>장소&nbsp;:</b></label>&nbsp;&nbsp;<i class="glyphicon glyphicon-map-marker">${timePlaceList[j].std_addr}</i></td>
@@ -255,8 +238,8 @@ button.btn-effect:hover:before,button.btn-effect:hover:after{
 					<form action="/StudyCloud/fwd" method="POST">
 					<input type="hidden" name="command" value="STUDYAPPLY">
 					<input type="hidden" name="stdId" value="${std.std_id}">
-					<textarea cols="50" rows="15"  name="apply_content" id="apply_content" maxlength="200" placeholder="신청내용" style="overflow: hidden; resize: none"></textarea>
-					<button class="btn btn-effect" type="submit">신청</button>
+					<textarea rows="15" style="width:80%;"  name="apply_content" id="apply_content" maxlength="200" placeholder="신청내용" style="over-flow:hidden;resize:none"></textarea>
+					<button class="btn btn-effect" type="submit">신청</button>&nbsp;&nbsp;&nbsp;
 					<button class="btn btn-effect" class="close" data-dismiss="modal">닫기</button>
 					</form>
 				</div>
@@ -265,27 +248,6 @@ button.btn-effect:hover:before,button.btn-effect:hover:after{
 		</div>
 	</div>
 	
-	<!-- 스터디 신청 결과 모달창 -->
-			<div class="modal fade" id="StudyApplyResultModal" data-backdrop="static">
-				<div class="modal-dialog modal-sm">
-					<div class="modal-content">
-						<div class="modal-header">
-							<i class="fa fa-cloud" style="font-size:24px;color:#39d2fd"><strong>스터디 신청</strong></i>
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-						</div>
-						<div class="modal-body">
-							스터디 신청에 성공하셨습니다.
-						</div>
-						<div class="modal-footer">
-							<button class="btn btn-info" id="stdApplyBtn">확인</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-		<!-- 스터디 등록 결과 처리 -->
-		<c:if test="${! (empty StudyApplyResult)}">
-			<script>fnResultModal('${StudyApplyResult}');</script>
-		</c:if>
+	
 </body>
 </html>

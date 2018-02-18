@@ -16,15 +16,17 @@ public class InsertStudyApplyAction implements Action{
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String email = (String)req.getSession().getAttribute("email");
 		int studyId = Integer.parseInt(req.getParameter("stdId"));
-		String applyContent = (String)req.getAttribute("apply_content");
-		
+		String applyContent = req.getParameter("apply_content");
+		System.out.println(applyContent);
 		ApplyDao applyDao = new ApplyDao();
 		int result = applyDao.insertApply(email, studyId, "apply", applyContent, System.currentTimeMillis());
 		
-		req.setAttribute("StudyApplyResult", result);
-		String bodyInclude = "/studyInfo.jsp";
-		req.setAttribute("bodyInclude", bodyInclude);
-		return "/index.jsp";
+		if(result>0) {
+			return "/WEB-INF/templates/studyApply/studyApplyComplete.jsp";
+		}else {
+			return "/studyInfo.jsp";
+		}
+		
 	}
 	
 }
