@@ -1,11 +1,9 @@
 package controller.service;
 
 import controller.service.create.InsertAttendaceAction;
-
 import controller.service.create.InsertReplyAction;
-
+import controller.service.create.InsertRereplyAction;
 import controller.service.create.InsertStudyApplyAction;
-
 import controller.service.create.RegisterHomeworkAction;
 import controller.service.create.RegisterMemberAction;
 import controller.service.create.RegisterNoticeAction;
@@ -175,7 +173,7 @@ public class ActionFactory {
 			action = new InsertReplyAction();
 			break;
 		case "REREPLY"://대댓글달기
-			
+			action = new InsertRereplyAction();
 			break;
 		}
 		return action;

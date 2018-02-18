@@ -93,7 +93,13 @@ button.btn {border-radius: 3em;}
 				<div>
 					<c:set target="${regiDate}" property="time" value="${reply.rp_datetime}"/>
 					<span>${reply.writer}</span><fmt:formatDate value="${regiDate}" pattern="yyyy-MM-dd HH:mm"/>
-					<span onclick="fnSetRereply('${reply.rp_pos}', '${reply.rp_writer}', '${reply.writer}')">댓글달기</span><br>
+					<c:if test="${reply.rp_writer ne email}">
+						<span onclick="fnSetRereply('${reply.rp_pos}', '${reply.rp_writer}', '${reply.writer}')">댓글달기</span>
+					</c:if>
+					<c:if test="${reply.rp_writer eq email}">
+						<span onclick="fnModifyReply('${reply.rp_id}', '${reply.rp_content}')">댓글수정</span>
+					</c:if>
+					<br>
 					<span>${reply.reciever}</span><span>${reply.rp_content}</span>
 				</div>
 			</c:forEach>
@@ -181,6 +187,9 @@ function fnReply() {
 					$("#${includeStdMenu}").html(code);
 			});
 	}
-	
+}
+
+function fnModifyReply(rp_id, rp_content) {
+	//모달로 띄워서 수정. 모달 만들어야 함.
 }
 </script>
