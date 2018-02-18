@@ -172,7 +172,7 @@ function createHomeworkRecord(hList, i) {
 
 //과제 보기
 function fnReadHomework(b_id) {
-	$.post("/StudyCloud/fwd", {"stdId":'${myStdList[index].std_id}', "command":"READHOMEWORK", "b_id":b_id}, 
+	$.post("/StudyCloud/fwd", {"command":"READHOMEWORK", "b_id":b_id}, 
 			function(code) {
 				$("#${includeStdMenu}").html(code);
 		});

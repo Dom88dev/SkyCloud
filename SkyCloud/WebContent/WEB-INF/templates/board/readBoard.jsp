@@ -70,9 +70,33 @@ button.btn {border-radius: 3em;}
 	<div class="col-md-12 content-box" align="left">
 		<div>
 			${board.content}
+			<div align="right">
+				<a href="javascript:fnReplyShowUp();" style="color: #39d2fd;">´ñ±Û º¸±â</a>
+			</div>
 		</div>
-		<div>
-			<!-- dropdown Çü½ÄÀÇ ´ñ±Û div -->
+		<div id="replyPostBox">
+			<!-- ´ñ±Û ÀÔ·ÂÃ¢ -->
+			<form>
+				<input type="hidden" name="rp_pos" value="0">
+				<input type="hidden" name="rp_reciever">
+				<div id="rrp_indicator"><span></span>¿¡°Ô ´ë´ñ±Û<button type="button" class="close" onclick="fnResetRereply()">&times;</button></div>
+				<div class="input-group">
+					<input type="text" id="replyContent" class="form-control" name="rp_content">
+					<span class="input-group-addon" style="background: white; color: #39d2fd; border: none;" onclick="fnReply()">´ñ±Û ´Þ±â</span>
+				</div>
+			</form>
+		</div>
+		<div id="replyBox">
+			´ñ±Û
+			<!-- ´ñ±ÛÀ» °¡Áø replies°´Ã¼¸¦ elÀ» ÀÌ¿ëÇØ »Ñ¸°´Ù. -->
+			<c:forEach items="${replies}" var="reply">
+				<div>
+					<c:set target="${regiDate}" property="time" value="${reply.rp_datetime}"/>
+					<span>${reply.writer}</span><fmt:formatDate value="${regiDate}" pattern="yyyy-MM-dd HH:mm"/>
+					<span onclick="fnSetRereply('${reply.rp_pos}', '${reply.rp_writer}')">´ñ±Û´Þ±â</span><br>
+					<span>${reply.reciever}</span><span>${reply.rp_content}</span>
+				</div>
+			</c:forEach>
 		</div>
 	</div>
 </div>
@@ -105,6 +129,7 @@ button.btn {border-radius: 3em;}
 	if("${ !(empty board.files.b_file3)}") {
 		$("#file3").attr("href", "/StudyCloud"+"${board.files.b_file3}");
 	}
+	$("#replyBox").hide();
 })();
 
 function fnDeleteBoard() {
@@ -118,7 +143,40 @@ function fnDeleteBoard() {
 function fnGoToModify(b_id, kind) {
 	$.post("/StudyCloud/fwd", {"b_id":b_id, "command":"UPDATEBOARD", "board":kind}, 
 			function(code) {
-				$("body").html(code);
+				$("#${includeStdMenu}").html(code);
 		});
+}
+
+function fnReplyShowUp() {
+	$("#replyBox").toggle();
+}
+
+function fnSetRereply(pos, reciever) {
+	$("input[name='rp_pos']").val(pos);
+	$("input[name='rp_reciever']").val(reciever);
+	$("#replyContent").focus();
+}
+
+function fnResetRereply() {
+	$("input[name='rp_pos']").val("0");
+}
+
+function fnReply() {
+	var content = $("#replyContent").val();
+	var pos = $("input[name='rp_pos']").val();
+	var b_id = '${board.b_id}';
+	if(pos == "0") {
+		$.post("/StudyCloud/fwd", {"b_id":b_id, "command":"REPLY", "rp_writer":"${email}", "rp_content":content, "board":'${kind}'}, 
+				function(code) {
+					$("#${includeStdMenu}").html(code);
+			});
+	} else {
+		var reciever = $("input[name='rp_reciever']").val();
+		$.post("/StudyCloud/fwd", {"b_id":b_id, "command":"REREPLY", "rp_writer":"${email}", "rp_content":content, "rp_pos":pos, "rp_reciever":reciever, "board":'${kind}'}, 
+				function(code) {
+					$("#${includeStdMenu}").html(code);
+			});
+	}
+	
 }
 </script>

@@ -9,6 +9,8 @@ public class Replies {
 	private long rp_datetime;
 	private String rp_writer;
 	private String rp_reciever;
+	private String writer;//작성자 닉네임
+	private String reciever;//댓글대상자 닉네임
 	
 	public int getRp_id() {
 		return rp_id;
@@ -57,5 +59,17 @@ public class Replies {
 	}
 	public void setRp_reciever(String rp_reciever) {
 		this.rp_reciever = rp_reciever;
+	}
+	public String getWriter() {
+		return writer;
+	}
+	public void setWriter(String writer) {
+		this.writer = writer;
+	}
+	public String getReciever() {
+		return reciever;
+	}
+	public void setReciever(String reciever) {
+		this.reciever = reciever;
 	}
 }
