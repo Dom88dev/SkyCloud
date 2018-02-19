@@ -2,10 +2,10 @@ package controller.service.read;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import controller.service.Action;
 import model.Member;
@@ -24,11 +24,12 @@ public class LoadStudyInfoAction implements Action {
 		StudyDao stdDao = new StudyDao();
 		MemberDao memDao = new MemberDao();
 		ApplyDao applyDao = new ApplyDao();
+		HttpSession session = req.getSession();
 		Member mem = memDao.getMemberByEmail(leaderEmail);
 		Study std = stdDao.getStudyInfo(studyId);
 		int currentMember = applyDao.getCurrentMembersNum(studyId);
 		req.setAttribute("currentMember", currentMember);
-		req.setAttribute("std", std);
+		session.setAttribute("std", std);
 		req.setAttribute("mem", mem);
 		String bodyInclude = "/studyInfo.jsp";
 		req.setAttribute("bodyInclude", bodyInclude);
