@@ -66,6 +66,7 @@ public class MemberDao {
 		}
 		return m;
 	}
+	
 	public int getValidEmail(String email) {
 		int result = 0;
 		String sql="select email from MEMBER where email = ?";

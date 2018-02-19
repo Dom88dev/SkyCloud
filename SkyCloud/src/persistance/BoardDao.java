@@ -404,4 +404,21 @@ public class BoardDao {
 		}
 		return result;
 	}
+	
+	public int boardViewCntUp(int b_id) {
+		int result = 0;
+		try {
+			String sql = "update BOARD set view_cnt=view_cnt+1 where b_id=?";
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, b_id);
+			result = pstmt.executeUpdate();
+			
+		} catch(Exception e) {
+			System.out.println("boardViewCntUp() 에러 : "+e);
+		} finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+		return result;
+	}
 }
