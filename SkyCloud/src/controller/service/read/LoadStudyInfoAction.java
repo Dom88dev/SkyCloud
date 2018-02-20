@@ -20,19 +20,27 @@ public class LoadStudyInfoAction implements Action {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int studyId = Integer.parseInt(req.getParameter("stdId"));
+		String applicantEmail = (String)req.getSession().getAttribute("email");
 		String leaderEmail = req.getParameter("email");
+		
 		StudyDao stdDao = new StudyDao();
 		MemberDao memDao = new MemberDao();
 		ApplyDao applyDao = new ApplyDao();
 		HttpSession session = req.getSession();
+		
+		Member applicantMem = memDao.getMemberByEmail(applicantEmail);
 		Member mem = memDao.getMemberByEmail(leaderEmail);
 		Study std = stdDao.getStudyInfo(studyId);
 		int currentMember = applyDao.getCurrentMembersNum(studyId);
+		
 		req.setAttribute("currentMember", currentMember);
 		session.setAttribute("std", std);
+		req.setAttribute("applicantMem", applicantMem);
 		req.setAttribute("mem", mem);
+		
 		String bodyInclude = "/studyInfo.jsp";
 		req.setAttribute("bodyInclude", bodyInclude);
+		
 		return "/index.jsp";
 	}
 	

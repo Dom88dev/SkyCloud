@@ -142,11 +142,12 @@ button.btn-effect:hover:before,button.btn-effect:hover:after{
 				 window.location.href="/StudyCloud/index.jsp";
 			});
 		} else {//실패
-			$("#ApplyResultModal div.modal-body")[0].innerHTML = "스터드등록 중 문제가 발생했습니다. 잠시 후 다시 등록해 주십시오.";
+			$("#ApplyResultModal div.modal-body")[0].innerHTML = "스터디신청 중 문제가 발생했습니다. 잠시 후 다시 신청해 주십시오.";
 			$("#ApplyResultModal div.modal-footer button").removeClass("btn-info");
 			$("#ApplyResultModal div.modal-footer button").addClass("btn-danger");
 			$("#stdApplyBtn").click(function() {
-				$("#ApplyResultModal").modal("hide");
+				//$("#ApplyResultModal").modal("hide");
+				window.location.href="/StudyCloud/index.jsp";
 			});
 		}
 		
@@ -257,6 +258,7 @@ button.btn-effect:hover:before,button.btn-effect:hover:after{
 					<input type="hidden" name="std_id" value="${std.std_id}">
 					<input type="hidden" name="std_name" value="${std.std_name}">
 					<input type="hidden" name="leaderEmail" value="${mem.email}">
+					<input type="hidden" name="applicantName" value="${applicantMem.name}">
 					<textarea rows="15" style="width:80%;"  name="apply_content" id="apply_content" maxlength="200" placeholder="신청내용" style="over-flow:hidden;resize:none"></textarea>
 					<button class="btn btn-effect" type="submit">신청</button>&nbsp;&nbsp;&nbsp;
 					<button class="btn btn-effect" class="close" data-dismiss="modal">닫기</button>
