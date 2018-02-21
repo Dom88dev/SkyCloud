@@ -14,7 +14,7 @@
 <script type="text/javascript" src="/StudyCloud/lib/bootstrap337/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="/StudyCloud/lib/bootstrap337/js/bootstrap.min.js"></script>
 <script>
-	//스터디 등록 결과 모달 처리 function
+	//스터디 수정 결과 모달 처리 function
 	function fnResultModal(result) {
 		if(result>0) {//성공
 			$("#regiStdBtn").click(function() {
@@ -286,7 +286,7 @@ input:focus, select:focus {
 										<input type="text" name="std_addr" class="rform-control" value="${timePlaceList[j].std_addr }" placeholder="위치 확인을 눌러 주소를 찾아주세요" id="std_addr0" required="required">
 									</div>
 									<div class="col-sm-2" style="padding:0;">
-										<button type="button" class="btn btn-white" onclick="popupMapModal('std_addr0')">위치 확인 ${day[0]}</button>
+										<button type="button" class="btn btn-white" onclick="popupMapModal('std_addr0')">위치 확인 ${day[0]}${day[1]}</button>
 									</div>
 									<div class="col-sm-2" style="padding:0; line-height:40px;" align="right">
 										<button class="btn-trans" type="button" onclick="fnAddPlace()"><i class="fa fa-plus-square-o" style="color:#39d2fd;"></i></button>
