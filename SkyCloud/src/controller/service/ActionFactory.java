@@ -6,6 +6,7 @@ import controller.service.create.InsertRereplyAction;
 import controller.service.create.InsertStudyApplyAction;
 import controller.service.create.RegisterHomeworkAction;
 import controller.service.create.RegisterMemberAction;
+import controller.service.create.RegisterMsgAction;
 import controller.service.create.RegisterNoticeAction;
 import controller.service.create.RegisterStudyAction;
 import controller.service.delete.DeleteBoardAction;
@@ -17,6 +18,7 @@ import controller.service.move.MoveBoardUpdateAction;
 import controller.service.move.MoveLeaderCalendarAction;
 import controller.service.move.MoveMemberCalendarAction;
 import controller.service.move.MoveMemberRegisterAction;
+import controller.service.move.MoveMsgSendAction;
 import controller.service.move.MoveStudyManagerAction;
 import controller.service.move.MoveStudyRegisterAction;
 import controller.service.move.MoveStudyUpdateAction;
@@ -25,11 +27,13 @@ import controller.service.read.LoadAttendanceStatusAction;
 import controller.service.read.LoadCountAttendaceAction;
 import controller.service.read.LoadHomeworksForStudyHomeworkAction;
 import controller.service.read.LoadLogInInfoAction;
+import controller.service.read.LoadMessageAction;
 import controller.service.read.LoadNoticesForStudyNoticeAction;
 import controller.service.read.LoadRecentStudyListAction;
 import controller.service.read.LoadSearchStudyAction;
 import controller.service.read.LoadStudyInfoAction;
 import controller.service.read.LoadStudyInfoForStudyHomeAction;
+import controller.service.read.ReadMsgAction;
 import controller.service.read.ReadStudyHomeworkAction;
 import controller.service.read.ReadStudyNoticeAction;
 import controller.service.read.validity.ValidateMemberEmailAction;
@@ -174,6 +178,18 @@ public class ActionFactory {
 			break;
 		case "REREPLY"://대댓글달기
 			action = new InsertRereplyAction();
+			break;
+		case "LOADMSG"://쪽지불러오기
+			action = new LoadMessageAction();
+			break;
+		case "READMSG"://특정쪽지불러오기
+			action = new ReadMsgAction();
+			break;
+		case "SENDMSG"://쪽지보내기
+			action = new MoveMsgSendAction();
+			break;
+		case "POSTMSG":// 쪽지 등록
+			action = new RegisterMsgAction();
 			break;
 		}
 		return action;
