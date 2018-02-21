@@ -3,6 +3,10 @@ package persistance;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+import model.Apply;
 
 public class ApplyDao {
 	private Connection conn;
@@ -92,5 +96,51 @@ public class ApplyDao {
 		}finally {
 			pool.freeConnection(conn,pstmt,rs);
 		}
+	}
+	
+	public List<Apply> getStudyApplies(int std_id, String leaderEmail) {
+		ArrayList<Apply> applies = new ArrayList<>();
+		try{
+			String sql = "select * from APPLIES where std_id=?";
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, std_id);
+			pstmt.executeUpdate();
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				if(rs.getString("email").equals(leaderEmail)) continue;
+				Apply apply = new Apply();
+				apply.setApply(rs.getInt("appliy_id"), rs.getString("email"), std_id, rs.getString("apply_status"), rs.getString("apply_content"), rs.getLong("apply_datetime"));
+				applies.add(apply);
+			}
+		} catch(Exception e){
+			System.out.println("getStudyApplies() 에러 :" + e);
+		} finally{
+			pool.freeConnection(conn,pstmt,rs);
+		}
+		return applies;
+	}
+	
+	public List<Apply> getMyApplyList(String email) {
+		ArrayList<Apply> applies = new ArrayList<>();
+		try{
+			String sql = "select * from APPLIES where email=?";
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, email);
+			pstmt.executeUpdate();
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				if(rs.getString("apply_content").equals("study leader")&&rs.getString("apply_status").equals("accept")) continue;
+				Apply apply = new Apply();
+				apply.setApply(rs.getInt("appliy_id"), email, rs.getInt("std_id"), rs.getString("apply_status"), rs.getString("apply_content"), rs.getLong("apply_datetime"));
+				applies.add(apply);
+			}
+		} catch(Exception e){
+			System.out.println("getMyApplyList() 에러 :" + e);
+		} finally{
+			pool.freeConnection(conn,pstmt,rs);
+		}
+		return applies;
 	}
 }
