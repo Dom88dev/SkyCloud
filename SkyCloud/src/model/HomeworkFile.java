@@ -6,7 +6,7 @@ public class HomeworkFile {
 	private String hw_file_name;
 	private String hw_file;
 	private long hw_datetime;
-	
+	private String name;
 	
 	public int getB_id() {
 		return b_id;
@@ -37,5 +37,11 @@ public class HomeworkFile {
 	}
 	public void setHw_datetime(long hw_datetime) {
 		this.hw_datetime = hw_datetime;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 }

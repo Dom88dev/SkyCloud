@@ -9,8 +9,10 @@ import controller.service.create.RegisterMemberAction;
 import controller.service.create.RegisterMsgAction;
 import controller.service.create.RegisterNoticeAction;
 import controller.service.create.RegisterStudyAction;
+import controller.service.create.UploadHomeworkFileAction;
 import controller.service.delete.DeleteBoardAction;
 import controller.service.delete.DeleteMemberAction;
+import controller.service.delete.DeleteReplyAction;
 import controller.service.move.ChangeManagerStudyMenuAction;
 import controller.service.move.LogOutAction;
 import controller.service.move.MoveBoardRegisterAction;
@@ -19,9 +21,13 @@ import controller.service.move.MoveLeaderCalendarAction;
 import controller.service.move.MoveMemberCalendarAction;
 import controller.service.move.MoveMemberRegisterAction;
 import controller.service.move.MoveMsgSendAction;
+
+import controller.service.move.MoveReadBoardByMessageAction;
+
 import controller.service.move.MoveStudyManagerAction;
 import controller.service.move.MoveStudyRegisterAction;
 import controller.service.move.MoveStudyUpdateAction;
+import controller.service.move.MoveToUploadHomeworkViewAction;
 import controller.service.read.LoadAttendanceImageAction;
 import controller.service.read.LoadAttendanceStatusAction;
 import controller.service.read.LoadCountAttendaceAction;
@@ -44,6 +50,7 @@ import controller.service.update.UpdateAttendanceAction;
 import controller.service.update.UpdateHomeworkAction;
 import controller.service.update.UpdateMemberAction;
 import controller.service.update.UpdateNoticeAction;
+import controller.service.update.UpdateReplyAction;
 import controller.service.update.UpdateStudyAction;
 
 public class ActionFactory {
@@ -190,6 +197,21 @@ public class ActionFactory {
 			break;
 		case "POSTMSG":// 쪽지 등록
 			action = new RegisterMsgAction();
+			break;
+		case "MODIFYREPLY"://댓글 수정
+			action = new UpdateReplyAction();
+			break;
+		case "DELETEREPLY"://댓글 삭제
+			action = new DeleteReplyAction();
+			break;
+		case "GOTOBOARD"://쪽지에서 댓글알림 클릭시 해당 보드 화면으로 이동
+			action = new MoveReadBoardByMessageAction();
+			break;
+		case "MOVETOUPLOADHWF"://과제 파일 업로드 모달창 내 iframe에 template전송 OR 과제 파일 업로드 후 결과 처리
+			action = new MoveToUploadHomeworkViewAction();
+			break;
+		case "UPLOAD_HOMEWORK"://과제파일 업로드 처리
+			action = new UploadHomeworkFileAction();
 			break;
 		}
 		return action;

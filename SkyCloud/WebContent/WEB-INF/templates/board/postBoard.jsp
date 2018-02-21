@@ -3,31 +3,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link rel="stylesheet" type="text/css" href="/StudyCloud/lib/css/boardCss.css">
 <link rel="stylesheet" type="text/css" href="/StudyCloud/lib/css/stdRegisterCss.css">
+<link rel="stylesheet" type="text/css" href="/StudyCloud/lib/css/uploadButton.css">
 <script src="/StudyCloud/lib/ckeditor/ckeditor.js"></script>
 <jsp:useBean id="toDay" class="java.util.Date" />
-<style>
-input.file_Upload {  
-  opacity: 0;       /*input type="file" tag 투명하게 처리*/
-  position: relative;
-  width:100%;
-}
-::-webkit-file-upload-button { cursor:pointer; }
-button.btn-upload {
-	width:30%;
-	position: absolute;
-	cursor: pointer;
-}
-label.upload_file_name {
-	width:60%;
-	left:35%;
-	color: #b3eefe;
-	font-size: 0.8em;
-	text-overflow:ellipsis;
-	line-height:2em;
-	position: absolute;
-	cursor: pointer;
-}
-</style>
+
 <div class="col-md-12">
 	<h2 class="boardLabel">
 		<c:choose>

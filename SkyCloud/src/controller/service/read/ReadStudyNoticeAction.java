@@ -19,7 +19,12 @@ public class ReadStudyNoticeAction implements Action {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		BoardDao boardDao = new BoardDao();
-		Notice notice = boardDao.getNotice(Integer.parseInt(req.getParameter("b_id")));
+		boolean countUp = req.getParameter("countUp")==null?false:true;
+		int b_id = Integer.parseInt(req.getParameter("b_id"));
+		if(countUp) {
+			boardDao.boardViewCntUp(b_id);
+		}
+		Notice notice = boardDao.getNotice(b_id);
 		ReplyDao rpDao = new ReplyDao();
 		ArrayList<Replies> replies = (ArrayList<Replies>) rpDao.getReplies(Integer.parseInt(req.getParameter("b_id")));
 		req.setAttribute("notice", notice);

@@ -28,7 +28,7 @@ public class RegisterMsgAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Message message = new Message();
+		Message message = new Message(0, null, null, 0, null, null);
 
 		message.setReciever(req.getParameter("reciever"));
 		message.setMsg_datetime(System.currentTimeMillis());

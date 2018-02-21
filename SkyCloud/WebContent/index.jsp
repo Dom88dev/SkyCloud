@@ -90,6 +90,7 @@
 	window.closeModal = function(){
 	    $('#logInModal').modal('hide');
 	    $('#logOutModal').modal('hide');
+	    $("#HWF_UploadModal").modal("hide");
 	};
 	
 </script>

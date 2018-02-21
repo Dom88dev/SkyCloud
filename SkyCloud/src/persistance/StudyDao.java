@@ -352,5 +352,32 @@ public class StudyDao {
 		return result;
 	}
 
-
+	public void deleteStudy(int std_id) {
+		String sql = "delete * from STUDY where std_id=?";
+		try {
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, std_id);
+			pstmt.executeUpdate();
+		}catch(Exception e) {
+			System.out.println("deleteStudy() 에러 : "+e);
+		}finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+	}
+	
+	public void deleteStudyTimeplace(int std_id) {
+		String sql = "delete * from STUDYTIMEPLACE where std_id=?";
+		try {
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, std_id);
+			pstmt.executeUpdate();
+		}catch(Exception e) {
+			System.out.println("deleteStudyTimeplace() 에러 : "+e);
+		}finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+	}
+	
 }

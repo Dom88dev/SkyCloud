@@ -39,13 +39,13 @@ public class RegisterNoticeAction implements MultipartAction {
 				continue;
 			if (fileNum == 1) {
 				bf.setB_file1_name(multi.getOriginalFileName(fName));
-				bf.setB_file1("/upload" + multi.getFilesystemName(fName));
+				bf.setB_file1(multi.getFilesystemName(fName));
 			} else if (fileNum == 2) {
 				bf.setB_file2_name(multi.getOriginalFileName(fName));
-				bf.setB_file2("/upload" + multi.getFilesystemName(fName));
+				bf.setB_file2(multi.getFilesystemName(fName));
 			} else if (fileNum == 3) {
 				bf.setB_file3_name(multi.getOriginalFileName(fName));
-				bf.setB_file3("/upload" + multi.getFilesystemName(fName));
+				bf.setB_file3(multi.getFilesystemName(fName));
 			}
 		}
 		BoardDao boardDao = new BoardDao();

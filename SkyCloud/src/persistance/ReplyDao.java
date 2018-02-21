@@ -47,6 +47,11 @@ public class ReplyDao {
 			pstmt.setString(6, writer);
 			result = pstmt.executeUpdate();
 			
+			sql = "update BOARD set replies_cnt=replies_cnt+1 where b_id=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, b_id);
+			pstmt.executeUpdate();
+			
 		} catch(Exception err) {
 			System.out.println("insertReply() 에러 : "+err);
 			err.printStackTrace();
@@ -83,6 +88,11 @@ public class ReplyDao {
 			pstmt.setString(6, writer);
 			pstmt.setString(7, reciever);
 			result = pstmt.executeUpdate();
+			
+			sql = "update BOARD set replies_cnt=replies_cnt+1 where b_id=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, b_id);
+			pstmt.executeUpdate();
 			
 		} catch(Exception err) {
 			System.out.println("insertRereply() 에러 : "+err);
@@ -135,5 +145,48 @@ public class ReplyDao {
 			pool.freeConnection(conn, pstmt, rs);
 		}
 		return replies;
+	}
+	
+	public int updateReply(int rp_id, String rp_content) {
+		int result=0;
+		try {
+			String sql = "update REPLIES set rp_content=?, rp_datetime=? where rp_id=?";
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, rp_content);
+			pstmt.setLong(2, System.currentTimeMillis());
+			pstmt.setInt(3, rp_id);
+			result = pstmt.executeUpdate();		
+			
+		} catch(Exception err) {
+			System.out.println("updateReply() 에러 : "+err);
+			err.printStackTrace();
+		} finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+		return result;
+	}
+	
+	public int deleteReply(int rp_id, int b_id) {
+		int result=0;
+		try {
+			String sql = "delete from REPLIES where rp_id=?";
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, rp_id);
+			result = pstmt.executeUpdate();
+			
+			sql = "update BOARD set replies_cnt=replies_cnt-1 where b_id=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, b_id);
+			pstmt.executeUpdate();
+			
+		} catch(Exception err) {
+			System.out.println("deleteReply() 에러 : "+err);
+			err.printStackTrace();
+		} finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+		return result;
 	}
 }

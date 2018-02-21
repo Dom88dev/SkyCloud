@@ -61,4 +61,36 @@ public class ApplyDao {
 		return result;
 		
 	}
+	
+	public int getApplyByEmail(String email){
+		int result = 0;
+		String sql = "select email from APPLIES where email=?";
+		try{
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, email);
+			rs = pstmt.executeQuery();
+			if(rs.next()) result = 1;
+		}catch(Exception e){
+			System.out.println("getApplyByEmail() 에러 :" + e);
+		}finally{
+			pool.freeConnection(conn,pstmt,rs);
+		}
+		
+		return result;
+	}
+	
+	public void deleteApply(int std_id) {
+		String sql = "delete * from APPLIES where std_id=?";
+		try {
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, std_id);
+			pstmt.executeUpdate();
+		}catch(Exception e) {
+			System.out.println("deleteApply() 에러 :" + e);
+		}finally {
+			pool.freeConnection(conn,pstmt,rs);
+		}
+	}
 }
