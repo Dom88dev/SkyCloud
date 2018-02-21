@@ -17,8 +17,6 @@
 	})();
 
 	function fnLoadSmallMsg(data) {
-
-		document.write('parseJson : ' + data);
 		if (data) {
 			var mList = data.msgList;
 
