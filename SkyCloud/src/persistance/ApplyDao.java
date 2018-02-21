@@ -79,4 +79,18 @@ public class ApplyDao {
 		
 		return result;
 	}
+	
+	public void deleteApply(int std_id) {
+		String sql = "delete * from APPLIES where std_id=?";
+		try {
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, std_id);
+			pstmt.executeUpdate();
+		}catch(Exception e) {
+			System.out.println("deleteApply() 에러 :" + e);
+		}finally {
+			pool.freeConnection(conn,pstmt,rs);
+		}
+	}
 }
