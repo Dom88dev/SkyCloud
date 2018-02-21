@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.HomeworkFile;
+import util.Util;
 
 public class HomeworkFileDao {
 	private Connection conn;
@@ -52,18 +53,57 @@ public class HomeworkFileDao {
 	public int uploadHomework(HomeworkFile hf) {
 		int result = 0;
 		try {
-			String sql = "insert into HOMEWORKFILE(b_id, email, hw_file_name, hw_file, hw_datetime) values(?, ?, ?, ?, ?)";
+			String sql = "select * from HOMEWORKFILE where email=? and  b_id=?";
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, hf.getB_id());
-			pstmt.setString(2, hf.getEmail());
-			pstmt.setString(3, hf.getHw_file_name());
-			pstmt.setString(4, hf.getHw_file());
-			pstmt.setLong(5, System.currentTimeMillis());
+			pstmt.setInt(2, hf.getB_id());
+			pstmt.setString(1, hf.getEmail());
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				String fileName = rs.getString("hw_file");
+				sql="upadate HOMEWORKFILE set hw_file_name=?, hw_file=?, hw_datetime where b_id=? and email=?";
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, hf.getHw_file_name());
+				pstmt.setString(2, hf.getHw_file());
+				pstmt.setLong(3, System.currentTimeMillis());
+				pstmt.setInt(4, hf.getB_id());
+				pstmt.setString(5, hf.getEmail());
+				Util.removeFile(fileName);
+			} else {
+				sql = "insert into HOMEWORKFILE(b_id, email, hw_file_name, hw_file, hw_datetime) values(?, ?, ?, ?, ?)";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, hf.getB_id());
+				pstmt.setString(2, hf.getEmail());
+				pstmt.setString(3, hf.getHw_file_name());
+				pstmt.setString(4, hf.getHw_file());
+				pstmt.setLong(5, System.currentTimeMillis());
+			}
+			
 			result = pstmt.executeUpdate();
 			
 		} catch(Exception err) {
 			System.out.println("uploadHomework() 에러 : "+err);
+			err.printStackTrace();
+		} finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+		return result;
+	}
+	
+	public int deleteHomeworkFile(int b_id, String email, String fileName) {
+		int result=0;
+		try {
+			String sql = "delete from HOMEWORKFILE where b_id=? and email =?";
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, b_id);
+			pstmt.setString(2, email);
+			result = pstmt.executeUpdate();
+			Util.removeFile(fileName);
+		} catch(Exception err) {
+			System.out.println("deleteHomeworkFile() 에러 : "+err);
 			err.printStackTrace();
 		} finally {
 			pool.freeConnection(conn, pstmt, rs);

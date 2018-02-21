@@ -176,11 +176,14 @@ function createHomeworkRecord(hList, i, hfList) {
 	$(toggleDiv).attr("align", "left");
 	var innerCode = "";
 	var hfiles = hfList[i];
+	var realHFileName = "";
+	
 	for(var n = 0; n<hfiles.length; n++) {
 		hfiles[n]
 		innerCode+="<b>"+hfiles[n].name+"</b><a class='btn-white' href='/StudyCloud"+hfiles[n].hw_file+"'><i class='glyphicon glyphicon-paperclip'>"+hfiles[n].hw_file_name+"</i></a>";
 		if(hfiles[n].email == "${email}") {
-			innerCode += "<button class='btn-red' onclick='fnDelHomeworkFile("+hList[i].b_id+")' style='border-radius:1em;'>파일 삭제</button>"
+			innerCode += "<button id='hfDelBtn"+i+"' class='btn-red' style='border-radius:1em;'>파일 삭제</button>"
+			realHFileName = hfiles[n].hw_file;
 		}
 		d = new Date(hfiles[n].hw_datetime);
 		
@@ -190,9 +193,13 @@ function createHomeworkRecord(hList, i, hfList) {
 		innerCode = "아직 제출된 과제 파일이 없습니다.";
 	}
 	$(toggleDiv).html(innerCode);
+	
 	$(tBody).append(toggleDiv);
 	$(toggleDiv).hide();
 	$("#toggleBtn"+i).attr("onclick", "fnToggleHomeworkFdiv('"+"hFileListToggleDiv"+i+"')");
+	if(realHFileName!="") {
+		$("#hfDelBtn"+i).attr("onclick", "fnDelHomeworkFile("+hList[i].b_id+", '"+realHFileName+"')");
+	}
 	
 	var hr = document.createElement("hr");
 	$(hr).addClass("hr col-md-12");
@@ -203,8 +210,25 @@ function fnToggleHomeworkFdiv(toggleDivId) {
 	$("#"+toggleDivId).toggle();
 }
 
-function fnDelHomeworkFile() {
+function fnDelHomeworkFile(b_id, fName) {
+	var deleting = false;
 	
+	$('#HWF_DeleteModal').on('hidden.bs.modal', function () {
+		if(deleting) {
+			deleting = false;
+			$.post("/StudyCloud/fwd", {"b_id":b_id, "command":"DELETEHFILE", "realFileName":fName}, 
+					function(code) {
+						$("#${includeStdMenu}").html(code);
+				});
+		}
+	})
+	
+	$("#DeleteHfileCommit").click(function(){
+		deleting = true;
+		$("#HWF_DeleteModal").modal('hide');
+	});
+	
+	$("#HWF_DeleteModal").modal();
 }
 
 //과제 보기
@@ -280,6 +304,23 @@ function fnWriteHomework(){
 		<div class="modal-content">
 			<button type="button" class="close" data-dismiss="modal">&times;</button>
 			<iframe id="hwUpTemplate" src="/StudyCloud/fwd?command=MOVETOUPLOADHWF" width="100%" style="border:none;"></iframe>
+		</div>
+	</div>
+</div>
+
+
+<!-- 과제 파일 삭제 모달창 -->
+<div class="modal fade" id="HWF_DeleteModal" data-backdrop="static">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<label>제출된 과제 파일을 삭제하시겠습니까?</label>
+				<div>
+					<button id="DeleteHfileCommit" class="btn-danger">네</button>
+					<button class="btn-red" data-dismiss="modal">아니오</button>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

@@ -137,8 +137,9 @@
 				</div>
 			<!-- 스터디 신청 목록 화면 -->
 				<div id="applyList" class="tab-pane fade">
-					<h3>Menu 1</h3>
-  					<p>Some content in menu 1.</p>
+					<div id="applyMenuDiv">
+						<%@ include file="/WEB-INF/templates/applyMenu/applyMenu.jsp" %>
+					</div>
 				</div>
 			</div>
 		</div>

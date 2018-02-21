@@ -11,6 +11,7 @@ import controller.service.create.RegisterNoticeAction;
 import controller.service.create.RegisterStudyAction;
 import controller.service.create.UploadHomeworkFileAction;
 import controller.service.delete.DeleteBoardAction;
+import controller.service.delete.DeleteHomeworkFileAction;
 import controller.service.delete.DeleteMemberAction;
 import controller.service.delete.DeleteReplyAction;
 import controller.service.move.ChangeManagerStudyMenuAction;
@@ -212,6 +213,9 @@ public class ActionFactory {
 			break;
 		case "UPLOAD_HOMEWORK"://과제파일 업로드 처리
 			action = new UploadHomeworkFileAction();
+			break;
+		case "DELETEHFILE"://업로드한 과베파일 삭제
+			action = new DeleteHomeworkFileAction();
 			break;
 		}
 		return action;
