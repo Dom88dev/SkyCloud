@@ -1,0 +1,23 @@
+@CHARSET "UTF-8";
+
+input.file_Upload {  
+  opacity: 0;       /*input type="file" tag 투명하게 처리*/
+  position: relative;
+  width:100%;
+}
+::-webkit-file-upload-button { cursor:pointer; }
+button.btn-upload {
+	width:30%;
+	position: absolute;
+	cursor: pointer;
+}
+label.upload_file_name {
+	width:60%;
+	left:35%;
+	color: #b3eefe;
+	font-size: 0.8em;
+	text-overflow:ellipsis;
+	line-height:2em;
+	position: absolute;
+	cursor: pointer;
+}

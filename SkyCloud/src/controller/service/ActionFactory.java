@@ -8,6 +8,7 @@ import controller.service.create.RegisterHomeworkAction;
 import controller.service.create.RegisterMemberAction;
 import controller.service.create.RegisterNoticeAction;
 import controller.service.create.RegisterStudyAction;
+import controller.service.create.UploadHomeworkFileAction;
 import controller.service.delete.DeleteBoardAction;
 import controller.service.delete.DeleteMemberAction;
 import controller.service.delete.DeleteReplyAction;
@@ -22,6 +23,7 @@ import controller.service.move.MoveReadBoardByMessageAction;
 import controller.service.move.MoveStudyManagerAction;
 import controller.service.move.MoveStudyRegisterAction;
 import controller.service.move.MoveStudyUpdateAction;
+import controller.service.move.MoveToUploadHomeworkViewAction;
 import controller.service.read.LoadAttendanceImageAction;
 import controller.service.read.LoadAttendanceStatusAction;
 import controller.service.read.LoadCountAttendaceAction;
@@ -187,6 +189,13 @@ public class ActionFactory {
 		case "GOTOBOARD"://쪽지에서 댓글알림 클릭시 해당 보드 화면으로 이동
 			action = new MoveReadBoardByMessageAction();
 			break;
+		case "MOVETOUPLOADHWF"://과제 파일 업로드 모달창 내 iframe에 template전송 OR 과제 파일 업로드 후 결과 처리
+			action = new MoveToUploadHomeworkViewAction();
+			break;
+		case "UPLOAD_HOMEWORK"://과제파일 업로드 처리
+			action = new UploadHomeworkFileAction();
+			break;
+		
 		}
 		return action;
 	}

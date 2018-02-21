@@ -374,7 +374,7 @@ public class BoardDao {
 	
 	public int deleteBoard(int b_id) {
 		int result = 0;
-		String sql = "delete BOARD where b_id=?";
+		String sql = "delete from BOARD where b_id=?";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -391,7 +391,7 @@ public class BoardDao {
 	
 	public int deleteBoardFile(int b_id) {
 		int result = 0;
-		String sql = "delete Board_File where b_id=?";
+		String sql = "delete from BOARD_FILE where b_id=?";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);

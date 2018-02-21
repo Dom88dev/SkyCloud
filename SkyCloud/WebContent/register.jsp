@@ -419,7 +419,7 @@ td, tr {
 
 				$.ajax({
 					type:"POST",
-					url:"/StudyCloud/ajax?command=VALIDITYTEST_REGISTER_NAME",
+					url:"/StudyCloud/json?command=VALIDITYTEST_REGISTER_NAME",
 					data:{name : name},
 					success:function(result){
 						//alert("result : " + result);
@@ -454,7 +454,7 @@ td, tr {
 
 				$.ajax({
 					type:"POST",
-					url:"/StudyCloud/ajax?command=VALIDITYTEST_REGISTER_TEL",
+					url:"/StudyCloud/json?command=VALIDITYTEST_REGISTER_TEL",
 					data:{tel : tel},
 					success:function(result){
 						//alert("result : " + result);

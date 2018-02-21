@@ -88,7 +88,6 @@ button.btn {border-radius: 3em;}
 			</form>
 		</div>
 		<div id="replyBox">
-			´ñ±Û
 			<!-- ´ñ±ÛÀ» °¡Áø replies°´Ã¼¸¦ elÀ» ÀÌ¿ëÇØ »Ñ¸°´Ù. -->
 			<c:forEach items="${replies}" var="reply">
 				<c:if test="${reply.rp_depth ne 0}">

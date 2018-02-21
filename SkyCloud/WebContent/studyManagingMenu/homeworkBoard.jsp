@@ -23,6 +23,7 @@ function fnLoadHomework(data) {
 	var jsonData = $.parseJSON(data);
 	if(jsonData){
 		var hList = jsonData.homeworkList;
+		var hfList = jsonData.homeworkFilesList;
 		var tBody = $("div#hTbody");
 		var postBtn = $("button#btnPostHomework");
 		var previousP = $("li#hPrevious");
@@ -43,16 +44,16 @@ function fnLoadHomework(data) {
 			if(hList.length>recordsPerPage) {
 				if(currentHPage==(totalPage-1)) {
 					for(var i=beginNumPerHPage;i<(beginNumPerHPage + (hList.length%recordsPerPage)); i++) {
-						createHomeworkRecord(hList, i);
+						createHomeworkRecord(hList, i, hfList);
 					}
 				} else {
 					for(var i=beginNumPerHPage;i<(beginNumPerHPage + recordsPerPage); i++) {
-						createHomeworkRecord(hList, i);
+						createHomeworkRecord(hList, i, fhList);
 					}
 				}
 			} else {
 				for(var i=beginNumPerHPage;i<hList.length; i++) {
-					createHomeworkRecord(hList, i);
+					createHomeworkRecord(hList, i, hfList);
 				}
 			}
 			
@@ -125,22 +126,24 @@ function fnNextBlockH(cBlock) {
 
 //과제 upload
 function fnUploadHomework(h_id) {
+	$("#hwUpTemplate").attr("src", "/StudyCloud/fwd?command=MOVETOUPLOADHWF&b_id="+h_id);
 	
+	$("#HWF_UploadModal").modal();
 }
 
 //과제 목록 로딩 및 생성
-function createHomeworkRecord(hList, i) {
+function createHomeworkRecord(hList, i, hfList) {
 	var tBody = $("div#hTbody");
 	var recordDiv = document.createElement("div");
 	$(recordDiv).addClass("record");
 	var titleDiv = document.createElement("div");
-	$(titleDiv).addClass("col-md-4");
+	$(titleDiv).addClass("col-md-5");
 	var uploadHDiv = document.createElement("div");
-	$(uploadHDiv).addClass("col-md-2");
+	$(uploadHDiv).addClass("col-md-3");
 	var duedateDiv = document.createElement("div");
-	$(duedateDiv).addClass("col-md-2");
+	$(duedateDiv).addClass("col-md-1");
 	var dateDiv = document.createElement("div");
-	$(dateDiv).addClass("col-md-2");
+	$(dateDiv).addClass("col-md-1");
 	var rpNumDiv = document.createElement("div");
 	$(rpNumDiv).addClass("col-md-1");
 	var viewNumDiv = document.createElement("div");
@@ -151,7 +154,7 @@ function createHomeworkRecord(hList, i) {
 	$(title_a).attr("href", "javascript:fnReadHomework('"+hList[i].b_id+"')");
 	$(titleDiv).append(title_a);
 	$(uploadHDiv).attr("align", "right");
-	$(uploadHDiv).html("<button class='btn-white' onclick='fnUploadHomework("+hList[i].b_id+")'>과제 올리기</button>");
+	$(uploadHDiv).html("<button class='btn-white' onclick='fnUploadHomework("+hList[i].b_id+")'>과제 올리기</button><button class='btn-white' id='toggleBtn"+i+"' style='border:none; margin:0.1em;'>제출파일보기<i class='glyphicon glyphicon-triangle-bottom'></i></button>");
 	var d = new Date(hList[i].duedate);
 	$(duedateDiv).text(d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate());
 	d = new Date(hList[i].b_datetime);
@@ -165,9 +168,43 @@ function createHomeworkRecord(hList, i) {
 	recordDiv.append(rpNumDiv);
 	recordDiv.append(viewNumDiv);
 	$(tBody).append(recordDiv);
+	
+	//toggle될 div 추가
+	var toggleDiv = document.createElement("div");
+	$(toggleDiv).addClass("col-md-12");
+	$(toggleDiv).attr("id", "hFileListToggleDiv"+i);
+	$(toggleDiv).attr("align", "left");
+	var innerCode = "";
+	var hfiles = hfList[i];
+	for(var n = 0; n<hfiles.length; n++) {
+		hfiles[n]
+		innerCode+="<b>"+hfiles[n].name+"</b><a class='btn-white' href='/StudyCloud"+hfiles[n].hw_file+"'><i class='glyphicon glyphicon-paperclip'>"+hfiles[n].hw_file_name+"</i></a>";
+		if(hfiles[n].email == "${email}") {
+			innerCode += "<button class='btn-red' onclick='fnDelHomeworkFile("+hList[i].b_id+")' style='border-radius:1em;'>파일 삭제</button>"
+		}
+		d = new Date(hfiles[n].hw_datetime);
+		
+		innerCode+="<span style='text-shadow: 0 1px 0 #fff; filter: alpha(opacity = 20); opacity: .2;'>"+d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()+" "+d.getHours()+":"+d.getMinutes()+"</span><br>";
+	}
+	if(hfiles.length == 0) {
+		innerCode = "아직 제출된 과제 파일이 없습니다.";
+	}
+	$(toggleDiv).html(innerCode);
+	$(tBody).append(toggleDiv);
+	$(toggleDiv).hide();
+	$("#toggleBtn"+i).attr("onclick", "fnToggleHomeworkFdiv('"+"hFileListToggleDiv"+i+"')");
+	
 	var hr = document.createElement("hr");
 	$(hr).addClass("hr col-md-12");
 	$(tBody).append(hr);
+}
+
+function fnToggleHomeworkFdiv(toggleDivId) {
+	$("#"+toggleDivId).toggle();
+}
+
+function fnDelHomeworkFile() {
+	
 }
 
 //과제 보기
@@ -204,8 +241,9 @@ function fnWriteHomework(){
 	<div class="tableDiv col-md-12" align="justify">
 		<div class="thead" align="center">
 			<div class="col-md-6">제목</div>
-			<div class="col-md-2">마감일</div>
-			<div class="col-md-2">등록일</div>
+			<div class="col-md-2">과제 업로드/확인</div>
+			<div class="col-md-1">마감일</div>
+			<div class="col-md-1">등록일</div>
 			<div class="col-md-1">댓글 수</div>
 			<div class="col-md-1">조회 수</div>
 		</div>
@@ -235,6 +273,17 @@ function fnWriteHomework(){
 		</div>
 	</div>
 </div>
+
+<!-- 과제 파일 업로드 모달창 -->
+<div class="modal fade" id="HWF_UploadModal" data-backdrop="static">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<iframe id="hwUpTemplate" src="/StudyCloud/fwd?command=MOVETOUPLOADHWF" width="100%" style="border:none;"></iframe>
+		</div>
+	</div>
+</div>
+
 <c:if test="${! (empty readBoard_id)}">
 	<script>fnReadHomework("${readBoard_id}");</script>
 </c:if>
