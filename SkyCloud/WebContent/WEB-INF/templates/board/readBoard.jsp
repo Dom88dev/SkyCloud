@@ -115,6 +115,9 @@ button.btn {border-radius: 3em;}
 <form id="deleteBForm" method="post" action="/StudyCloud/fwd">
 <input type="hidden" name="command" value="DELETEBOARD">
 <input type="hidden" name="b_id" value="${board.b_id}">
+<input type="hidden" name="file1" value="${board.files.b_file1}">
+<input type="hidden" name="file2" value="${board.files.b_file2}">
+<input type="hidden" name="file3" value="${board.files.b_file3}">
 </form>
 <!-- 삭제 확인 modal -->
 <div class="modal fade" id="deleteBoardConfirmModal" data-backdrop="static">
@@ -227,15 +230,23 @@ function fnReply() {
 
 function fnModifyReply(rp_id, rp_content) {
 	$("#modiReplyContent").val(rp_content);
+	var modify = false;
+	
+	$("#replyModifyModal").on('hidden.bs.modal', function () {
+		if(modify) {
+			modify = false;
+			var b_id = '${board.b_id}';
+			var content = $("#modiReplyContent").val();
+			$.post("/StudyCloud/fwd", {"b_id":b_id, "command":"MODIFYREPLY", "rp_id":rp_id, "rp_content":content, "board":'${kind}'}, 
+					function(code) {
+						$("#${includeStdMenu}").html(code);
+				});
+		}
+	})
 	
 	$("#ModiReplyCommit").click(function(){
+		modify = true;
 		$("#replyModifyModal").modal('hide');
-		var b_id = '${board.b_id}';
-		var content = $("#modiReplyContent").val();
-		$.post("/StudyCloud/fwd", {"b_id":b_id, "command":"MODIFYREPLY", "rp_id":rp_id, "rp_content":content, "board":'${kind}'}, 
-				function(code) {
-					$("#${includeStdMenu}").html(code);
-			});
 	});
 	
 	$("#replyModifyModal").modal();
@@ -243,11 +254,11 @@ function fnModifyReply(rp_id, rp_content) {
 
 function fnDeleteReply(rp_id) {
 	
-	var modify = false;
+	var deleting = false;
 	
 	$('#replyDeleteModal').on('hidden.bs.modal', function () {
-		if(modify) {
-			modify = false;
+		if(deleting) {
+			deleting = false;
 			var b_id = '${board.b_id}';
 			var content = $("#modiReplyContent").val();
 			$.post("/StudyCloud/fwd", {"b_id":b_id, "command":"DELETEREPLY", "rp_id":rp_id, "board":'${kind}'}, 
@@ -258,7 +269,7 @@ function fnDeleteReply(rp_id) {
 	})
 	
 	$("#DelReplyCommit").click(function(){
-		modify = true;
+		deleting = true;
 		$("#replyDeleteModal").modal('hide');
 	});
 	

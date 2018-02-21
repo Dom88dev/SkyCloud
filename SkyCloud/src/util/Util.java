@@ -1,10 +1,10 @@
 package util;
 
+import java.io.File;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import model.Study;
 import model.StudyTimePlace;
@@ -43,5 +43,11 @@ public class Util {
 			tpList.add(tp);
 		}
 		return tpList;
+	}
+	
+	public static void removeFile(String realName) {
+		String path = "C:/DEVELOPMENT/job_train/jsp/jspWorkspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp3/wtpwebapps/StudyCloud";
+		File file = new File(path+realName);
+		if(file.exists()) file.delete();
 	}
 }
