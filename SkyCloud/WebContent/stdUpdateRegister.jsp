@@ -14,22 +14,27 @@
 <script type="text/javascript" src="/StudyCloud/lib/bootstrap337/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="/StudyCloud/lib/bootstrap337/js/bootstrap.min.js"></script>
 <script>
-	//스터디 수정 결과 모달 처리 function
-	function fnResultModal(result) {
+
+	/* //스터디 수정 결과 모달 처리 function
+	function fnUpdateResultModal(result) {
 		if(result>0) {//성공
-			$("#regiStdBtn").click(function() {
+			$("#stdUpdateBtn").click(function() {
 				 window.location.href="/StudyCloud/index.jsp";
 			});
 		} else {//실패
 			$("#updateStudyResultModal div.modal-body")[0].innerHTML = "스터드수정 중 문제가 발생했습니다. 잠시 후 다시 등록해 주십시오.";
 			$("#updateStudyResultModal div.modal-footer button").removeClass("btn-info");
 			$("#updateStudyResultModal div.modal-footer button").addClass("btn-danger");
-			$("#regiStdBtn").click(function() {
+			$("#stdUpdateBtn").click(function() {
 				$("#updateStudyResultModal").modal("hide");
 			});
 		}
 		
 		$('#updateStudyResultModal').modal();
+	} */
+	// 스터디 수정 취소 처리
+	function fnCancel(){
+		window.history.back();
 	}
 </script>
 <style>
@@ -259,9 +264,7 @@ input:focus, select:focus {
 								<c:set value="${std.timePlaceList }" var="timePlaceList"></c:set>
 								<c:forEach begin="0" end="${fn:length(timePlaceList)-1 }" step="1" var="j">
 								<c:set value="${timePlaceList[j].std_time }" var="time"/>
-								<c:set value="${timePlaceList[j].std_day}" var="std_day"/>
-								<c:set value="${fn:split( std_day,'/') }" var="day"/>
-								
+								<c:set value="${timePlaceList[j].std_day }" var="day"/>
 							<td colspan="2" class="col-sm-10" id="timePlaceTd" style="padding:3px;">
 								<div class="timePlaceDiv col-sm-12" >
 									<div class="col-sm-6" style="padding:0;">
@@ -273,20 +276,70 @@ input:focus, select:focus {
 										<label style="color:#000; padding:0;">시간</label>
 									</div>
 									<div class="col-sm-6" style="padding:0; vertical-align: middle;" align="justify">
-										<input name="std_day" type="checkbox" id="mon" value="월"><label for="mon">월</label>
-										<input name="std_day" type="checkbox" id="tue" value="화"><label for="tue">화</label>
-										<input name="std_day" type="checkbox" id="wed" value="수"><label for="wed">수</label>
-										<input name="std_day" type="checkbox" id="thur" value="목"><label for="thur">목</label>
-										<input name="std_day" type="checkbox" id="fri" value="금"><label for="fri">금</label>
-										<input name="std_day" type="checkbox" id="sat" value="토"><label for="sat">토</label>
-										<input name="std_day" type="checkbox" id="sun" value="일"><label for="sun">일 </label>
+										<c:choose>
+										<c:when test="${fn:contains(day,'월')}">
+											<input name="std_day" type="checkbox" id="mon" value="월" checked="checked"><label for="mon">월</label>
+										</c:when>
+										<c:otherwise>
+											<input name="std_day" type="checkbox" id="mon" value="월"><label for="mon">월</label>
+										</c:otherwise>
+										</c:choose>
+										<c:choose>
+										<c:when test="${fn:contains(day,'화')}">
+											<input name="std_day" type="checkbox" id="tue" value="화" checked="checked"><label for="tue">화</label>
+										</c:when>
+										<c:otherwise>
+											<input name="std_day" type="checkbox" id="tue" value="화"><label for="tue">화</label>
+										</c:otherwise>
+										</c:choose>
+										<c:choose>
+										<c:when test="${fn:contains(day,'수')}">
+											<input name="std_day" type="checkbox" id="wed" value="수" checked="checked"><label for="wed">수</label>
+										</c:when>
+										<c:otherwise>
+											<input name="std_day" type="checkbox" id="wed" value="수"><label for="wed">수</label>
+										</c:otherwise>
+										</c:choose>
+										<c:choose>
+										<c:when test="${fn:contains(day,'목')}">
+											<input name="std_day" type="checkbox" id="thur" value="목" checked="checked"><label for="thur">목</label>
+										</c:when>
+										<c:otherwise>
+											<input name="std_day" type="checkbox" id="thur" value="목" ><label for="thur">목</label>
+										</c:otherwise>
+										</c:choose>
+										<c:choose>
+										<c:when test="${fn:contains(day,'금')}">
+											<input name="std_day" type="checkbox" id="fri" value="금" checked="checked"><label for="fri">금</label>
+										</c:when>
+										<c:otherwise>
+											<input name="std_day" type="checkbox" id="fri" value="금" ><label for="fri">금</label>
+										</c:otherwise>
+										</c:choose>
+										<c:choose>
+										<c:when test="${fn:contains(day,'토')}">
+											<input name="std_day" type="checkbox" id="sat" value="토" checked="checked"><label for="sat">토</label>
+										</c:when>
+										<c:otherwise>
+											<input name="std_day" type="checkbox" id="sat" value="토"><label for="sat">토</label>
+										</c:otherwise>
+										</c:choose>
+										<c:choose>
+										<c:when test="${fn:contains(day,'일')}">
+											<input name="std_day" type="checkbox" id="sun" value="일" checked="checked"><label for="sun">일 </label>
+										</c:when>
+										<c:otherwise>
+											<input name="std_day" type="checkbox" id="sun" value="일"><label for="sun">일 </label>
+										</c:otherwise>
+										</c:choose>
+										
 									</div>
 									<div class="col-sm-12" style="padding:0;"><hr></div>
 									<div class="col-sm-8" style="padding:0;">
-										<input type="text" name="std_addr" class="rform-control" value="${timePlaceList[j].std_addr }" placeholder="위치 확인을 눌러 주소를 찾아주세요" id="std_addr0" required="required">
+										<input type="text" name="std_addr" class="rform-control" value="${timePlaceList[j].std_addr }" placeholder="위치 확인을 눌러 주소를 찾아주세요" id="std_addr0" >
 									</div>
 									<div class="col-sm-2" style="padding:0;">
-										<button type="button" class="btn btn-white" onclick="popupMapModal('std_addr0')">위치 확인 ${day[0]}${day[1]}</button>
+										<button type="button" class="btn btn-white" onclick="popupMapModal('std_addr0')">위치 확인 </button>
 									</div>
 									<div class="col-sm-2" style="padding:0; line-height:40px;" align="right">
 										<button class="btn-trans" type="button" onclick="fnAddPlace()"><i class="fa fa-plus-square-o" style="color:#39d2fd;"></i></button>
@@ -329,13 +382,23 @@ input:focus, select:focus {
 							</td>
 						</tr>
 					</table>
-					<div align="center">
-						<button type="submit" class="btn btn-info" style="margin-bottom:100px;">등록</button>
+					<div align="right" class="col-sm-4">
+						<input type="hidden" name="stdId" value="${std.std_id }">
+						<button type="submit" class="btn btn-info" style="margin-bottom:100px;">수정</button>
 					</div>
 				</form>
+				
+					<div align="center" class="col-sm-4">
+						<button class="btn btn-info" type="button" onclick="fnDeleteStudyModal()">삭제</button>
+					</div>
+				
+					<div align="left" class="col-sm-4">
+						<button class="btn btn-info" type="button" onclick="fnCancel()">취소</button>
+					</div>
 			</div>
 		</div>
 	</div>
+	
 	<!-- Map modal -->
 			<div class="modal fade" id="mapModal" data-backdrop="static">
 				<div class="modal-dialog">
@@ -350,6 +413,28 @@ input:focus, select:focus {
 				</div>
 			</div>
 			
+	<!-- 스터디 삭제 모달창 -->
+	<div class="modal fade" id="studyDeleteModal" data-backdrop="static">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<i class="fa fa-cloud" style="font-size: 24px; color: #39d2fd"><strong>스터디
+							삭제</strong></i>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">스터디를 삭제 하시겠습니까?</div>
+				<div class="modal-footer">
+					<form method="post" action="/StudyCloud/fwd">
+						<input type="hidden" name="command" value="DELETESTUDY"> 
+						<input type="hidden" name="std_id" value="${std.std_id }">
+						<button class="btn btn-info" id="deleteBtn" style="width: 20%">확인</button>
+						<button class="btn btn-info" data-dismiss="modal" style="width: 20%">취소</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<%-- 
 	<!-- 스터디 등록 결과 모달창 -->
 			<div class="modal fade" id="updateStudyResultModal" data-backdrop="static">
 				<div class="modal-dialog modal-sm">
@@ -362,7 +447,7 @@ input:focus, select:focus {
 							스터디 수정에 성공하셨습니다.
 						</div>
 						<div class="modal-footer">
-							<button class="btn btn-info" id="regiStdBtn">확인</button>
+							<button class="btn btn-info" id="stdUpdateBtn">확인</button>
 						</div>
 					</div>
 				</div>
@@ -370,11 +455,10 @@ input:focus, select:focus {
 			
 		<!-- 스터디 등록 결과 처리 -->
 		<c:if test="${! (empty updateStudyResult)}">
-			<script>fnResultModal('${updateStudyResult}');</script>
+			<script>fnUpdateResultModal('${updateStudyResult}');</script>
 		</c:if>
-			
-
-</body>
+ --%>
+ </body>
 <script src="/StudyCloud/lib/js/bootstrap-datepicker.js" ></script>
 <script src="/StudyCloud/lib/js/bootstrap-datepicker.kr.js" charset="UTF-8"></script>
 <script>
@@ -410,6 +494,10 @@ input:focus, select:focus {
 		});
 	});
 	
+	function fnDeleteStudyModal(){
+		$('#studyDeleteModal').modal();
+	}
+	
 	// mapModal
 	var currentAddrId = "";
 	
@@ -433,6 +521,7 @@ input:focus, select:focus {
 
 </script>
 <!-- 유효성 검사 -->
+<!-- 
 <script>
 	$(document).ready(function(){
 		$("#std_name").focusout(function(){
@@ -465,7 +554,8 @@ input:focus, select:focus {
 		})
 	})
 </script>
-</html>
+ -->
+ </html>
 
 
 

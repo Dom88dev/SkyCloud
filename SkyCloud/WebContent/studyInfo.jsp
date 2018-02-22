@@ -261,7 +261,7 @@ button.btn-effect:hover:before,button.btn-effect:hover:after{
 					<input type="hidden" name="applicantName" value="${applicantMem.name}">
 					<textarea rows="15" style="width:80%;"  name="apply_content" id="apply_content" maxlength="200" placeholder="신청내용" style="over-flow:hidden;resize:none"></textarea>
 					<button class="btn btn-effect" type="submit">신청</button>&nbsp;&nbsp;&nbsp;
-					<button class="btn btn-effect" class="close" data-dismiss="modal">닫기</button>
+					<button class="btn btn-effect" data-dismiss="modal">닫기</button>
 					</form>
 				</div>
 				
