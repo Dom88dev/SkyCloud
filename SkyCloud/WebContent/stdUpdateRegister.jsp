@@ -14,7 +14,6 @@
 <script type="text/javascript" src="/StudyCloud/lib/bootstrap337/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="/StudyCloud/lib/bootstrap337/js/bootstrap.min.js"></script>
 <script>
-	/* 
 	//스터디 수정 결과 모달 처리 function
 	function fnResultModal(result) {
 		if(result>0) {//성공
@@ -32,10 +31,9 @@
 		
 		$('#updateStudyResultModal').modal();
 	}
-	 */
 	
-	 function fnDeleteModal(){
-		$('#studyDeleteModal').modal();
+	function fnCancel(){
+		window.history.back();
 	}
 </script>
 <style>
@@ -384,18 +382,22 @@ input:focus, select:focus {
 						</tr>
 					</table>
 					<div align="right" class="col-sm-4">
+						<input type="hidden" name="stdId" value="${std.std_id }">
 						<button type="submit" class="btn btn-info" style="margin-bottom:100px;">수정</button>
 					</div>
-					<div align="center" class="col-sm-4">
-						<button class="btn btn-info" onclick="fn">삭제</button>
-					</div>
-					<div align="left" class="col-sm-4">
-						<button class="btn btn-info" onclick="location='/StudyCloud/index.jsp'">취소</button>
-					</div>
 				</form>
+				
+					<div align="center" class="col-sm-4">
+						<button class="btn btn-info" type="button" onclick="fnDeleteStudyModal()">삭제</button>
+					</div>
+				
+					<div align="left" class="col-sm-4">
+						<button class="btn btn-info" type="button" onclick="fnCancel()">취소</button>
+					</div>
 			</div>
 		</div>
 	</div>
+	
 	<!-- Map modal -->
 			<div class="modal fade" id="mapModal" data-backdrop="static">
 				<div class="modal-dialog">
@@ -411,24 +413,26 @@ input:focus, select:focus {
 			</div>
 			
 	<!-- 스터디 삭제 모달창 -->
-			<div class="modal fade" id="studyDeleteModal" data-backdrop="static">
-				<div class="modal-dialog modal-sm">
-					<div class="modal-content">
-						<div class="modal-header">
-							<i class="fa fa-cloud" style="font-size:24px;color:#39d2fd"><strong>스터디 삭제</strong></i>
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-						</div>
-						<div class="modal-body">
-							스터디를 삭제 하시겠습니까?
-						</div>
-						<div class="modal-footer">
-							<button class="btn btn-info" id="deleteBtn">확인</button>
-							<button class="btn btn-info" data-dismiss="modal">취소</button>
-						</div>
-					</div>
+	<div class="modal fade" id="studyDeleteModal" data-backdrop="static">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<i class="fa fa-cloud" style="font-size: 24px; color: #39d2fd"><strong>스터디
+							삭제</strong></i>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">스터디를 삭제 하시겠습니까?</div>
+				<div class="modal-footer">
+					<form method="post" action="/StudyCloud/fwd">
+						<input type="hidden" name="command" value="DELETESTUDY"> 
+						<input type="hidden" name="std_id" value="${std.std_id }">
+						<button class="btn btn-info" id="deleteBtn" style="width: 20%">확인</button>
+						<button class="btn btn-info" data-dismiss="modal" style="width: 20%">취소</button>
+					</form>
 				</div>
 			</div>
-	<%-- 		
+		</div>
+	</div>
 	<!-- 스터디 등록 결과 모달창 -->
 			<div class="modal fade" id="updateStudyResultModal" data-backdrop="static">
 				<div class="modal-dialog modal-sm">
@@ -451,7 +455,6 @@ input:focus, select:focus {
 		<c:if test="${! (empty updateStudyResult)}">
 			<script>fnResultModal('${updateStudyResult}');</script>
 		</c:if>
-			 --%>
 
 </body>
 <script src="/StudyCloud/lib/js/bootstrap-datepicker.js" ></script>
@@ -488,6 +491,10 @@ input:focus, select:focus {
 		    $(this).parent().removeClass('focus');
 		});
 	});
+	
+	function fnDeleteStudyModal(){
+		$('#studyDeleteModal').modal();
+	}
 	
 	// mapModal
 	var currentAddrId = "";

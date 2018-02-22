@@ -85,7 +85,7 @@ public class ApplyDao {
 	}
 	
 	public void deleteApply(int std_id) {
-		String sql = "delete * from APPLIES where std_id=?";
+		String sql = "delete from APPLIES where std_id=?";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);

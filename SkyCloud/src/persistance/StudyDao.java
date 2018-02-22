@@ -221,7 +221,7 @@ public class StudyDao {
 	//study 테이블  update 처리
 	public int updateStudy(Study s) {
 		int result=0;
-		String sql = "update set study std_name=?, std_max=?, std_start=?, std_end=?, std_info=?, std_plan=?, std_etc=?, std_gender=?, std_category=?, std_email=? where std_id=?";
+		String sql = "update STUDY set std_name=?, std_max=?, std_start=?, std_end=?, std_info=?, std_plan=?, std_etc=?, std_gender=?, std_category=?, email=? where std_id=?";
 		try {
 			conn = pool.getConnection();
 			
@@ -257,7 +257,7 @@ public class StudyDao {
 				result = rs.getInt("std_id");
 			}
 		} catch(Exception err) {
-			System.out.println("insertStudy() 에러 : "+err);
+			System.out.println("updateStudy() 에러 : "+err);
 			err.printStackTrace();
 		} finally {
 			pool.freeConnection(conn, pstmt, rs);
@@ -268,7 +268,7 @@ public class StudyDao {
 	//study_timeplace테이블에 update 처리
 	public int updateStudyTimePlace(StudyTimePlace tp) {
 		int result = 0;
-		String sql = "update set STUDY_TIMEPLACE std_time=?, std_hour=?, std_addr=?, std_day=? where std_id=?";
+		String sql = "update STUDY_TIMEPLACE set std_time=?, std_hour=?, std_addr=?, std_day=? where std_id=?";
 		
 		try {
 			conn = pool.getConnection();
@@ -282,7 +282,7 @@ public class StudyDao {
 			result = pstmt.executeUpdate();
 			
 		} catch(Exception err) {
-			System.out.println("insertStudyTimePlace() 에러 : "+err);
+			System.out.println("updateStudyTimePlace() 에러 : "+err);
 			err.printStackTrace();
 		} finally {
 			pool.freeConnection(conn, pstmt, rs);
@@ -353,7 +353,7 @@ public class StudyDao {
 	}
 
 	public void deleteStudy(int std_id) {
-		String sql = "delete * from STUDY where std_id=?";
+		String sql = "delete from STUDY where std_id=?";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -367,7 +367,7 @@ public class StudyDao {
 	}
 	
 	public void deleteStudyTimeplace(int std_id) {
-		String sql = "delete * from STUDYTIMEPLACE where std_id=?";
+		String sql = "delete from STUDY_TIMEPLACE where std_id=?";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);

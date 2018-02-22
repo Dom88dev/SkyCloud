@@ -22,6 +22,7 @@ public class UpdateStudyAction implements Action {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String email = (String)req.getSession().getAttribute("email");
+		int studyId = Integer.parseInt(req.getParameter("stdId")); 
 		StudyDao stdDao = new StudyDao();
 		Map<String, String[]> params = req.getParameterMap();
 		Enumeration<String> paramEnums = req.getParameterNames();
@@ -39,6 +40,7 @@ public class UpdateStudyAction implements Action {
 		std.setStudy(params.get("std_name")[0], Integer.parseInt(params.get("std_max")[0]), Util.transDate(params.get("std_start")[0]), 
 				Util.transDate(params.get("std_end")[0]), params.get("std_info")[0], params.get("std_plan")[0], params.get("std_etc")[0], 
 				params.get("std_gender")[0], params.get("std_category")[0], email);
+		std.setStd_id(studyId);
 		//Study table에 스터디를 등록
 		int stdId = stdDao.updateStudy(std);
 		
@@ -63,7 +65,7 @@ public class UpdateStudyAction implements Action {
 		req.setAttribute("updateStudyResult", result);
 		String bodyInclude = "/stdUpdateRegister.jsp";
 		req.setAttribute("bodyInclude", bodyInclude);
-		return "/index.jsp";
+		return "/fwd?command=GOMNGSTUDY";
 	}
 
 }
