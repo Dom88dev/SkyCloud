@@ -67,6 +67,9 @@ public class MemberDao {
 		return m;
 	}
 	
+
+	//이메일 유효성 검사
+
 	public int getValidEmail(String email) {
 		int result = 0;
 		String sql="select email from MEMBER where email = ?";
@@ -84,6 +87,7 @@ public class MemberDao {
 		return result;
 	}
 	
+	// 닉네임 유효성 검사
 	public int getValidName(String name) {
 		int result = 0;
 		String sql="select name from MEMBER where name = ?";
@@ -101,6 +105,7 @@ public class MemberDao {
 		return result;
 	}
 	
+	// 전화번호 유효성 검사
 	public int getValidTel(String tel) {
 		int result = 0;
 		String sql="select tel from MEMBER where tel = ?";

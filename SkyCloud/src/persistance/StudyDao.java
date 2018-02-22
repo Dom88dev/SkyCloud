@@ -314,6 +314,7 @@ public class StudyDao {
 		std.setTimePlaceList(tpList);
 		return std;
 	}
+	
 	//study 등록 유효성 검사
 	public int getValidStdEmail(String stdEmail) {
 		int result = 0;
