@@ -14,24 +14,25 @@
 <script type="text/javascript" src="/StudyCloud/lib/bootstrap337/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="/StudyCloud/lib/bootstrap337/js/bootstrap.min.js"></script>
 <script>
-	//스터디 수정 결과 모달 처리 function
-	function fnResultModal(result) {
+
+	/* //스터디 수정 결과 모달 처리 function
+	function fnUpdateResultModal(result) {
 		if(result>0) {//성공
-			$("#regiStdBtn").click(function() {
+			$("#stdUpdateBtn").click(function() {
 				 window.location.href="/StudyCloud/index.jsp";
 			});
 		} else {//실패
 			$("#updateStudyResultModal div.modal-body")[0].innerHTML = "스터드수정 중 문제가 발생했습니다. 잠시 후 다시 등록해 주십시오.";
 			$("#updateStudyResultModal div.modal-footer button").removeClass("btn-info");
 			$("#updateStudyResultModal div.modal-footer button").addClass("btn-danger");
-			$("#regiStdBtn").click(function() {
+			$("#stdUpdateBtn").click(function() {
 				$("#updateStudyResultModal").modal("hide");
 			});
 		}
 		
 		$('#updateStudyResultModal').modal();
-	}
-	
+	} */
+	// 스터디 수정 취소 처리
 	function fnCancel(){
 		window.history.back();
 	}
@@ -433,6 +434,7 @@ input:focus, select:focus {
 			</div>
 		</div>
 	</div>
+	<%-- 
 	<!-- 스터디 등록 결과 모달창 -->
 			<div class="modal fade" id="updateStudyResultModal" data-backdrop="static">
 				<div class="modal-dialog modal-sm">
@@ -445,7 +447,7 @@ input:focus, select:focus {
 							스터디 수정에 성공하셨습니다.
 						</div>
 						<div class="modal-footer">
-							<button class="btn btn-info" id="regiStdBtn">확인</button>
+							<button class="btn btn-info" id="stdUpdateBtn">확인</button>
 						</div>
 					</div>
 				</div>
@@ -453,10 +455,10 @@ input:focus, select:focus {
 			
 		<!-- 스터디 등록 결과 처리 -->
 		<c:if test="${! (empty updateStudyResult)}">
-			<script>fnResultModal('${updateStudyResult}');</script>
+			<script>fnUpdateResultModal('${updateStudyResult}');</script>
 		</c:if>
-
-</body>
+ --%>
+ </body>
 <script src="/StudyCloud/lib/js/bootstrap-datepicker.js" ></script>
 <script src="/StudyCloud/lib/js/bootstrap-datepicker.kr.js" charset="UTF-8"></script>
 <script>

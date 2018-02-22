@@ -62,6 +62,7 @@ public class UpdateStudyAction implements Action {
 			result += stdDao.updateStudyTimePlace(stp);
 		}
 		
+		System.out.println(result);
 		req.setAttribute("updateStudyResult", result);
 		String bodyInclude = "/stdUpdateRegister.jsp";
 		req.setAttribute("bodyInclude", bodyInclude);
