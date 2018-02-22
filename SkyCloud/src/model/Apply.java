@@ -7,7 +7,8 @@ public class Apply {
 	private String apply_status;
 	private String apply_content;
 	private long apply_datetime;
-	
+	private String stdName;
+	private String name;
 	
 	public void setApply(int appliy_id, String email, int std_id, String apply_status, String apply_content, long apply_datetime) {
 		setApply_id(appliy_id);
@@ -53,6 +54,22 @@ public class Apply {
 	}
 	public void setApply_datetime(long apply_datetime) {
 		this.apply_datetime = apply_datetime;
+	}
+
+	public String getStdName() {
+		return stdName;
+	}
+
+	public void setStdName(String stdName) {
+		this.stdName = stdName;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 }

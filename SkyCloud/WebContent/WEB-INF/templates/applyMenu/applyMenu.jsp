@@ -20,3 +20,10 @@
 			<%@ include file="/WEB-INF/templates/applyMenu/myApplyList.jsp" %>
 		</div>
 	</div>
+	
+<script>
+(function() {
+	$("a[href='#${includeApplyMenu}']").parent().addClass("active");
+	$("#"+"${includeApplyMenu}").addClass("in active");
+})();
+</script>
