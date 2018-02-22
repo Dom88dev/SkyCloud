@@ -385,7 +385,7 @@ input:focus, select:focus {
 </script>
 <!-- 유효성 검사 -->
 <script>
-	$(document).ready(function(){
+	/* $(document).ready(function(){
 		$("#std_name").focusout(function(){
 			var val = $(this).val();
 			var re =/^[0-9a-zA-Z가-힣]{6,16}$/;
@@ -414,7 +414,7 @@ input:focus, select:focus {
 				})
 			}
 		})
-	})
+	}) */
 </script>
 </html>
 
