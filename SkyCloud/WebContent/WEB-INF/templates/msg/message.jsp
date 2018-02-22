@@ -46,22 +46,33 @@
 	var recordsPerPage = 10;
 	var currentMPage = 0;
 	var beginNumPerMPage = recordsPerPage * currentMPage;
-
+	
 	var msgData = "";
+	
 	(function() {
 		$.post("/StudyCloud/json", {
 			command : "LOADMSG",
 			reciever : "${mem.email}"
 		}, function(data) {
+			$.each(data, function(index, num) {
+				var msgId = num.msg_id;
+				var msgDatetime = num.msg_datetime;
+				var msgHref = num.msg_href;
+				var msgContent = num.msg_content;
+				var msgCheck = num.msg_check;
+				var msgReciever = num.reciever;
+				var msgSender = num.sender;
+			})
+			/* alert(data);
 			msgData = data;
-			fnLoadMsg(data);
+			fnLoadMsg(data); */
 		});
 	})();
 
 	function fnLoadMsg(data) {
-
-		if (data) {
-			var mList = data.msgList;
+		var jsonData = $.parseJSON(data);
+		if (jsonData) {
+			var mList = jsonData.msgList;
 			var tBody = $("div#msgTable");
 			var sendBtn = $("button#btnSendMessage");
 
@@ -70,42 +81,6 @@
 			createMsgRecord(mList);
 
 		}
-	}
-
-	function createMsgRecord(mList) {
-		var tBody = $("div#msgTable");
-		var msgContent = msgList.msg_content;
-		var msgDate = new Date(msgList.msg_datetime);
-		var td_a = document.createElement("a");
-		$(td_a)
-				.attr("href",
-						"javascript:fnReadMsg('" + msgList.reciever + "')");
-
-		var tdName = document.createElement("td");
-		$(tdName).addClass("mailbox-name");
-		tdName.appendChild(td_a);
-
-		var tdSubject = document.createElement("td");
-		$(tdSubject).addClass("mailbox-subject");
-		tdSubject.innerHTML = msgContent;
-
-		var tdDate = document.createElement("td");
-		$(tdDate).addClass("mailbox-date");
-		$(tdDate).text(
-				msgDate.getFullYear() + '-' + (msgDate.getMonth() + 1) + '-'
-						+ msgDate.getDate());
-
-		var trTable = document.createElement("tr");
-		$(trTable).addClass("mailbox-date");
-		trTable.appendChild(tdName);
-		trTable.appendChild(tdSubject);
-		trTable.appendChild(tdDate);
-
-		var mTable = document.createElement("table");
-		$(mTable).addClass("table table-hover table-striped");
-		mTable.appendChild(trTable);
-
-		$(tBody).append(mTable);
 	}
 
 	//쪽지 보기
@@ -140,7 +115,7 @@
 					<div class="box box-body">
 						<div class="box-header with-border">
 							<div class="col-md-9">
-								<h3 class="box-title">쪽지함</h3>
+								<h3 class="box-title">쪽지 보내기</h3>
 							</div>
 							<div class="col-md-3">
 								<button type="submit" class="btn btn-default"
@@ -151,9 +126,7 @@
 						<!-- /.box-header -->
 						<div class="box-body no-padding">
 							<div class="table-responsive mailbox-messages" id="msgTable">
-								<c:if test="${empty msgList}">
-									<p>쪽지가 없습니다.</p>
-								</c:if>
+
 								<!-- /.table -->
 							</div>
 							<!-- /.mail-box-messages -->

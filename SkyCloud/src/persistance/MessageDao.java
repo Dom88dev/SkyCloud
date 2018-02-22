@@ -72,7 +72,7 @@ public class MessageDao {
 				m.setSender(rs.getString("sender"));
 			}
 		} catch (Exception e) {
-			System.out.println("getNotice() 에러 : " + e);
+			System.out.println("getMsg() 에러 : " + e);
 		} finally {
 			pool.freeConnection(conn, pstmt, rs);
 		}
@@ -85,10 +85,10 @@ public class MessageDao {
 		String sql = "insert into MESSAGE(msg_datetime, msg_href, msg_content, msg_check, reciever, sender) values(?,?,?,?,?,?)";
 		try {
 			conn = pool.getConnection();
-
+			System.out.println(m);
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setLong(1, m.getMsg_datetime());
-			pstmt.setString(2, m.getMsg_href());
+			pstmt.setString(2, "alalal");
 			pstmt.setString(3, m.getMsg_content());
 			pstmt.setLong(4, m.getMsg_check());
 			pstmt.setString(5, m.getReciever());

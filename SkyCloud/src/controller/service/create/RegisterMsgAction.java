@@ -28,24 +28,21 @@ public class RegisterMsgAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		System.out.println("RegaisterMsgAction");
 		Message message = new Message(0, null, null, 0, null, null);
-
+		String msg=null;
 		message.setReciever(req.getParameter("reciever"));
-		message.setMsg_datetime(System.currentTimeMillis());
-		message.setMsg_id(Integer.parseInt(req.getParameter("msgId")));
-		
+		message.setMsg_datetime(System.currentTimeMillis());		
 		message.setMsg_content(req.getParameter("msgContent"));
 		message.setSender(req.getParameter("sender"));
-		
-		String who = message.getReciever();
-		
+				
 		MessageDao messageDao = new MessageDao();
 		int result = messageDao.insertMessage(message);
+		System.out.println(result);
 		if(result>0) {
-			result = messageDao.getMsg_IdFromMessage(message);
+			msg = "success!";
 		}
-		
-		return who;
+		return msg;
 	}
 
 

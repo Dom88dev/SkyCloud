@@ -8,11 +8,7 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="/StudyCloud/lib/dist/js/adminlte.js"></script>
-<script>
-	function fncloseModal(){
-		$(this).modal('hide');
-	}
-</script>
+
 <div class="box box-info direct-chat direct-chat-info">
 	<!-- /.box-header -->
 	<div class="box-body">

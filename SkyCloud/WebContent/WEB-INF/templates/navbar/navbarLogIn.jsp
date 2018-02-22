@@ -85,23 +85,7 @@ div.uiheader {
 	position: relative;
 }
 </style>
-<script>
-	function fnLogOut() {
-		$("#logOutModal").modal();
-	}
 
-	$(document).ready(function() {
-		$('.dropdown-menu').on("click", function(e) {
-			$(this).next('ul').toggle();
-			e.stopPropagation();
-			e.preventDefault();
-		});
-		$('#myMsgModal').on('click', function(e) {
-			$('#msgmodal').modal('show');
-			//$('msgBoxDiv').html('/StudyCloud/WEB-INF/templates/msg/msgBox.jsp');
-		});
-	});
-</script>
 <!-- navbar -->
 <nav class="navbar navbar-fixed-top">
 	<div class="container-fluid">
@@ -135,16 +119,55 @@ div.uiheader {
 					<li>
 						<!-- inner menu: contains the messages -->
 						<ul class="menu">
-							<li>
-								<jsp:include page="/WEB-INF/templates/msg/SmallMessage.jsp"></jsp:include>
-							</li>
+							<li><jsp:include
+									page="/WEB-INF/templates/msg/SmallMessage.jsp"></jsp:include></li>
 							<!-- end message -->
 						</ul> <!-- /.menu -->
 					</li>
-					<li class="footer"><a href="#" id="myMsgModal">쪽지함</a></li>
+					<li class="footer"><a href="javascript:fnPostMsg()"
+						id="myMsgModal">쪽지 보내기</a></li>
 					<div class="modal" id="msgmodal" tabindex="-1" role="dialog"
 						aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="">
-						<jsp:include page="/WEB-INF/templates/msg/message.jsp"></jsp:include>
+						<div class="box box-info direct-chat direct-chat-info">
+							<!-- /.box-header -->
+							<div class="box-body">
+								<!-- Conversations are loaded here -->
+								<div class="direct-chat-messages">
+									<div class="col-md-12">
+										<form action="/StudyCloud/json" method="get">
+											<input type="hidden" name="command" value="POSTMSG">
+											<input type="hidden" name="sender" value="${sessionScope.email}">
+											<div class="col-md-3" align="center"
+												style="margin-top: 0.8em; margin-bottom: 0.8em;">
+												<label
+													style="font-size: 1em; line-height: 2em; color: #39d2fd;">받는
+													사람</label>
+											</div>
+											<div class="col-md-9"
+												style="margin-top: 0.8em; margin-bottom: 0.8em;">
+												<input type="text" name="reciever" class="form-control">
+											</div>
+											<div class="col-md-12">
+												<div class="col-md-2">
+													<label
+														style="font-size: 1em; line-height: 2em; color: #39d2fd;">내용</label>
+												</div>
+												<div class="col-md-10">
+												<!-- textarea id="message_content_area" name="msgContent"
+														rows="10" cols="50" class="form-control"></textarea>  -->
+												<input type="text" name="msgContent" class="form-control">
+												</div>
+											</div>
+											<div class="col-md-12"
+												style="margin-top: 0.8em; margin-bottom: 0.8em; float: right;">
+												<input type="button" class="btn btn-info" data-dismiss="modal"
+													style="width: 30%;" value="전송" onclick="fnSendMsg(this.form);">
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 
 				</ul>
@@ -166,3 +189,38 @@ div.uiheader {
 		</div>
 	</div>
 </nav>
+<script>
+	function fnLogOut() {
+		$("#logOutModal").modal();
+	}
+	//쪽지 보내기로 넘기는 function
+	function fnSendMsg(f) {
+		var r = f.reciever;
+		var m = f.msgContent;
+		
+		$.ajax({
+			url : "/StudyCloud/json",
+			data : {
+				command : "POSTMSG",
+				reciever : r.value,
+				sender : "${sessionScope.email}",
+				msgContent : m.value
+				
+			},
+			success : function(data){
+				alert(data);
+			}
+		});
+	}
+	$(document).ready(function() {
+		$('.dropdown-menu').on("click", function(e) {
+			$(this).next('ul').toggle();
+			e.stopPropagation();
+			e.preventDefault();
+		});
+		$('#myMsgModal').on('click', function(e) {
+			$('#msgmodal').modal('show');
+			//$('msgBoxDiv').html('/StudyCloud/WEB-INF/templates/msg/msgBox.jsp');
+		});
+	});
+</script>

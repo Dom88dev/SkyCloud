@@ -58,8 +58,17 @@ public class Message {
 	}
 	public String getSender() {
 		return sender;
-	}
+	} 
 	public void setSender(String sender) {
 		this.sender = sender;
 	}
+
+	@Override
+	public String toString() {
+		return "Message [msg_id=" + msg_id + ", msg_datetime=" + msg_datetime + ", msg_href=" + msg_href
+				+ ", msg_content=" + msg_content + ", msg_check=" + msg_check + ", reciever=" + reciever + ", sender="
+				+ sender + "]";
+	}
+	
+	
 }

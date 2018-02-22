@@ -8,6 +8,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.catalina.valves.rewrite.Substitution.StaticElement;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -27,14 +29,15 @@ public class LoadMessageAction implements Action {
 		resp.setContentType("text/plain");
 		JsonObject jobj = new JsonObject();
 		MessageDao messageDao = new MessageDao();
-		String reciever = "1@a.com";
-		System.out.println("reciever : "+ reciever);
+		String reciever = null;
+		if (req.getSession().getAttribute("email") != null)
+			reciever = (String) req.getSession().getAttribute("email");
 		ArrayList<Message> mList = (ArrayList<Message>) messageDao.getMsgList(reciever);
 		JsonArray jarrayNList = (JsonArray) new Gson().toJsonTree(mList, new TypeToken<List<Message>>() {
 		}.getType());
-		jobj.add("msgList", jarrayNList);
-		String jsonData = new Gson().toJson(jobj);
-		System.out.println("jsonData : "+jsonData);
+		//jobj.add("msgList", jarrayNList);
+		//String jsonData = new Gson().toJson(jobj);
+		String jsonData = new Gson().toJson(jarrayNList);
 		return jsonData;
 	}
 
