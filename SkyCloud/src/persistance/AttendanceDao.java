@@ -104,7 +104,7 @@ public class AttendanceDao {
 		System.out.println("스터디 시작시간 hhmm : "+stdTime);
 		try {
 			conn = pool.getConnection();
-			String sql = "insert into attendance(atd_date, atd_status, email, std_id) values(?,?,?,?)";
+			String sql = "insert into ATTENDANCE(atd_date, atd_status, email, std_id) values(?,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setDate(1, sqlDate);
 			if(stdTime.compareTo(str)<0) {
@@ -161,7 +161,7 @@ public class AttendanceDao {
 	//잘못된 출석 상태 수정하기
 	public int UpdateStatus(String upatd, String email) {
 		int result=0;
-		String sql = "update attendance set atd_status=? where email=?";
+		String sql = "update ATTENDANCE set atd_status=? where email=?";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);

@@ -9,6 +9,17 @@ public class Message {
 	private String reciever;
 	private String sender;
 	
+	public Message(long msg_datetime, String msg_href, String msg_content, int msg_check, String reciever,
+			String sender) {
+		super();
+		this.msg_datetime = msg_datetime;
+		this.msg_href = msg_href;
+		this.msg_content = msg_content;
+		this.msg_check = msg_check;
+		this.reciever = reciever;
+		this.sender = sender;
+	}
+	
 	public int getMsg_id() {
 		return msg_id;
 	}

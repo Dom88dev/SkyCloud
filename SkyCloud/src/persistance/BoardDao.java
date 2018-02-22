@@ -374,7 +374,7 @@ public class BoardDao {
 	
 	public int deleteBoard(int b_id) {
 		int result = 0;
-		String sql = "delete BOARD where b_id=?";
+		String sql = "delete from BOARD where b_id=?";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -391,7 +391,7 @@ public class BoardDao {
 	
 	public int deleteBoardFile(int b_id) {
 		int result = 0;
-		String sql = "delete Board_File where b_id=?";
+		String sql = "delete from BOARD_FILE where b_id=?";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -399,6 +399,23 @@ public class BoardDao {
 			result = pstmt.executeUpdate();
 		} catch(Exception e) {
 			System.out.println("deleteBoardFile() 에러 : "+e);
+		} finally {
+			pool.freeConnection(conn, pstmt, rs);
+		}
+		return result;
+	}
+	
+	public int boardViewCntUp(int b_id) {
+		int result = 0;
+		try {
+			String sql = "update BOARD set view_cnt=view_cnt+1 where b_id=?";
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, b_id);
+			result = pstmt.executeUpdate();
+			
+		} catch(Exception e) {
+			System.out.println("boardViewCntUp() 에러 : "+e);
 		} finally {
 			pool.freeConnection(conn, pstmt, rs);
 		}

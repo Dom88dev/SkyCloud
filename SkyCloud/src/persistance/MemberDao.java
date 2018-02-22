@@ -67,7 +67,9 @@ public class MemberDao {
 		return m;
 	}
 	
+
 	//이메일 유효성 검사
+
 	public int getValidEmail(String email) {
 		int result = 0;
 		String sql="select email from MEMBER where email = ?";

@@ -135,6 +135,24 @@ button.btn-effect:hover:before,button.btn-effect:hover:after{
 		$('#studyApplyModal').modal();
 	}
 	
+	//스터디 신청 결과 모달 처리 function
+	function fnResultModal(result) {
+		if(result>0) {//성공
+			$("#stdApplyBtn").click(function() {
+				 window.location.href="/StudyCloud/index.jsp";
+			});
+		} else {//실패
+			$("#ApplyResultModal div.modal-body")[0].innerHTML = "스터디신청 중 문제가 발생했습니다. 잠시 후 다시 신청해 주십시오.";
+			$("#ApplyResultModal div.modal-footer button").removeClass("btn-info");
+			$("#ApplyResultModal div.modal-footer button").addClass("btn-danger");
+			$("#stdApplyBtn").click(function() {
+				//$("#ApplyResultModal").modal("hide");
+				window.location.href="/StudyCloud/index.jsp";
+			});
+		}
+		
+		$('#ApplyResultModal').modal();
+	}
 	
 </script>
 </head>
@@ -237,10 +255,13 @@ button.btn-effect:hover:before,button.btn-effect:hover:after{
 				<div class="modal-body" align="center">
 					<form action="/StudyCloud/fwd" method="POST">
 					<input type="hidden" name="command" value="STUDYAPPLY">
-					<input type="hidden" name="stdId" value="${std.std_id}">
+					<input type="hidden" name="std_id" value="${std.std_id}">
+					<input type="hidden" name="std_name" value="${std.std_name}">
+					<input type="hidden" name="leaderEmail" value="${mem.email}">
+					<input type="hidden" name="applicantName" value="${applicantMem.name}">
 					<textarea rows="15" style="width:80%;"  name="apply_content" id="apply_content" maxlength="200" placeholder="신청내용" style="over-flow:hidden;resize:none"></textarea>
 					<button class="btn btn-effect" type="submit">신청</button>&nbsp;&nbsp;&nbsp;
-					<button class="btn btn-effect" class="close" data-dismiss="modal">닫기</button>
+					<button class="btn btn-effect" data-dismiss="modal">닫기</button>
 					</form>
 				</div>
 				
@@ -248,6 +269,28 @@ button.btn-effect:hover:before,button.btn-effect:hover:after{
 		</div>
 	</div>
 	
+	<!-- 스터디 신청 결과 모달창 -->
+			<div class="modal fade" id="ApplyResultModal" data-backdrop="static">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<i class="fa fa-cloud" style="font-size:24px;color:#39d2fd"><strong>스터디 신청</strong></i>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+						<div class="modal-body">
+							스터디 신청에 성공하셨습니다.
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-info" id="stdApplyBtn">확인</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		<!-- 스터디 신청 결과 처리 -->
+		<c:if test="${! (empty applyResult && empty msgResult)}">
+			<script>fnResultModal('${applyResult}');</script>
+		</c:if>
 	
 </body>
 </html>

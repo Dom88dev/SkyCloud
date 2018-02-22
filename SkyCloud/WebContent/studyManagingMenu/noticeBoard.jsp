@@ -155,7 +155,7 @@ function createNoticeRecord(nList, i) {
 
 //공지사항 보기
 function fnReadNotice(b_id) {
-	$.post("/StudyCloud/fwd", {"stdId":'${myStdList[index].std_id}', "command":"READNOTICE", "b_id":b_id}, 
+	$.post("/StudyCloud/fwd", {"command":"READNOTICE", "b_id":b_id, "countUp":"up"}, 
 			function(code) {
 				$("#${includeStdMenu}").html(code);
 		});
@@ -214,5 +214,7 @@ function fnPostNotice() {
 			</div>
 		</div>
 	</div>
-	
 </div>
+<c:if test="${! (empty readBoard_id)}">
+	<script>fnReadNotice("${readBoard_id}");</script>
+</c:if>

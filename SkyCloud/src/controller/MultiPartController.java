@@ -38,6 +38,7 @@ public class MultiPartController extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		
 		String path = getServletContext().getRealPath("upload");
+		//System.out.println(path);
 		int maxSize = 50 * 1024 * 1024;
 		MultipartRequest multi = null;
 		String command = null;
