@@ -33,25 +33,15 @@ td, tr {
 }
 </style>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
-<script>
-	$(document).ready(
-		function(){
-			$("#input").click(
-				function(){
-					alert("호출");
-				}		
-			)
-	});
-</script>
+
 </head>
 	<script>		
 		function regiResultModal(result) { 
 			if(result>0){
-				alert("result : " + result);
-				//$("#emailNumModal").modal();
-				//$("div.modal-footer button").click(function(){
+				$("#emailNumModal").modal();
+				$("div.modal-footer button").click(function(){
 					window.location.replace("/StudyCloud/index.jsp");
-				//});
+				});
 				
 			} else {
 				$("div.modal-body")[0].innerHTML = "회원가입도중 문제가 발생했습니다.<br>잠시 후 다시 시도해주십시오.";
@@ -324,7 +314,7 @@ td, tr {
 </script>
 <script>
 	// 이메일 유효성 검사
-	$(document).ready(function(){
+	/* $(document).ready(function(){
 		$("#email").focusout(function(){
 			
 			// var val =$(this).val();
@@ -500,10 +490,10 @@ td, tr {
 				$("#registermodal").modal();
 			}
 		});
-	});
+	}); */
 </script>
 <script>
-	$(document).ready(function(){
+	/* $(document).ready(function(){
 		//이메일 인증 버튼
 		$("#inputEmail").click(function(){
 			var email = $("#email").val();
@@ -530,7 +520,7 @@ td, tr {
 		})
 		
 		
-	})
+	}) */
 </script>
 
 </html>

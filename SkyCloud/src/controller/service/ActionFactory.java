@@ -48,6 +48,9 @@ import controller.service.read.validity.ValidateMemberEmailAction;
 import controller.service.read.validity.ValidateMemberNameAction;
 import controller.service.read.validity.ValidateMemberTelAction;
 import controller.service.read.validity.ValidateStudyNameAction;
+import controller.service.update.AcceptApplyAction;
+import controller.service.update.CancelApplyAction;
+import controller.service.update.RejectApplyAction;
 import controller.service.update.UpdateAttendanceAction;
 import controller.service.update.UpdateHomeworkAction;
 import controller.service.update.UpdateMemberAction;
@@ -226,6 +229,15 @@ public class ActionFactory {
 			break;
 		case "GODELETEMEM"://회원삭제 페이지 이동
 			action = new MoveDeleteMemAction();
+			break;
+		case "ACCEPTAPPLY"://스터디 신청 수락
+			action = new AcceptApplyAction();
+			break;
+		case "REJECTAPPLY"://스터디 신청 거절
+			action = new RejectApplyAction();
+			break;
+		case "CANCELAPPLY"://스터디 신청 결정 취소
+			action = new CancelApplyAction();
 			break;
 		}
 		return action;
