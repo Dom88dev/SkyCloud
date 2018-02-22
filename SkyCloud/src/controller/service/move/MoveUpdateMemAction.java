@@ -1,4 +1,4 @@
-package controller.service.update;
+package controller.service.move;
 
 import java.io.IOException;
 
@@ -10,26 +10,22 @@ import controller.service.Action;
 import model.Member;
 import persistance.MemberDao;
 
-//회원 수정 처리
-public class UpdateMemberAction implements Action {
+public class MoveUpdateMemAction implements Action {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String email = (String)req.getSession().getAttribute("email");
 		
-		Member mem = new Member();
+		Member member = new Member();
+		MemberDao memberDao = new MemberDao();
 		
-		mem.setEmail((String)req.getSession().getAttribute("email"));
-		mem.setPw(req.getParameter("pw"));
-		mem.setName(req.getParameter("name"));
-		mem.setTel(req.getParameter("tel"));
-		mem.setBorn(util.Util.transDate(req.getParameter("born")));
+		member = memberDao.getMemberByEmail(email);
 		
-		MemberDao memDao = new MemberDao();
-		int rs = memDao.UpdateMemInfo(mem);
-		req.setAttribute("upInfoResult", rs);
+		req.setAttribute("member", member);
+		
 		String bodyInclude = "/upMemInfo.jsp";
 		req.setAttribute("bodyInclude", bodyInclude);
 		return "/index.jsp";
 	}
-
+	
 }

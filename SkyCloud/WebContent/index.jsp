@@ -83,8 +83,26 @@
 	 			</div>
 	 		</div>
 	 		
+	 		
+	 	<!-- 진행중인 스터디가 없을 시 나의 스터디 모달창 -->	
+	 		<div class="modal fade" id="noStdModal" data-backdrop="static">
+	 			<div class="modal-dialog modal-sm">
+	 				<div class="modal-content">
+	 					<div class="modal-body">
+							<h4 style="text-align: center;color: #6e6e6e">스터디를 등록하거나 가입하세요.</h4>
+		 					<div style="text-align: center;padding-top: 20px">
+		 						<button class="btn btn-primary" data-dismiss="modal" style="background: #39d2fd;border: 0;">닫기</button>
+		 					</div>
+		 				</div>
+	 				</div>
+	 			</div>
+	 		</div>
+	 		
 		</div>
 	</div>
+	
+	<c:if test="${!(empty havingStudy)}"><script>$("#noStdModal").modal();</script></c:if>
+	
 </body>
 <script>
 	window.closeModal = function(){

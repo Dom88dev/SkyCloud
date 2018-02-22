@@ -25,7 +25,7 @@ public class InsertStudyApplyAction implements Action{
 		ApplyDao applyDao = new ApplyDao();
 		MessageDao messageDao = new MessageDao();
 		
-		int applyCheck = applyDao.getApplyByEmail(applicantEmail);
+		int applyCheck = applyDao.getApplyByEmail(applicantEmail, studyId);
 		
 		if(applyCheck == 0){
 			int msgResult = messageDao.insertNotiStudyApply(System.currentTimeMillis(), "/fwd?command=MOVESTUDYAPPLIES", applicantName+"님이"+ stdName+"스터디에 가입했습니다.", 0, leaderEmail, applicantEmail);

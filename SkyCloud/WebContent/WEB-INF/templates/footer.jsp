@@ -10,32 +10,42 @@
 <script src="/StudyCloud/lib/bootstrap337/js/bootstrap.min.js"></script>
 <body>
  	<footer class="text-center" style="color: white;">
-       <div class="container"
-          style="background-color: #737373; width: 100%">
+       <div class="container" style="background-color: #737373; width: 100%;" >
           <div class="row">
-             <div class="col-sm-4">
-                <h3>Footer header</h3>
+             <div class="col-sm-3" >
+                <h3>COMPANY </h3>
                 <p>
-                   Lorem ipsum dolor sit amet, consectetur adipisici elit, <br>sed
-                   eiusmod tempor incidunt ut labore et dolore magna aliqua. <br>Ut
-                   enim ad minim veniam, quis nostrud
+                   	서비스소개<br>
+                   	블로그<br>
+                   	언론보도
                 </p>
              </div>
-             <div class="col-sm-4">
-                <h3>Footer header</h3>
+             <div class="col-sm-3">
+                <h3>POLICIES</h3>
                 <p>
-                   Lorem ipsum dolor sit amet, consectetur adipisici elit, <br>sed
-                   eiusmod tempor incidunt ut labore et dolore magna aliqua. <br>Ut
-                   enim ad minim veniam, quis nostrud
+                  	이용약관<br>
+                   	개인정보취급방침<br>
                 </p>
              </div>
-             <div class="col-sm-4">
-                <h3>Footer header</h3>
+             <div class="col-sm-3">
+                <h3>SUPPORT</h3>
                 <p>
-                   Lorem ipsum dolor sit amet, consectetur adipisici elit, <br>sed
-                   eiusmod tempor incidunt ut labore et dolore magna aliqua. <br>Ut
-                   enim ad minim veniam, quis nostrud
+                   	FAQ<br>
+                   	스터디클라우드센터<br>
                 </p>
+             </div>
+             
+             <div class="col-sm-3">
+                <h3>MEMBER</h3>
+                	<form id="frm" method="post" action="/StudyCloud/fwd">
+                	<input type="hidden" name="command" value="GOUPDATEMEM">
+                   	<a href="#" onclick="document.getElementById('frm').submit();" style="color: white;"><b>회원수정</b></a><br>
+                   	</form>
+                   	<form id="frm2" method="post" action="/StudyCloud/fwd">
+                	<input type="hidden" name="command" value="GODELETEMEM">
+                   	<a href="#" onclick="document.getElementById('frm2').submit();" style="color: white;"><b>회원탈퇴</b></a><br>
+                   	</form>  
+                   	
              </div>
           </div>
        </div>

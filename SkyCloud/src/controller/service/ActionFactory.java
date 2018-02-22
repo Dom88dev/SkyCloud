@@ -19,17 +19,17 @@ import controller.service.move.ChangeManagerStudyMenuAction;
 import controller.service.move.LogOutAction;
 import controller.service.move.MoveBoardRegisterAction;
 import controller.service.move.MoveBoardUpdateAction;
+import controller.service.move.MoveDeleteMemAction;
 import controller.service.move.MoveLeaderCalendarAction;
 import controller.service.move.MoveMemberCalendarAction;
 import controller.service.move.MoveMemberRegisterAction;
 import controller.service.move.MoveMsgSendAction;
-
 import controller.service.move.MoveReadBoardByMessageAction;
-
 import controller.service.move.MoveStudyManagerAction;
 import controller.service.move.MoveStudyRegisterAction;
 import controller.service.move.MoveStudyUpdateAction;
 import controller.service.move.MoveToUploadHomeworkViewAction;
+import controller.service.move.MoveUpdateMemAction;
 import controller.service.read.LoadAttendanceImageAction;
 import controller.service.read.LoadAttendanceStatusAction;
 import controller.service.read.LoadCountAttendaceAction;
@@ -48,6 +48,9 @@ import controller.service.read.validity.ValidateMemberEmailAction;
 import controller.service.read.validity.ValidateMemberNameAction;
 import controller.service.read.validity.ValidateMemberTelAction;
 import controller.service.read.validity.ValidateStudyNameAction;
+import controller.service.update.AcceptApplyAction;
+import controller.service.update.CancelApplyAction;
+import controller.service.update.RejectApplyAction;
 import controller.service.update.UpdateAttendanceAction;
 import controller.service.update.UpdateHomeworkAction;
 import controller.service.update.UpdateMemberAction;
@@ -95,10 +98,10 @@ public class ActionFactory {
 		case "GOMNGSTUDY"://스터디 매니징 클라우드로 이동
 			action = new MoveStudyManagerAction();
 			break;
-		case "UPDATEMEM": //회원 수정 처리 - 미완성
+		case "UPDATEMEM": //회원 수정 처리 
 			action = new UpdateMemberAction();
 			break;
-		case "DELETEMEM": //회원 탈퇴 처리 - 미완성
+		case "DELETEMEM": //회원 탈퇴 처리 
 			action = new DeleteMemberAction();
 			break;
 		case "STUDYUPDATEINFO": // 스터디 수정 페이지 이동 및 값 전달 처리
@@ -220,6 +223,21 @@ public class ActionFactory {
 			break;
 		case "DELETEHFILE"://업로드한 과베파일 삭제
 			action = new DeleteHomeworkFileAction();
+			break;
+		case "GOUPDATEMEM"://회원수정 페이지 이동
+			action = new MoveUpdateMemAction();
+			break;
+		case "GODELETEMEM"://회원삭제 페이지 이동
+			action = new MoveDeleteMemAction();
+			break;
+		case "ACCEPTAPPLY"://스터디 신청 수락
+			action = new AcceptApplyAction();
+			break;
+		case "REJECTAPPLY"://스터디 신청 거절
+			action = new RejectApplyAction();
+			break;
+		case "CANCELAPPLY"://스터디 신청 결정 취소
+			action = new CancelApplyAction();
 			break;
 		}
 		return action;

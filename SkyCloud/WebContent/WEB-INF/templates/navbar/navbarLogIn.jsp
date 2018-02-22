@@ -86,6 +86,21 @@ div.uiheader {
 }
 </style>
 
+<<<<<<< HEAD
+=======
+	/* $(document).ready(function() {
+		$('.dropdown-menu').on("click", function(e) {
+			$(this).next('ul').toggle();
+			e.stopPropagation();
+			e.preventDefault();
+		});
+		$('#myMsgModal').on('click', function(e) {
+			$('#msgmodal').modal('show');
+			//$('msgBoxDiv').html('/StudyCloud/WEB-INF/templates/msg/msgBox.jsp');
+		});
+	}); */
+</script>
+>>>>>>> refs/remotes/origin/beta
 <!-- navbar -->
 <nav class="navbar navbar-fixed-top">
 	<div class="container-fluid">
@@ -97,8 +112,7 @@ div.uiheader {
 		</div>
 		<form class="navbar-form navbar-left" action="/StudyCloud/fwd"
 			method="post">
-			<input type="hidden" name="command" value="SEARCHSTUDY" /> <input
-				type="hidden" name="command" value="LOADMSG" />
+			<input type="hidden" name="command" value="SEARCHSTUDY" />
 			<div class="form-group form-control">
 				<input type="search" class="nav-search-input"
 					placeholder="검색할 스터디를 입력하세요" name="searchTxt" /> <a
@@ -108,7 +122,7 @@ div.uiheader {
 		</form>
 		<ul class="nav navbar-nav">
 			<!-- Messages: style can be found in dropdown.less-->
-			<li class="dropdown messages-menu open">
+			<%-- <li class="dropdown messages-menu open">
 				<!-- Menu toggle button --> <a href="#" class="dropdown-toggle"
 				data-toggle="dropdown"> <span id="message"
 					class="glyphicon glyphicon-envelope"></span> <span
@@ -171,7 +185,7 @@ div.uiheader {
 					</div>
 
 				</ul>
-			</li>
+			</li> --%>
 			<!-- /.messages-menu -->
 		</ul>
 

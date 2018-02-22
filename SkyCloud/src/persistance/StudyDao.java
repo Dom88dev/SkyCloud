@@ -65,13 +65,6 @@ public class StudyDao {
 				s.setStudy(rs.getInt("std_id"), rs.getString("std_name"), rs.getInt("std_max"), rs.getDate("std_start"), rs.getDate("std_end"), rs.getString("std_info"), rs.getString("std_plan"), rs.getString("std_etc"), rs.getString("std_gender"), rs.getString("std_category"), rs.getString("email"));
 				list.add(s);
 			}
-			
-			//각각의 스터디에 해당하는 시간장소 리스트를 추가해준다.
-			for(Study s : list) {
-				ArrayList<StudyTimePlace> tpList = new ArrayList<>();
-				tpList = (ArrayList<StudyTimePlace>)getTimePlaceList(s.getStd_id());
-				s.setTimePlaceList(tpList);
-			}
 		} catch(Exception e) {
 			System.out.println("getStudyList() 에러 : "+e);
 		} finally {
@@ -103,6 +96,12 @@ public class StudyDao {
 					}
 				}
 			}
+			for(Study s : stdList) {
+				//각각의 스터디에 해당하는 시간장소 리스트를 추가해준다.
+				ArrayList<StudyTimePlace> tpList = new ArrayList<>();
+				tpList = (ArrayList<StudyTimePlace>)getTimePlaceList(s.getStd_id());
+				s.setTimePlaceList(tpList);
+			}
 		} catch(Exception e) {
 			System.out.println("getStudyList() 에러 : "+e);
 		} finally {
@@ -130,7 +129,10 @@ public class StudyDao {
 				for(int id : stdIds) {
 					if(s.getStd_id() == id)	{//내가 가입한 스터디 걸러내기
 						if(System.currentTimeMillis()<s.getStd_end().getTime()){//종료가 안된 스터디만 걸러내기
-							ArrayList<StudyTimePlace> tpList = Util.getOrderedDays(s);
+							ArrayList<StudyTimePlace> tpList = new ArrayList<>();
+							tpList = (ArrayList<StudyTimePlace>)getTimePlaceList(s.getStd_id());
+							s.setTimePlaceList(tpList);
+							tpList = Util.getOrderedDays(s);
 							s.setTimePlaceList(tpList);
 							stdList.add(s);
 						}
@@ -303,15 +305,28 @@ public class StudyDao {
 
 	//StudyInfo 검색 (스터디 상세보기)
 	public Study getStudyInfo(int std_id) {
-		ArrayList<Study> list = (ArrayList<Study>)getAllStduyList("std_category, std_id");
+		String sql = "select * from STUDY where std_id=?";
 		Study std = new Study();
-		for(Study s : list) {
-			if(s.getStd_id() == std_id) {
-				std = s;
+		try{
+			conn=pool.getConnection();
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, std_id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				std.setStudy(rs.getInt("std_id"), rs.getString("std_name"), rs.getInt("std_max"), rs.getDate("std_start"), rs.getDate("std_end"), rs.getString("std_info"), rs.getString("std_plan"), rs.getString("std_etc"), rs.getString("std_gender"), rs.getString("std_category"), rs.getString("email"));
+				ArrayList<StudyTimePlace> tpList = new ArrayList<>();
+				tpList = (ArrayList<StudyTimePlace>)getTimePlaceList(std.getStd_id());
+				std.setTimePlaceList(tpList);
+				tpList = Util.getOrderedDays(std);
+				std.setTimePlaceList(tpList);
 			}
+			
+			
+		}  catch (Exception err) {
+			System.out.println("getStudyInfo() 에러 : " + err);
+		} finally {
+			pool.freeConnection(conn, pstmt, rs);
 		}
-		ArrayList<StudyTimePlace> tpList = Util.getOrderedDays(std);
-		std.setTimePlaceList(tpList);
 		return std;
 	}
 	
@@ -378,6 +393,20 @@ public class StudyDao {
 			System.out.println("deleteStudyTimeplace() 에러 : "+e);
 		}finally {
 			pool.freeConnection(conn, pstmt, rs);
+		}
+	}
+	
+	public void deleteStudyByEmail(String email){
+		String sql = "delete from STUDY where email=?";
+		try {
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, email);
+			pstmt.executeUpdate();
+		}catch(Exception e) {
+			System.out.println("deleteReplyByWriter() 에러 :" + e);
+		}finally {
+			pool.freeConnection(conn,pstmt,rs);
 		}
 	}
 	

@@ -125,14 +125,15 @@ public class MemberDao {
 	//회원정보 수정
 	public int UpdateMemInfo(Member m){
 		int result=0;
-		String sql = "update member set pw=?, name=?, tel=? where email=?";
+		String sql = "update MEMBER set pw=?, name=?, tel=?, born=? where email=?";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, m.getPw());
 			pstmt.setString(2, m.getName());
 			pstmt.setString(3, m.getTel());
-			pstmt.setString(4, m.getEmail());
+			pstmt.setDate(4, m.getBorn());
+			pstmt.setString(5, m.getEmail());
 			result = pstmt.executeUpdate();
 		} catch(Exception e) {
 			System.out.println("UpdateMemInfo() 에러 : "+e);
@@ -144,7 +145,7 @@ public class MemberDao {
 	//회원탈퇴시 정보 삭제
 	public int deleteMem(Member m) {
 		int result=0;
-		String sql = "delete member where email=?";
+		String sql = "delete from MEMBER where email=?";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -153,6 +154,23 @@ public class MemberDao {
 		} catch(Exception e) {
 			System.out.println("UpdateMemInfo() 에러 : "+e);
 		} finally {
+			pool.freeConnection(conn, pstmt);
+		}
+		return result;
+	}
+	
+	public int getPwd(String pwd){
+		int result=0;
+		String sql = "select pw from MEMBER where pw=?";
+		try{
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, pwd);
+			rs =  pstmt.executeQuery();
+			if(rs.next()) result = 1;
+		}catch(Exception e){
+			System.out.println("UpdateMemInfo() 에러 : "+e);
+		}finally{
 			pool.freeConnection(conn, pstmt);
 		}
 		return result;
