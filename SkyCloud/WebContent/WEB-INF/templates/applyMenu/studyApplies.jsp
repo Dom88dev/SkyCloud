@@ -7,7 +7,7 @@ th{color:white}
 </style>
 
 <div class="col-md-12" align="center">
-	<h2 class="text-info">스터디 신청목록</h2>
+	<h2 class="text-info">스터디 신청받은 목록</h2>
 	<br>
 	<div class="col-md-12">
 		<div align="right">
@@ -17,8 +17,9 @@ th{color:white}
 					<c:forEach begin="0" end="${fn:length(myStdList) - 1}" step="1" var="i">
 						<c:if test="${myStdList[i].email == sessionScope.email}">
 							<c:set value="${appliesStdIndex +1}" var="appliesStdIndex"></c:set>
-							<option style="color:#39d2fd; font-style: italic;" value="${appliesStdIndex}">${myStdList[i].std_name}</option>
-							<input type="hidden" name="appliesStudyId${appliesStdIndex}" value="${myStdList[i].std_id}">
+							<option style="color:#39d2fd; font-style: italic;" value="${myStdList[i].std_id}">
+								${myStdList[i].std_name}
+							</option>
 							<c:if test="${appliesStdIndex == 0 }"><c:set value="${myStdList[i].std_id}" var="appliesFirstStdId"></c:set></c:if>
 						</c:if>
 					</c:forEach>
@@ -37,13 +38,13 @@ th{color:white}
 					<td>${stdApply.stdName}</td><td>${stdApply.name}</td>
 					<c:choose>
 						<c:when test="${stdApply.apply_status eq 'accept'}">
-							<td>수락</td><td><button>수락 취소</button></td>
+							<td>수락</td><td><button onclick="fnCancelApply('${stdApply.apply_id}')">수락 취소</button></td>
 						</c:when>
 						<c:when test="${stdApply.apply_status eq 'apply'}">
-							<td>가입 대기</td><td><button>수락</button><button>거절</button></td>
+							<td>가입 대기</td><td><button onclick="fnAcceptApply('${stdApply.apply_id}')">수락</button><button onclick="fnRejectApply('${stdApply.apply_id}')">거절</button></td>
 						</c:when>
 						<c:when test="${stdApply.apply_status eq 'reject'}">
-							<td>거절</td><td><button>거절 취소</button></td>
+							<td>거절</td><td><button onclick="fnCancelApply('${stdApply.apply_id}')">거절 취소</button></td>
 						</c:when>
 					</c:choose>
 					<c:set target="${date}" property="time" value="${stdApply.apply_datetime}"/>
@@ -53,20 +54,38 @@ th{color:white}
 		</c:forEach>
 	</div>
 </div>
-
+<form id="modifyStdApplyForm" method="post" action="/StudyCloud/fwd">
+	<input type="hidden" name="command">
+	<input type="hidden" name="apply_id">
+</form>
 <script>
-	var selectedApplyStudyId = 0;
 	
 	(function() {
 		$("tr.recordTr").hide();
-		var i = $("input[name='appliesStudyId0']").val();
+		var i = "${appliesFirstStdId}";
 		$("tr.appliesStdIdIs"+i).show();
 	})();
 	
 	function fnSetApplyStdIndex(i) {
-		selectedApplyStudyId = $("input[name='appliesStudyId"+i+"']").val();
 		$("tr.recordTr").hide();
-		$("tr.appliesStdIdIs"+selectedApplyStudyId).show();
+		$("tr.appliesStdIdIs"+i).show();
 	}
 	
+	function fnAcceptApply(apply_id) {
+		$("form#modifyStdApplyForm input[name='command']").val("ACCEPTAPPLY");
+		$("form#modifyStdApplyForm input[name='apply_id']").val(apply_id);
+		$("form#modifyStdApplyForm").submit();
+	}
+
+	function fnRejectApply(apply_id) {
+		$("form#modifyStdApplyForm input[name='command']").val("REJECTAPPLY");
+		$("form#modifyStdApplyForm input[name='apply_id']").val(apply_id);
+		$("form#modifyStdApplyForm").submit();
+	}
+
+	function fnCancelApply(apply_id) {
+		$("form#modifyStdApplyForm input[name='command']").val("CANCELAPPLY");
+		$("form#modifyStdApplyForm input[name='apply_id']").val(apply_id);
+		$("form#modifyStdApplyForm").submit();
+	}
 </script>

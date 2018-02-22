@@ -23,9 +23,7 @@ import controller.service.move.MoveLeaderCalendarAction;
 import controller.service.move.MoveMemberCalendarAction;
 import controller.service.move.MoveMemberRegisterAction;
 import controller.service.move.MoveMsgSendAction;
-
 import controller.service.move.MoveReadBoardByMessageAction;
-
 import controller.service.move.MoveStudyManagerAction;
 import controller.service.move.MoveStudyRegisterAction;
 import controller.service.move.MoveStudyUpdateAction;
@@ -48,6 +46,9 @@ import controller.service.read.validity.ValidateMemberEmailAction;
 import controller.service.read.validity.ValidateMemberNameAction;
 import controller.service.read.validity.ValidateMemberTelAction;
 import controller.service.read.validity.ValidateStudyNameAction;
+import controller.service.update.AcceptApplyAction;
+import controller.service.update.CancelApplyAction;
+import controller.service.update.RejectApplyAction;
 import controller.service.update.UpdateAttendanceAction;
 import controller.service.update.UpdateHomeworkAction;
 import controller.service.update.UpdateMemberAction;
@@ -220,6 +221,15 @@ public class ActionFactory {
 			break;
 		case "DELETEHFILE"://업로드한 과베파일 삭제
 			action = new DeleteHomeworkFileAction();
+			break;
+		case "ACCEPTAPPLY"://스터디 신청 수락
+			action = new AcceptApplyAction();
+			break;
+		case "REJECTAPPLY"://스터디 신청 거절
+			action = new RejectApplyAction();
+			break;
+		case "CANCELAPPLY"://스터디 신청 결정 취소
+			action = new CancelApplyAction();
 			break;
 		}
 		return action;

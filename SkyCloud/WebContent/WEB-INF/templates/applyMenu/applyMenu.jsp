@@ -5,10 +5,10 @@
 	<div class="col-md-2" style="border:0px; margin-top:20px;">
 		<ul class="nav rnav-pills nav-stacked text-center">	
 			<li>
-				<a data-toggle="pill" href="#stdApplies" onclick="fnSetCurrentApplyMenu('stdApplies')">스터디 홈</a>
+				<a data-toggle="pill" href="#stdApplies" onclick="fnSetCurrentApplyMenu('stdApplies')">스터디 신청받은 목록</a>
             </li>
             <li>
-               <a data-toggle="pill" href="#myApplies" onclick="fnSetCurrentApplyMenu('myApplies')">공지사항</a>
+               <a data-toggle="pill" href="#myApplies" onclick="fnSetCurrentApplyMenu('myApplies')">스터디 신청한 목록</a>
             </li>
 		</ul>	
 	</div>
@@ -26,4 +26,5 @@
 	$("a[href='#${includeApplyMenu}']").parent().addClass("active");
 	$("#"+"${includeApplyMenu}").addClass("in active");
 })();
+
 </script>

@@ -123,14 +123,14 @@
 		<!-- nav tabs -->
 		<div class="col-md-12">
 			<ul class="nav nav-tabs">
-				<li class="active"><a href="#studyManager" data-toggle="tab">나의 스터디</a></li>
+				<li><a href="#studyManager" data-toggle="tab">나의 스터디</a></li>
 				<li><a href="#applyList" data-toggle="tab">스터디 신청목록</a></li>
 			</ul>
 			
 		<!-- 탭화면 -->
 			<div class="tab-content">
 			<!-- 스터디 매니져 화면 -->
-				<div id="studyManager" class="tab-pane fade in active">
+				<div id="studyManager" class="tab-pane fade">
 					<div id="mngMenuDiv">
 						<jsp:include page="/studyManagingMenu/stdMenu.jsp"></jsp:include>
 					</div>
@@ -170,4 +170,10 @@
 		
 	</div>
 </body>
+<script>
+(function() {
+	$("a[href='#${currentTab}']").parent().addClass("active");
+	$("#"+"${currentTab}").addClass("in active");
+})();
+</script>
 </html>

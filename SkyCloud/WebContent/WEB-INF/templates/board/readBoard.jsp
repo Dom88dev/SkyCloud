@@ -90,24 +90,41 @@ button.btn {border-radius: 3em;}
 		<div id="replyBox">
 			<!-- ´ñ±ÛÀ» °¡Áø replies°´Ã¼¸¦ elÀ» ÀÌ¿ëÇØ »Ñ¸°´Ù. -->
 			<c:forEach items="${replies}" var="reply">
-				<c:if test="${reply.rp_depth ne 0}">
-					<div style="width: 5%">
-						<i class="fa fa-mail-reply fa-rotate-180"></i>
-					</div>
-				</c:if>
-				<div style="width: 95%">
-					<c:set target="${regiDate}" property="time" value="${reply.rp_datetime}"/>
-					<span><b>${reply.writer}</b></span><span style="text-shadow: 0 1px 0 #fff; filter: alpha(opacity = 20); opacity: .2;"><fmt:formatDate value="${regiDate}" pattern="yyyy-MM-dd HH:mm"/></span>
-					<c:if test="${reply.rp_writer ne email}">
-						<span onclick="fnSetRereply('${reply.rp_pos}', '${reply.rp_writer}', '${reply.writer}')">´ñ±Û´Þ±â</span>
-					</c:if>
-					<c:if test="${reply.rp_writer eq email}">
-						<span onclick="fnModifyReply('${reply.rp_id}', '${reply.rp_content}')">´ñ±Û¼öÁ¤</span>
-						<button class="btn btn-red" onclick="fnDeleteReply('${reply.rp_id}')" style="float: right; text-shadow: 0 1px 0 #fff; filter: alpha(opacity = 20); opacity: .2;">´ñ±Û »èÁ¦</button>
-					</c:if>
-					<br>
-					<span><i>${reply.reciever}</i></span><span style="color:black;">${reply.rp_content}</span>
-				</div>
+				<c:choose>
+					<c:when test="${reply.rp_depth ne 0}">
+						<div style="width: 5%; float: left;" align="right">
+							<i class="fa fa-mail-reply fa-rotate-180"></i>
+						</div>
+						<div style="width: 95%;  float: left;">
+							<c:set target="${regiDate}" property="time" value="${reply.rp_datetime}"/>
+							<span><b>${reply.writer}</b></span><span style="text-shadow: 0 1px 0 #fff; filter: alpha(opacity = 20); opacity: .2;"><fmt:formatDate value="${regiDate}" pattern="yyyy-MM-dd HH:mm"/></span>
+							<c:if test="${reply.rp_writer ne email}">
+								<span onclick="fnSetRereply('${reply.rp_pos}', '${reply.rp_writer}', '${reply.writer}')">´ñ±Û´Þ±â</span>
+							</c:if>
+							<c:if test="${reply.rp_writer eq email}">
+								<span onclick="fnModifyReply('${reply.rp_id}', '${reply.rp_content}')">´ñ±Û¼öÁ¤</span>
+								<button class="btn btn-red" onclick="fnDeleteReply('${reply.rp_id}')" style="float: right; text-shadow: 0 1px 0 #fff; filter: alpha(opacity = 20); opacity: .2;">´ñ±Û »èÁ¦</button>
+							</c:if>
+							<br>
+							<span><i>${reply.reciever}</i></span><span style="color:black;">${reply.rp_content}</span>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div style="width: 100%; float:left">
+							<c:set target="${regiDate}" property="time" value="${reply.rp_datetime}"/>
+							<span><b>${reply.writer}</b></span><span style="text-shadow: 0 1px 0 #fff; filter: alpha(opacity = 20); opacity: .2;"><fmt:formatDate value="${regiDate}" pattern="yyyy-MM-dd HH:mm"/></span>
+							<c:if test="${reply.rp_writer ne email}">
+								<span onclick="fnSetRereply('${reply.rp_pos}', '${reply.rp_writer}', '${reply.writer}')">´ñ±Û´Þ±â</span>
+							</c:if>
+							<c:if test="${reply.rp_writer eq email}">
+								<span onclick="fnModifyReply('${reply.rp_id}', '${reply.rp_content}')">´ñ±Û¼öÁ¤</span>
+								<button class="btn btn-red" onclick="fnDeleteReply('${reply.rp_id}')" style="float: right; text-shadow: 0 1px 0 #fff; filter: alpha(opacity = 20); opacity: .2;">´ñ±Û »èÁ¦</button>
+							</c:if>
+							<br>
+							<span><i>${reply.reciever}</i></span><span style="color:black;">${reply.rp_content}</span>
+						</div>
+					</c:otherwise>
+				</c:choose>
 			</c:forEach>
 		</div>
 	</div>

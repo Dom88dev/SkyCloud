@@ -32,11 +32,17 @@ public class MoveStudyManagerAction implements Action {
 		}
 		ArrayList<Apply> myApplyList = (ArrayList<Apply>) applyDao.getMyApplyList(email);
 		
+		if(stdList.size()<1) {
+			bodyInclude = "/main.jsp";
+			req.setAttribute("havingStudy", "0");
+		}
+		
 		HttpSession session = req.getSession();
 		session.setAttribute("myStdList", stdList);
 		session.setAttribute("index", session.getAttribute("index")==null?0:session.getAttribute("index"));
 		session.setAttribute("includeStdMenu", session.getAttribute("includeStdMenu")==null?"stdHome":session.getAttribute("includeStdMenu"));
 		session.setAttribute("includeApplyMenu", session.getAttribute("includeApplyMenu")==null?"stdApplies":session.getAttribute("includeApplyMenu"));
+		session.setAttribute("currentTab", session.getAttribute("currentTab")==null?"studyManager":session.getAttribute("currentTab"));
 		session.setAttribute("stdApplies", stdApplies);
 		session.setAttribute("myApplyList", myApplyList);
 		
