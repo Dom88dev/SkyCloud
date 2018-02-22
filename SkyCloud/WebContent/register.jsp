@@ -415,7 +415,6 @@ td, tr {
 			}
 			else{
 				var name = $("#name").val();
-				alert(name);
 
 				$.ajax({
 					type:"POST",
@@ -450,7 +449,6 @@ td, tr {
 			}
 			else{
 				var tel = $("#tel").val();
-				alert(tel);
 
 				$.ajax({
 					type:"POST",
@@ -508,7 +506,6 @@ td, tr {
 	$(document).ready(function(){
 		//이메일 인증 버튼
 		$("#inputEmail").click(function(){
-			alert("호출1")
 			var email = $("#email").val();
 			$.ajax({
 				type:"POST",
@@ -517,21 +514,15 @@ td, tr {
 				//dataType:"text",
 				success:function(data){
 					var val = data;
-					alert("호출2");
 					alert("받아온 인증 번호: "+val);
 					$("#emailNumModal").modal();
 					$("#emailNum").focusout(function() {
-						alert("입력한 인증 번호 : "+$("#emailNum").val());
-						alert("받아온 인증 번호: "+val);
 						if ($("#emailNum").val() == Number(val)){
-							alert("인증 번호 맞음")
 							$("#emailValidFalse").text("이메일 인증이 완료 되었습니다.").val();
 							$("#emailNumValid").text("이메일 인증이 완료 되었습니다.").val();
-							$("#emailConformBtn").attr("disabled", "inline-block");
 						} else {
-							alert("인증 번호 틀림")
 							$("#emailValidFalse").text("인증번호가 틀렸습니다.").val();
-							$("#emailConformBtn").attr("disabled", "disabled");
+							$("#emailNumValid").text("인증번호가 틀렸습니다.").val();
 						}
 					})
 				}
