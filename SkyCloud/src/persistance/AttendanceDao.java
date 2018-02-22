@@ -213,4 +213,18 @@ public class AttendanceDao {
 		}
 		return date;		
 	}
+	
+	public void deleteAttendanceByEmail(String email){
+		String sql = "delete from ATTENDANCE where email=?";
+		try {
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, email);
+			pstmt.executeUpdate();
+		}catch(Exception e) {
+			System.out.println("deleteAttendanceByEmail() 에러 :" + e);
+		}finally {
+			pool.freeConnection(conn,pstmt,rs);
+		}
+	}
 }

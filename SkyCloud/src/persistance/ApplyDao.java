@@ -98,6 +98,20 @@ public class ApplyDao {
 		}
 	}
 	
+	public void deleteApplyByEmail(String email){
+		String sql = "delete from APPLIES where email=?";
+		try {
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, email);
+			pstmt.executeUpdate();
+		}catch(Exception e) {
+			System.out.println("deleteApply() 에러 :" + e);
+		}finally {
+			pool.freeConnection(conn,pstmt,rs);
+		}
+	}
+	
 	public List<Apply> getStudyApplies(int std_id, String leaderEmail) {
 		ArrayList<Apply> applies = new ArrayList<>();
 		try{

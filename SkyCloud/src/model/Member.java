@@ -19,6 +19,11 @@ public class Member {
 		setGender(gender);
 		setBorn(born);
 	}
+	
+	
+	
+
+
 	public String getEmail() {
 		return email;
 	}

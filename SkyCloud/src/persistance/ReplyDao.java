@@ -189,4 +189,18 @@ public class ReplyDao {
 		}
 		return result;
 	}
+	
+	public void deleteReplyByWriter(String email){
+		String sql = "delete from REPLIES where rp_writer=?";
+		try {
+			conn = pool.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, email);
+			pstmt.executeUpdate();
+		}catch(Exception e) {
+			System.out.println("deleteReplyByWriter() 에러 :" + e);
+		}finally {
+			pool.freeConnection(conn,pstmt,rs);
+		}
+	}
 }
