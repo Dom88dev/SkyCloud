@@ -156,18 +156,18 @@
 	});
 	function showAttStatus(data) {
 		var tab = document.querySelector('#att-table');
-	      alert(tab);
+	      
 	      html = '<table>';
 	      for (var i = 0; i < data.length; i++) {
 	         if (data[i].atd_status=='att') {
-	            alert(data[i].atd_status);
+	            
 	            atdstatus = "출석";
 	         } else if (data[i].atd_status=='late') {
 	            atdstatus = "지각";
 	         } else if (data[i].atd_status=='abs') {
 	            atdstatus = "결석";
 	         } else {
-	            alert(data[i].atd_status);
+	           
 	            atdstatus = "공결";
 	         }
 	         html += '<tr><td>'+ data[i].email+ '</td><td><select class="rselect" name="status_select"><option value="'+data[i].atd_status+'">'+ atdstatus + '</option>' + '</select></td></tr>';
