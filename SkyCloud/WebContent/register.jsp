@@ -208,7 +208,7 @@ td, tr {
 								
 								<div>
 									<div>
-										<button id="registerbtn" type="button" style="width: 100%;height: 50px; border: 0;background-color:#39d2fd;color: white;margin: auto;">회원 가입</button>
+										<button id="registerbtn" type="submit" style="width: 100%;height: 50px; border: 0;background-color:#39d2fd;color: white;margin: auto;">회원 가입</button>
 									</div>
 								</div>
 								
