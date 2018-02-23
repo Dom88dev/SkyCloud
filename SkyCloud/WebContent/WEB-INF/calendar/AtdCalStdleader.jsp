@@ -63,18 +63,18 @@
 
 						var jData = $.parseJSON(data);
 						var events = [];
-						if (jsonData) {
-							$(jsonData).each(function(i, obj) {
+						if (jData) {
+							$(jData).each(function(i, obj) {
 								var titleStr;
 
-								if (jData.attcnt != null) {
-									titleStr = "출석 [" + jData.attcnt + "]건";
-								} else if (jData.latecnt != null) {
-									titleStr = "지각 [" + jData.latecnt + "]건";
-								} else if (jData.abscnt != null) {
-									titleStr = "결석 [" + jData.abscnt + "]건";
-								} else if (jData.obscnt != null) {
-									titleStr = "공결 [" + jData.obscnt + "]건";
+								if (obj.attcnt != null) {
+									titleStr = "출석 [" + obj.attcnt + "]건";
+								} else if (obj.latecnt != null) {
+									titleStr = "지각 [" + obj.latecnt + "]건";
+								} else if (obj.abscnt != null) {
+									titleStr = "결석 [" + obj.abscnt + "]건";
+								} else if (obj.obscnt != null) {
+									titleStr = "공결 [" + obj.obscnt + "]건";
 								}
 
 								events.push({

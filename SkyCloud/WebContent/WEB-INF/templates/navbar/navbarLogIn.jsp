@@ -85,10 +85,8 @@ div.uiheader {
 	position: relative;
 }
 </style>
-
-<<<<<<< HEAD
-=======
-	/* $(document).ready(function() {
+<script>
+	$(document).ready(function() {
 		$('.dropdown-menu').on("click", function(e) {
 			$(this).next('ul').toggle();
 			e.stopPropagation();
@@ -98,9 +96,9 @@ div.uiheader {
 			$('#msgmodal').modal('show');
 			//$('msgBoxDiv').html('/StudyCloud/WEB-INF/templates/msg/msgBox.jsp');
 		});
-	}); */
+	}); 
 </script>
->>>>>>> refs/remotes/origin/beta
+
 <!-- navbar -->
 <nav class="navbar navbar-fixed-top">
 	<div class="container-fluid">
@@ -122,7 +120,7 @@ div.uiheader {
 		</form>
 		<ul class="nav navbar-nav">
 			<!-- Messages: style can be found in dropdown.less-->
-			<%-- <li class="dropdown messages-menu open">
+			 <li class="dropdown messages-menu open">
 				<!-- Menu toggle button --> <a href="#" class="dropdown-toggle"
 				data-toggle="dropdown"> <span id="message"
 					class="glyphicon glyphicon-envelope"></span> <span
@@ -162,11 +160,11 @@ div.uiheader {
 												<input type="text" name="reciever" class="form-control">
 											</div>
 											<div class="col-md-12">
-												<div class="col-md-2">
+												<div class="col-md-3" align="center">
 													<label
 														style="font-size: 1em; line-height: 2em; color: #39d2fd;">내용</label>
 												</div>
-												<div class="col-md-10">
+												<div class="col-md-9" style="margin-top: 0.8em; margin-bottom: 0.8em;"> 
 												<!-- textarea id="message_content_area" name="msgContent"
 														rows="10" cols="50" class="form-control"></textarea>  -->
 												<input type="text" name="msgContent" class="form-control">
@@ -185,7 +183,7 @@ div.uiheader {
 					</div>
 
 				</ul>
-			</li> --%>
+			</li> 
 			<!-- /.messages-menu -->
 		</ul>
 
