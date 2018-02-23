@@ -28,7 +28,7 @@ public class InsertStudyApplyAction implements Action{
 		int applyCheck = applyDao.getApplyByEmail(applicantEmail, studyId);
 		
 		if(applyCheck == 0){
-			int msgResult = messageDao.insertNotiStudyApply(System.currentTimeMillis(), "/fwd?command=MOVESTUDYAPPLIES", applicantName+"님이"+ stdName+"스터디에 가입했습니다.", 0, leaderEmail, applicantEmail);
+			int msgResult = messageDao.insertNotiStudyApply(System.currentTimeMillis(), "/fwd?command=MOVESTUDYAPPLIES", applicantName+"님이"+ stdName+"스터디에 가입신청했습니다.", 0, leaderEmail, applicantEmail);
 			int applyResult = applyDao.insertApply(applicantEmail, studyId, "apply", applyContent, System.currentTimeMillis());
 			req.setAttribute("applyResult", applyResult);
 			req.setAttribute("msgResult", msgResult);

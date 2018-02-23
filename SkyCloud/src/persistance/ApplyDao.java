@@ -163,7 +163,7 @@ public class ApplyDao {
 		return applies;
 	}
 	
-	public int updateApply(int apply_id, String status, String content) {
+	public int updateApply(int apply_id, String status, String content, String apply_email) {
 		int result = 0;
 		try {
 			String sql = "update APPLIES set apply_status=?, apply_content=? where apply_id=?";
@@ -173,7 +173,7 @@ public class ApplyDao {
 			pstmt.setString(2, content);
 			pstmt.setInt(3, apply_id);
 			result = pstmt.executeUpdate();
-			
+			new MessageDao().insertNotiStudyApply(System.currentTimeMillis(), "StudyCloud/fwd?command=GOMNGSTUDY", "스터디 가입신청이 수락되었습니다.", 0, apply_email, "study@cloud.com");
 		} catch(Exception e){
 			System.out.println("updateApply() 에러 :" + e);
 		} finally{

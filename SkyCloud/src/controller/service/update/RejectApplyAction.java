@@ -17,7 +17,7 @@ public class RejectApplyAction implements Action {
 		HttpSession session = req.getSession();
 		int apply_id = Integer.parseInt(req.getParameter("apply_id"));
 		ApplyDao applyDao = new ApplyDao();
-		applyDao.updateApply(apply_id, "reject", "sorry");
+		applyDao.updateApply(apply_id, "reject", "sorry", req.getParameter("apply_email"));
 		session.setAttribute("currentTab", "applyList");
 		return "/fwd?command=GOMNGSTUDY";
 	}

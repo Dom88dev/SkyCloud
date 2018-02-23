@@ -17,7 +17,7 @@ public class AcceptApplyAction implements Action {
 		HttpSession session = req.getSession();
 		int apply_id = Integer.parseInt(req.getParameter("apply_id"));
 		ApplyDao applyDao = new ApplyDao();
-		applyDao.updateApply(apply_id, "accept", "member");
+		applyDao.updateApply(apply_id, "accept", "member", req.getParameter("apply_email"));
 		session.setAttribute("currentTab", "applyList");
 		return "/fwd?command=GOMNGSTUDY";
 	}

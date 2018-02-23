@@ -38,13 +38,13 @@ th{color:white}
 					<td>${stdApply.stdName}</td><td>${stdApply.name}</td>
 					<c:choose>
 						<c:when test="${stdApply.apply_status eq 'accept'}">
-							<td>수락</td><td><button onclick="fnCancelApply('${stdApply.apply_id}')">수락 취소</button></td>
+							<td>수락</td><td><button onclick="fnCancelApply('${stdApply.apply_id}', '${stdApply.email}')">수락 취소</button></td>
 						</c:when>
 						<c:when test="${stdApply.apply_status eq 'apply'}">
-							<td>가입 대기</td><td><button onclick="fnAcceptApply('${stdApply.apply_id}')">수락</button><button onclick="fnRejectApply('${stdApply.apply_id}')">거절</button></td>
+							<td>가입 대기</td><td><button onclick="fnAcceptApply('${stdApply.apply_id}', '${stdApply.email}')">수락</button><button onclick="fnRejectApply('${stdApply.apply_id}')">거절</button></td>
 						</c:when>
 						<c:when test="${stdApply.apply_status eq 'reject'}">
-							<td>거절</td><td><button onclick="fnCancelApply('${stdApply.apply_id}')">거절 취소</button></td>
+							<td>거절</td><td><button onclick="fnCancelApply('${stdApply.apply_id}', '${stdApply.email}')">거절 취소</button></td>
 						</c:when>
 					</c:choose>
 					<c:set target="${date}" property="time" value="${stdApply.apply_datetime}"/>
@@ -57,6 +57,7 @@ th{color:white}
 <form id="modifyStdApplyForm" method="post" action="/StudyCloud/fwd">
 	<input type="hidden" name="command">
 	<input type="hidden" name="apply_id">
+	<input type="hidden" name="apply_email">
 </form>
 <script>
 	
@@ -71,21 +72,24 @@ th{color:white}
 		$("tr.appliesStdIdIs"+i).show();
 	}
 	
-	function fnAcceptApply(apply_id) {
+	function fnAcceptApply(apply_id, email) {
 		$("form#modifyStdApplyForm input[name='command']").val("ACCEPTAPPLY");
 		$("form#modifyStdApplyForm input[name='apply_id']").val(apply_id);
+		$("form#modifyStdApplyForm input[name='apply_email']").val(email);
 		$("form#modifyStdApplyForm").submit();
 	}
 
-	function fnRejectApply(apply_id) {
+	function fnRejectApply(apply_id, email) {
 		$("form#modifyStdApplyForm input[name='command']").val("REJECTAPPLY");
 		$("form#modifyStdApplyForm input[name='apply_id']").val(apply_id);
+		$("form#modifyStdApplyForm input[name='apply_email']").val(email);
 		$("form#modifyStdApplyForm").submit();
 	}
 
-	function fnCancelApply(apply_id) {
+	function fnCancelApply(apply_id, email) {
 		$("form#modifyStdApplyForm input[name='command']").val("CANCELAPPLY");
 		$("form#modifyStdApplyForm input[name='apply_id']").val(apply_id);
+		$("form#modifyStdApplyForm input[name='apply_email']").val(email);
 		$("form#modifyStdApplyForm").submit();
 	}
 </script>

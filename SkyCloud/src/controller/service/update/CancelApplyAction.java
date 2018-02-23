@@ -17,7 +17,7 @@ public class CancelApplyAction implements Action {
 		HttpSession session = req.getSession();
 		int apply_id = Integer.parseInt(req.getParameter("apply_id"));
 		ApplyDao applyDao = new ApplyDao();
-		applyDao.updateApply(apply_id, "apply", "신청합니다.");
+		applyDao.updateApply(apply_id, "apply", "신청합니다.", req.getParameter("apply_email"));
 		session.setAttribute("currentTab", "applyList");
 		return "/fwd?command=GOMNGSTUDY";
 	}
