@@ -13,6 +13,7 @@ import java.util.List;
 
 import model.Attendance;
 import model.Member;
+import model.Message;
 import model.Study;
 import model.StudyTimePlace;
 import util.Util;
@@ -49,6 +50,7 @@ public class AttendanceDao {
 				a.setEmail(rs.getString("email"));
 				a.setAtd_id(rs.getInt("atd_id"));
 				a.setAtd_date(rs.getDate("atd_date"));
+				System.out.println("스터디 날짜"+rs.getDate("atd_date"));
 				a.setAtd_status(rs.getString("atd_status"));
 				a.setStd_id(rs.getInt("std_id"));
 				list.add(a);
@@ -98,10 +100,8 @@ public class AttendanceDao {
 		String str = sdf.format(date);
 		java.sql.Date sqlDate = new java.sql.Date(y, m, d);
 		System.out.println(sqlDate);
-		System.out.println("현재날짜 hhmm : "+str);
 		String status=null;
 		String stdTime = getStdTime(std_id);
-		System.out.println("스터디 시작시간 hhmm : "+stdTime);
 		try {
 			conn = pool.getConnection();
 			String sql = "insert into ATTENDANCE(atd_date, atd_status, email, std_id) values(?,?,?,?)";
@@ -130,33 +130,35 @@ public class AttendanceDao {
 		} finally {
 			pool.freeConnection(conn, pstmt);
 		}
-		System.out.println(email+"의 출결상황 : "+status);
 		return status;
 	}
 	//3. 출결현황 출력하기
-	public String getAttStatus(Attendance a){
-		String sql = String.format("select email, atd_status from ATTENDANCE where std_id='%s'", a.getStd_id());
-		String msg = null;
+	public List<Attendance> getAttStatus(int std_id){
+		ArrayList<Attendance> attList = new ArrayList<>();
+
+		String sql = "select email, atd_status from ATTENDANCE where std_id=? and atd_date=?";
 		try {
 			conn = pool.getConnection();
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, std_id);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String d = sdf.format(new Date());
+			java.sql.Date date = Util.transDate(d);
+			pstmt.setDate(2, date);
 			rs = pstmt.executeQuery();
 			while(rs.next()){
-				if(!rs.isFirst()) msg += ",";
-				msg += "{";
-				msg += "\"email\" : "+ rs.getString("email")+",";
-				msg += "\"atd_status\" : \"" + rs.getString("atd_status")+"\"";
-				msg += "}";
-			}
-			msg +=",";
-			return msg;
-			
+				Attendance a = new Attendance();
+				a.setEmail(rs.getString("email"));
+				a.setAtd_status(rs.getString("atd_status"));
+				
+				attList.add(a);
+			}		
 		} catch(Exception e) {
 			System.out.println("getAttStatus() 에러 : "+e);
 		} finally {
 			pool.freeConnection(conn, pstmt, rs);
 		}
-		return msg;
+		return attList;
 	}
 	//잘못된 출석 상태 수정하기
 	public int UpdateStatus(String upatd, String email) {

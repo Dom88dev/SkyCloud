@@ -1,8 +1,14 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<link rel="stylesheet" href="/StudyCloud/lib/dist/css/AdminLTE.css" />
+<link rel="stylesheet" href="/StudyCloud/lib/dist/css/AdminLTE.min.css" />
 <link rel="stylesheet"
 	href="/StudyCloud/lib/dist/css/alt/AdminLTE-bootstrap-social.css" />
+<link rel="stylesheet"
+	href="/StudyCloud/lib/bootstrap337/css/bootstrap.min.css" />
+<link rel="stylesheet"
+	href="/StudyCloud/lib/dist/css/ionicons.min.css" />
+<link rel="stylesheet"
+	href="/StudyCloud/lib/dist/css/skins/_all-skins.min.css" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
@@ -84,6 +90,8 @@ div.uiheader {
 	overflow: hidden;
 	position: relative;
 }
+
+
 </style>
 <script>
 	$(document).ready(function() {

@@ -39,95 +39,124 @@
 				stick : true
 			});
 		});
-		$('#calendar').fullCalendar({
-			now : new Date(y, m, d),
-			editable : false,
-			aspectRatio : 1.8,
-			height : "auto",
-			scrollTime : '00:00',
-			header : {
-				left : 'today',
-				center : 'prev title next',
-				right : 'myAttendButton'
-			},
-			events : function(start, end, timezone, callback) {
-				$.ajax({
-					url : "/StudyCloud/json",
-					type : "GET",
-					data : {
-						command : "CNTSTATUS",
-						stdId:"${myStdList[index].std_id}",
-					},
-					dataType : "json",
-					success : function(data) {
+		$('#calendar')
+				.fullCalendar(
+						{
+							now : new Date(y, m, d),
+							editable : false,
+							aspectRatio : 1.8,
+							height : "auto",
+							scrollTime : '00:00',
+							header : {
+								left : 'today',
+								center : 'prev title next',
+								right : 'myAttendButton'
+							},
+							events : function(start, end, timezone, callback) {
+								$
+										.ajax({
+											url : "/StudyCloud/json",
+											type : "GET",
+											data : {
+												command : "CNTSTATUS",
+												stdId : "${myStdList[index].std_id}",
+											},
+											dataType : "json",
+											success : function(data) {
 
-						//var jData = $.parseJSON(data);
-						var events = [];
-						if (data) {
-							$(data).each(function(i, obj) {
-								var titleStr;
+												//var jData = $.parseJSON(data);
+												var events = [];
+												if (data) {
+													$(data)
+															.each(
+																	function(i,
+																			obj) {
+																		var titleStr;
 
-								if (data.attcnt != null) {
-									titleStr = "출석 [" + data.attcnt + "]건";
-								} else if (data.latecnt != null) {
-									titleStr = "지각 [" + data.latecnt + "]건";
-								} else if (data.abscnt != null) {
-									titleStr = "결석 [" + data.abscnt + "]건";
-								} else{
-									titleStr = "공결 [" + data.obscnt + "]건";
-								}
+																		if (obj.attcnt != null) {
+																			titleStr = "출석 ["
+																					+ obj.attcnt
+																					+ "]건"
+																					+ "\n";
+																			titleStr += "지각 ["
+																					+ obj.latecnt
+																					+ "]건"
+																					+ "\n";
+																			titleStr += "결석 ["
+																					+ obj.abscnt
+																					+ "]건"
+																					+ "\n";
+																			titleStr += "공결 ["
+																					+ obj.obscnt
+																					+ "]건";
+																		} else if (obj.latecnt != null) {
+																			titleStr = "지각 ["
+																					+ obj.latecnt
+																					+ "]건";
+																		} else if (obj.abscnt != null) {
+																			titleStr = "결석 ["
+																					+ obj.abscnt
+																					+ "]건";
+																		} else {
+																			titleStr = "공결 ["
+																					+ obj.obscnt
+																					+ "]건";
+																		}
 
-								events.push({
-									start : new Date(y, m, d),
-									title : titleStr
+																		events
+																				.push({
+																					start : new Date(
+																							y,
+																							m,
+																							d),
+																					title : titleStr
+																				});
+																	});
+													callback(events);
+												}
+											},
+										});
+							},
+							eventAfterRender : function(event, element, view) {
+							},
+							buttonText : {
+								today : "오늘",
+							},
+							selectable : true,
+							selectHelper : true,
+							select : function(start, end) {
+								$('#calmodal').modal('show');
+							},
+							eventClick : function(event, element) {
+								var s = null;
+								$.ajax({
+									url : "/StudyCloud/json",
+									data : {
+										command : "GET_ATTSTATUS",
+										stdId : "${myStdList[index].std_id}",
+										//date : new Date(y, m, d)
+									},
+									//async: false,
+									success : function(data) {
+										showAttStatus(data);
+									}
 								});
-							});
-							callback(events);
-						}
-					},
-				});
-			},
-			eventAfterRender : function(event, element, view) {
-			},
-			buttonText : {
-				today : "오늘",
-			},
-			selectable : true,
-			selectHelper : true,
-			select : function(start, end) {
-				$('#calmodal').modal('show');
-			},
-			eventClick : function(event, element) {
-				var s = null;
-				$.ajax({
-					url : "/StudyCloud/json",
-					type : "GET",
-					data : {
-						command : "GET_ATTSTATUS",
-						stdId:"${myStdList[index].std_id}",
-						email : "${email}"
-					},
-					async: false,
-					success : function(data) {
-						showAttStatus(data);
-					}
-				});
-				
-				$('#calmodal').modal('show');
-				$('#calmodal').find('#title').val(event.title);
-			},
-			//editable : true,
-			eventLimit : true,
-			eventRender : function(event, element) {
-				$(element).find(".fc-time").remove();
-			},
-			schedulerLicenseKey : 'GPL-My-Project-Is-Open-Source'
-		});
+
+								$('#calmodal').modal('show');
+								$('#calmodal').find('#title').val(event.title);
+							},
+							//editable : true,
+							eventLimit : true,
+							eventRender : function(event, element) {
+								$(element).find(".fc-time").remove();
+							},
+							schedulerLicenseKey : 'GPL-My-Project-Is-Open-Source'
+						});
 		// Whenever the user clicks on the "save" button om the dialog
 		$('#save-event').on('click', function() {
 			var title = $('.rselect option:selected').val();
 			//$('#calendar').fullCalendar('removeEvents', event.title);
-			$.ajax({
+/* 			$.ajax({
 				url : "/StudyCloud/json",
 				type : "GET",
 				data : {
@@ -137,7 +166,7 @@
 				success : function(data) {
 					alert('출결이 정상적으로 수정되었습니다.');
 				}
-			});
+			}); */
 			if (title) {
 				var eventData = {
 					title : $('.rselect> option:selected').val(),
@@ -155,26 +184,25 @@
 		});
 	});
 	function showAttStatus(data) {
-		var tab = document.querySelector('#att-table');
-	      
-	      html = '<table>';
-	      for (var i = 0; i < data.length; i++) {
-	         if (data[i].atd_status=='att') {
-	            
-	            atdstatus = "출석";
-	         } else if (data[i].atd_status=='late') {
-	            atdstatus = "지각";
-	         } else if (data[i].atd_status=='abs') {
-	            atdstatus = "결석";
-	         } else {
-	           
-	            atdstatus = "공결";
-	         }
-	         html += '<tr><td>'+ data[i].email+ '</td><td><select class="rselect" name="status_select"><option value="'+data[i].atd_status+'">'+ atdstatus + '</option>' + '</select></td></tr>';
-	      }
-	      html += '</table>';
-	      tab.innerHTML = html;
-	      console.log(html);
+		var jData = $.parseJSON(data);
+		var output = '';
+		output += '<div><table class="table"><tr><td>이메일</td><td>출석 상태</td></tr></table></div>';
+		$(jData).each(function(i, obj) {
+		
+			output += '<div>';
+			output += '<table class="table">';
+			output += '<tr>';
+			output += '<td>' + obj.email + '</td>';
+			output += '<td>' + obj.atd_status + '</td>';
+			output += '<td>';
+			//output += '<input type="text" name="status" class="form-control" placeholder="att-출석, late-지각, abs-결석, obs-공결">';
+			//output += '<input type="hidden" name="email" value="'+obj.email+'">';
+			output += '</td>';
+			output += '</tr>';
+			output += '</table>';
+			output += '</div>';
+		});
+		$('#attStatus').html(output);
 	}
 </script>
 <style>
@@ -232,19 +260,23 @@ body {
 					</div>
 					<div class="modal-body">
 						<div class="row">
-							<div class="col-md-12">
-		                        <form action="/StudyCloud/AtdCalStdleader" method="post">
-		                           <table class="table">
-		                              <tr>
-		                                 <th class="text-center">이름</th>
-		                                 <th class="text-center">출결 현황</th>
-		                              </tr>
-		                           </table>
-		                        </form>
-		                     </div>
-		                     <div id="att-table" class="col-md-12">
-		                           
-		                     </div>
+							<!-- <div class="col-md-12">
+								<table class="table" style="color: black;">
+									<tr>
+										<th class="text-center">이름</th>
+										<th class="text-center">출결 현황</th>
+										<th class="text-center">출결 수정</th>
+									</tr>
+								</table>
+							</div> -->
+
+							<form action="/StudyCloud/fwd" method="post">
+								<input type="hidden" name="command" value="UPDATE_STATUS">
+								<div id="attStatus" class="col-md-12">
+									
+								</div>
+							</form>
+
 						</div>
 
 					</div>
